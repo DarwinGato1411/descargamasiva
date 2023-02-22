@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/app/ventas/facturar.css"?>
+<?init class="com.ec.seguridad.Autentificador"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
+<!--<zk   class="col-12 col-sm-12 col-md-12 col-lg-12">-->
+<hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
+      class="contenedorReporteSRI"
+      viewModel="@id('vm') @init('com.ec.controlador.ListaDetalleCompraSri')" >
+    
+    <div class="contenedorTablas">
+        <div class="contenedorTabla2">
+            <div class="content">
+                <div  class="contenedorBusqueda1" style="">
+                    Empresa:
+                    <combobox  
+                        model="@load(vm.listaTipoambientes)"  
+                        onSelect="@command('buscarDetalleCompra')"  
+                        selectedItem="@bind(vm.amb)" 
+                        readonly="true" 
+                    
+                        class="textoFechaDateBox">
+                        <template name="model">
+                            <comboitem  label="@bind(each.amNombreComercial)"/>
+                        </template>                                      
+                    </combobox>
+                    <div class="contenidoEspe">
+                        <label class="texto"  width="30%" value="Inicio: "   />
+                        <datebox  class="fecha"  value="@bind(vm.inicio)" 
+                                      style="font-weight:bold;"                                                   
+                                      buttonVisible="true" 
+                                      lenient="true"  format="dd/MM/yyyy" 
+                                      constraint="no empty: Ingrese de inicio de la busqueda"
+                                      width="60%"/> 
+                    </div>
+                    <div class="contenidoEspe">
+                        <label  class="texto"    width="30%" value="Fin: "  />
+                        <datebox  class="fecha"  width="60%"  value="@bind(vm.fin)" 
+                                      style="font-weight:bold;" 
+                                      onCreate="self.value = new Date()"                                                   
+                                      buttonVisible="true" 
+                                      lenient="true"  format="dd/MM/yyyy" 
+                                      constraint="no empty: IBuscar por fecha fin de la busqueda"
+                        /> 
+                    </div>
+                    <div  class="contenedorEspe">
+                        
+                        <button   image="/imagenes/buscar1.png"  
+                                  onClick="@command('buscarDetalleCompra')"  
+                                  class="btn btn-primary btn-sm "
+                                  label="Buscar"
+                                  
+                                  tooltiptext="Buscar"/>                 
+                    </div> 
+              
+                </div>    
+                <div  class="contenedorBusqueda2" style="">
+                    
+                    <radiogroup 
+                        selectedItem="@bind(vm.iprodClasificacio)"
+                        onCheck="@command('buscarDetalleCompra')">                   
+                        <radio label="TODO" value="TODO"/> 
+                        <space bar="false"  />                              
+                        <radio label="SALUD" value="S"/>
+                        <space bar="false"  />   
+                        <radio label="ALIMENTACION" value="A"/> 
+                        <space bar="false"  />                          
+                        <radio label="VESTIMENTA" value="V"/>                          
+                        <space bar="false"  /> 
+                        <radio label="TURISMO" value="T"/>                          
+                        <space bar="false"  /> 
+                        <radio label="EDUCACION" value="E"/>                          
+                        <space bar="false"  /> 
+                        <radio label="VIVIENDA" value="VI"/>                          
+                        <space bar="false"  /> 
+                        <radio label="NEGOCIO" value="N"/> 
+                    </radiogroup>
+                    
+                      <button   image="/iconos/excel.png"
+                                  label="Descargar Retenciones"
+                                  onClick="@command('exportListboxToExcel')"  
+                                  class="btn btn3"
+                                  tooltiptext="Descargar informacion"/>  
+                    
+                </div>
+            </div>
+            <listbox model="@load(vm.listaDetalleCompraSris)" 
+                     mold="paging" pageSize="15" 
+            >
+                <custom-attributes org.zkoss.zul.listbox.rod="true"/>
+
+                       
+                <listhead> 
+                    <listheader width="8%"  label="# Fact" />
+                    <listheader width="20%"  label="Proveedor" />
+                    <listheader width="8%"  label="Fecha" />
+                    <listheader width="20%"  label="Item / Producto" />
+                    <listheader width="5%"  label="Base 12%" style="font-size:11px;"/>    
+                    <listheader width="5%"  label="Base 0%" style="font-size:11px;"/>    
+                    <listheader width="5%"  label="Iva" style="font-size:11px;"/>        
+                    <listheader width="5%"  label="Total" style="font-size:11px;"/>        
+                    <listheader width="40%"  label="Clasificar" style="font-size:11px;"/>        
+                          
+                  
+                    <!--  <textbox placeholder="Proveedor"
+                        value="@bind(vm.buscar)" 
+                        class="form-control form-control-sm"
+                        onOK="@command('buscarForProveedor')"
+                        onChange="self.setValue(self.getValue().toUpperCase());" style="font-size:11px;"/>
+                    </listheader>        -->
+                                                                                               
+                                                                                       
+                                                                                                
+                </listhead>  
+                        
+                    
+                <template name="model">                                                            
+                    <listitem>
+                    
+                        <listcell zclass = "mycss-listcell">
+                            <textbox class="form-control form-control-sm"                                                               
+                                     style="font-size:11px;background:#EBF5FB"
+                                     readonly="true"
+                                     value="@bind(each.idCabeceraSri.cabNumFactura)" width="96%" />
+                        </listcell>
+                        <listcell zclass = "mycss-listcell">
+                            <textbox class="form-control form-control-sm"                                                               
+                                     style="font-size:11px;background:#EBF5FB"
+                                     readonly="true"
+                                     value="@bind(each.idCabeceraSri.cabProveedor)" width="96%" />
+                        </listcell>
+                        <listcell zclass = "mycss-listcell">
+                            <datebox compact="true" value="@bind(each.idCabeceraSri.cabFecha)"     
+                                     height=" 30px" 
+                                     buttonVisible="false" 
+                                     lenient="true" 
+                                     readonly="true"
+                                     format="medium" width="100%"  />
+                        </listcell>
+                        <listcell zclass = "mycss-listcell">
+                            <textbox class="form-control form-control-sm"                                                               
+                                     style="font-size:11px;background:#EBF5FB"
+                                     readonly="true"
+                                     value="@bind(each.iprodDescripcion)" width="96%" />
+                        </listcell>
+                        <listcell zclass = "mycss-listcell">
+                            <decimalbox format="###.##" 
+                                        class="form-control form-control-sm"                                                               
+                                        style="font-size:11px;background:#EBF5FB"
+                                        readonly="true"  
+                                        value="@bind(each.base12)" width="96%" />
+                        </listcell>
+                        <listcell zclass = "mycss-listcell">
+                            <decimalbox format="###.##" 
+                                        class="form-control form-control-sm"                                                               
+                                        style="font-size:11px;background:#EBF5FB"
+                                        readonly="true"  
+                                        value="@bind(each.base0)" width="96%" />
+                        </listcell>
+                        <listcell zclass = "mycss-listcell">
+                            <decimalbox format="###.##" 
+                                        class="form-control form-control-sm"                                                               
+                                        style="font-size:11px;background:#EBF5FB"
+                                        readonly="true"  
+                                        value="@bind(each.iva)" width="96%" />
+                        </listcell>
+                        <listcell zclass = "mycss-listcell">
+                            <decimalbox format="###.##" 
+                                        class="form-control form-control-sm"                                                               
+                                        style="font-size:11px;background:#EBF5FB"
+                                        readonly="true"  
+                                        value="@bind(each.iprodTotal)" width="96%" />
+                        </listcell>
+                        <listcell zclass = "mycss-listcell">
+                           
+                            <radiogroup 
+                                selectedItem="@bind(each.iprodClasificacion)"
+                                onCheck="@command('clasificar',valor=each)">                   
+                                <radio label="SALUD" value="S"/>
+                                <space bar="false"  />   
+                                <radio label="ALIMENTACION" value="A"/> 
+                                <space bar="false"  />                          
+                                <radio label="VESTIMENTA" value="V"/>                          
+                                <space bar="false"  /> 
+                                <radio label="TURISMO" value="T"/>                          
+                                <space bar="false"  /> 
+                                <radio label="EDUCACION" value="E"/>                          
+                                <space bar="false"  /> 
+                                <radio label="VIVIENDA" value="VI"/>                          
+                                <space bar="false"  /> 
+                                <radio label="NEGOCIO" value="N"/> 
+                            </radiogroup>
+                        </listcell>
+                                                                    
+
+                    </listitem>
+                </template>
+            </listbox>
+        </div>
+    </div>
+    
+</hbox>
+
+
+<!--</zk>-->
