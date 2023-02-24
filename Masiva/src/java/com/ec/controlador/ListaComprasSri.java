@@ -985,7 +985,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     for (int j = 0; j < 6; j++) {
 
                         /**campo del excel*/
-                        if (servicioComprasSri.findByAutorizacion(comprasSri.getCsriAutorizacion(), amb) == null) {
+//                        if (servicioComprasSri.findByAutorizacion(comprasSri.getCsriAutorizacion(), amb) == null) {
                             cell = row.getCell(j);
 //                            prod = new Producto();
 //                            prod.setProdCodigo(String.valueOf(row.getCell(0)));
@@ -1018,9 +1018,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             prod.setProdCantidadInicial(BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(6)))));
                             servicioProducto.crear(prod);
                             System.out.println("Valor: " + cell.toString());
-                        } else {
-                            System.out.println("El producto existe " + String.valueOf(row.getCell(1)));
-                        }
+//                        } else {
+//                            System.out.println("El producto existe " + String.valueOf(row.getCell(1)));
+//                        }
 
                     }
                 }
