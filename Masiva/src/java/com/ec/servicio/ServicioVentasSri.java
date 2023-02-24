@@ -18,7 +18,7 @@ import javax.validation.ConstraintViolationException;
  *
  * @author gato
  */
-public class ServicioComprasSri {
+public class ServicioVentasSri {
 
     private EntityManager em;
 
@@ -144,16 +144,17 @@ public class ServicioComprasSri {
     }
 
     /*documentos no procesados por rango de fechas*/
-    public List<ComprasSri> findNoVerificadosBetweenFecha(Date inicio, Date fin, String tipo,Tipoambiente codTipoambiente) {
+    public List<ComprasSri> findNoVerificadosBetweenFecha(Date inicio, Date fin, String tipo, Tipoambiente codTipoambiente) {
 
         List<ComprasSri> listaComprasSris = new ArrayList<ComprasSri>();
         try {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT a FROM ComprasSri a WHERE a.codTipoambiente=:codTipoambiente and a.csriVerificado='N' AND a.csriFechaEmision BETWEEN :inicio and :fin and a.csriTipoFactura=:tipo");
+            Query query = em.createQuery("SELECT a FROM ComprasSri a WHERE a.codTipoambiente=:codTipoambiente and a.csriVerificado='N' AND a.csriFechaEmision BETWEEN :inicio and :fin AND a.csriTipoFactura=:tipo");
             query.setParameter("codTipoambiente", codTipoambiente);
             query.setParameter("inicio", inicio);
+
             query.setParameter("tipo", tipo);
             query.setParameter("fin", fin);
             listaComprasSris = (List<ComprasSri>) query.getResultList();
@@ -166,8 +167,6 @@ public class ServicioComprasSri {
 
         return listaComprasSris;
     }
-    
-    
 
     public void eliminarCabeceraSri(Date inicio, Date fin) {
 
