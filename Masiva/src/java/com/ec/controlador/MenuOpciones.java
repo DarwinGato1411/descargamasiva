@@ -54,12 +54,16 @@ public class MenuOpciones extends SelectorComposer<Component> {
     Menu menuReportes;
     @Wire("#btnAdministarVenta")
     Menuitem btnAdministarVenta;
-    
+
     @Wire("#btnTotalizarRubros")
     Menuitem btnTotalizarRubros;
 
     @Wire("#btnReporteDetallado")
     Menuitem btnReporteDetallado;
+
+    @Wire("# btnListaVentasSRI")
+    Menuitem btnListaVentasSRI;
+
     UserCredential credential = new UserCredential();
     private String acceso = "";
 
@@ -96,7 +100,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void buttonConsultar() {
         Executions.sendRedirect("/consultas.zul");
     }
-    
+
     @Listen("onClick = #btnTotalizarRubros")
     public void btnTotalizarRubros() {
         Executions.sendRedirect("/compra/totalizarrubros.zul");
@@ -212,6 +216,11 @@ public class MenuOpciones extends SelectorComposer<Component> {
         Executions.sendRedirect("/compra/listaretencion.zul");
     }
 
+    @Listen("onClick = #btnListaVentasSRI")
+    public void btnListaVentasSRI() {
+        Executions.sendRedirect("/venta/listaventasssri.zul");
+    }
+
     @Listen("onClick = #btnBalanceUtilidad")
     public void btnBalanceUtilidad() {
         Executions.sendRedirect("/contabilidad/compraventa.zul");
@@ -311,7 +320,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnCierreCaja() {
 //        if (credential.getUsuarioSistema().getUsuNivel() != 1) {
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                    "/nuevo/cierrecaja.zul", null, null);
+                "/nuevo/cierrecaja.zul", null, null);
         window.doModal();
 //        } else {
 //            Clients.showNotification("El usuario administrador no puede cerrar una caja",
@@ -324,7 +333,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void nuevoProducto() {
 
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                    "/nuevo/producto.zul", null, null);
+                "/nuevo/producto.zul", null, null);
         window.doModal();
 
     }
@@ -333,7 +342,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void nuevoCliente() {
 
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                    "/nuevo/cliente.zul", null, null);
+                "/nuevo/cliente.zul", null, null);
         window.doModal();
 
     }

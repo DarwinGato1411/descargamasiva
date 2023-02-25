@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/web/venta/listaventasssri.zul</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/src/java/com/ec/controlador/ListaVentasSri.java</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/src/java/com/ec/servicio/ServicioVentasSri.java</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/src/java/com/ec/servicio/ServicioCabeceraComprasSri.java</file>
+        </group>
     </open-files>
 </project-private>

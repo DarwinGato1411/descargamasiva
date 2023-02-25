@@ -774,7 +774,7 @@ div.z-listheader-cnt {
     grid-template-columns: repeat(2,1fr);
     gap:10px;
     padding: 5px;
-    
+
 }
 
 .contenedorListaCompras .contenedorTablas .contenedorTabla1{
@@ -799,7 +799,7 @@ div.z-listheader-cnt {
 }
 
 .contenedorTabla1 .contenedorBotones .contenedorBusqueda {
-    
+
     display: grid;
     grid-template-columns: repeat(4,1fr);
     gap: 5px;
@@ -864,12 +864,12 @@ div.z-listheader-cnt {
 
 
 .contenedorListaCompras .contenedorTablas .contenedorTabla2 .contenedorBotones{
-    
-  
+
+
     background-color: #eee;
     padding: 20px;
     border-radius: 20px;
-   
+
 }
 
 @media screen and (max-width: 1300px){
@@ -888,7 +888,7 @@ div.z-listheader-cnt {
 
 .contenedorReporteSRI .contenedorTablas .contenedorTabla2 .content{
     display: grid;
-    width: 100%;  
+    width: 100%;
     gap:10px;
 }
 
@@ -944,6 +944,8 @@ div.z-listheader-cnt {
     display: grid;
     grid-template-columns: 50% 50%;
     align-items: center;
+    background: rgb(80, 134, 193);
+    padding: 20px;
 }
 
 .z-toolbar{

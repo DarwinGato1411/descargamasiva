@@ -153,6 +153,8 @@ public class CabeceraCompraSri implements Serializable {
     private String cabEstablecimiento;
     @Column(name = "cab_punto_emision")
     private String cabPuntoEmision;
+    @Column(name = "cab_tipo")
+    private String cabTipo;
 
 //    @Column(name = "cab_fecha_autorizacion")
 //    @Temporal(TemporalType.TIMESTAMP)
@@ -471,6 +473,14 @@ public class CabeceraCompraSri implements Serializable {
 
     public void setCodTipoambiente(Tipoambiente codTipoambiente) {
         this.codTipoambiente = codTipoambiente;
+    }
+
+    public String getCabTipo() {
+        return cabTipo;
+    }
+
+    public void setCabTipo(String cabTipo) {
+        this.cabTipo = cabTipo;
     }
 
 }

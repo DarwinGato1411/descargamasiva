@@ -306,7 +306,7 @@ public class ServicioCompra {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT c FROM CabeceraCompra c WHERE c.cabNumFactura LIKE :cabNumFactura AND c.cabHomologado='N' ORDER BY c.cabNumFactura DESC");
+            Query query = em.createQuery("SELECT c FROM CabeceraCompra c WHERE c.cabNumFactura LIKE :cabNumFactura AND c.cabHomologado='N' AND c. ORDER BY c.cabNumFactura DESC");
             query.setParameter("cabNumFactura", "%" + cabNumFactura + "%");
             listaCabeceraCompras = (List<CabeceraCompra>) query.getResultList();
             em.getTransaction().commit();

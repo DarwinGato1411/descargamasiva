@@ -72,6 +72,8 @@ public class ComprasSri implements Serializable {
     @Column(name = "csri_verificado")
     private String csriVerificado;
     
+    @Column(name = "csri_tipo_factura")
+    private String csriTipoFactura;
     
     @JoinColumn(name = "cod_tipoambiente", referencedColumnName = "cod_tipoambiente")
     @ManyToOne
@@ -201,6 +203,14 @@ public class ComprasSri implements Serializable {
 
     public void setCsriVerificado(String csriVerificado) {
         this.csriVerificado = csriVerificado;
+    }
+
+    public String getCsriTipoFactura() {
+        return csriTipoFactura;
+    }
+
+    public void setCsriTipoFactura(String csriTipoFactura) {
+        this.csriTipoFactura = csriTipoFactura;
     }
 
     @Override
