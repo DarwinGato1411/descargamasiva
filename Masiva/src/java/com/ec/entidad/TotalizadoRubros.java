@@ -41,6 +41,11 @@ public class TotalizadoRubros implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date cabFecha;
 
+    @Column(name = "total_12")
+    private BigDecimal total12;
+    @Column(name = "total_0")
+    private BigDecimal total0;
+
     public TotalizadoRubros() {
     }
 
@@ -49,7 +54,15 @@ public class TotalizadoRubros implements Serializable {
         this.subtotal = subtotal;
         this.total = total;
     }
-    
+
+    public TotalizadoRubros(String clasificacion, BigDecimal subtotal, BigDecimal total, BigDecimal total12, BigDecimal total0) {
+        this.clasificacion = clasificacion;
+        this.subtotal = subtotal;
+        this.total = total;
+
+        this.total12 = total12;
+        this.total0 = total0;
+    }
 
     public Integer getId() {
         return id;
@@ -97,6 +110,22 @@ public class TotalizadoRubros implements Serializable {
 
     public void setCabFecha(Date cabFecha) {
         this.cabFecha = cabFecha;
+    }
+
+    public BigDecimal getTotal12() {
+        return total12;
+    }
+
+    public void setTotal12(BigDecimal total12) {
+        this.total12 = total12;
+    }
+
+    public BigDecimal getTotal0() {
+        return total0;
+    }
+
+    public void setTotal0(BigDecimal total0) {
+        this.total0 = total0;
     }
 
 }

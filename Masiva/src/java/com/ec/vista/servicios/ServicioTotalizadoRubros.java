@@ -33,7 +33,7 @@ public class ServicioTotalizadoRubros {
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT new com.ec.entidad.TotalizadoRubros(a.clasificacion,sum(a.subtotal),sum(a.total) )FROM TotalizadoRubros a where a.cabFecha BETWEEN :inicio and :fin  and a.codTipoambiente=:codTipoambiente  GROUP BY a.clasificacion");
+            Query query = em.createQuery("SELECT new com.ec.entidad.TotalizadoRubros(a.clasificacion,sum(a.subtotal),sum(a.total), sum(a.total12),sum(a.total0) )FROM TotalizadoRubros a where a.cabFecha BETWEEN :inicio and :fin  and a.codTipoambiente=:codTipoambiente  GROUP BY a.clasificacion");
             query.setParameter("inicio", inicio);
             query.setParameter("fin", fin);
             query.setParameter("codTipoambiente", codTipoambiente.getCodTipoambiente());

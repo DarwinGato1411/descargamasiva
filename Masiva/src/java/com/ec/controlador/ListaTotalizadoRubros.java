@@ -7,10 +7,8 @@ package com.ec.controlador;
 import com.ec.entidad.Parametrizar;
 import com.ec.entidad.Tipoambiente;
 import com.ec.entidad.TotalizadoRubros;
-import com.ec.entidad.sri.DetalleCompraSri;
 import com.ec.seguridad.EnumSesion;
 import com.ec.seguridad.UserCredential;
-import com.ec.servicio.ServicioDetalleComprasSri;
 import com.ec.servicio.ServicioTipoAmbiente;
 import com.ec.untilitario.ArchivoUtils;
 import com.ec.vista.servicios.ServicioTotalizadoRubros;
@@ -33,7 +31,6 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
@@ -163,9 +160,14 @@ public class ListaTotalizadoRubros extends SelectorComposer<Component> {
             ch2.setCellStyle(estiloCelda);
 
             HSSFCell ch0 = r.createCell(j++);
-            ch0.setCellValue(new HSSFRichTextString("Subtotal"));
+            ch0.setCellValue(new HSSFRichTextString("Total 0%"));
             ch0.setCellStyle(estiloCelda);
 
+            
+            HSSFCell ch01 = r.createCell(j++);
+            ch01.setCellValue(new HSSFRichTextString("Total 12%"));
+            ch01.setCellStyle(estiloCelda);
+            
             HSSFCell ch1 = r.createCell(j++);
             ch1.setCellValue(new HSSFRichTextString("Total"));
             ch1.setCellStyle(estiloCelda);
@@ -181,11 +183,17 @@ public class ListaTotalizadoRubros extends SelectorComposer<Component> {
                 HSSFCell c0 = r.createCell(i++);
                 c0.setCellValue(new HSSFRichTextString(item.getClasificacion()));
 
-                HSSFCell c1 = r.createCell(i++);
-                c1.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getSubtotal(), 2).toString()));
+//                HSSFCell c1 = r.createCell(i++);
+//                c1.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getSubtotal(), 2).toString()));
 
                 HSSFCell c2 = r.createCell(i++);
-                c2.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotal(), 2).toString()));
+                c2.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotal0(), 2).toString()));
+
+                 HSSFCell c3 = r.createCell(i++);
+                c3.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotal12(), 2).toString()));
+
+                 HSSFCell c4 = r.createCell(i++);
+                c4.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotal(), 2).toString()));
 
                 /*autemta la siguiente fila*/
                 rownum += 1;
