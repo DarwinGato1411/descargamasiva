@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/web/venta/listaventasssri.zul</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/web/compra/detallecomprassri.zul</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/web/compra/totalizarrubros.zul</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/web/plantilladm/banner.zul</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/Facturas/descargamasiva/Masiva/web/venta/administrar.zul</file>
+        </group>
+>>>>>>> 5efd5e355c96e9bfd43201a5e6d41090be01fbd3
     </open-files>
 </project-private>

@@ -4,6 +4,8 @@
 <?link rel="stylesheet" type="text/css" href="/css/app/ventas/facturar.css"?>
 <?init class="com.ec.seguridad.Autentificador"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
+<?script src="../js/facturar.js"?>
+<?link rel="icon" type="image/x-icon" href="/imagenes/logo1.png"?>  
 <!--<zk   class="col-12 col-sm-12 col-md-12 col-lg-12">-->
 <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
       class="contenedorListaCompras"
@@ -57,7 +59,8 @@
                 
                
                 <div  class="contenedorBotonera">
-                    <button   image="/imagenes/folder.png"  
+                    <button   image="/imagenes/iconos/documento.png"
+                              style="" 
                               onClick="@command('subirArchivo')"                                               
                               label="Subir su archivo TXT"
                               class="btn btn1"
