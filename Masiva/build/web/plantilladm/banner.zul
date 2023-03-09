@@ -5,7 +5,7 @@
         <div class="containerLT" >
             
             <div class="" align="">
-                <image  src="/imagenes/logoSUDMG.png"  width="180px" height="100px" />
+                <image  src="/imagenes/logoTransp.png"  height="40px" />
             </div>
             <div class="" align="end">
                 <div apply="org.zkoss.bind.BindComposer" 

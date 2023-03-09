@@ -1,52 +1,49 @@
-   <zk>
+
+<zk>
 
     <div class="banner menu"   id="loginWin"   width="100%"
          apply="com.ec.controlador.LogoutController" >
         <div class="containerLT" >
-            
-            <div class="" align="">
-                <image  src="/imagenes/logoTransp.png"  height="70px" />
+            <div class="" >
+                <image  src="/imagenes/logoTransp.png"  height="40px" />
             </div>
-            <div class="" align="end" style="" >
+            <div class="">
                 <div apply="org.zkoss.bind.BindComposer" 
                      viewModel="@id('vm') @init('com.ec.controlador.MenuToolbar')">
-                    <toolbar id="tb"   style="background-color:transparent;margin-right:10%" align="end"  >
-
-                        <label style="font-size:16px; color:white;" value="Usuario: " if="${not sessionScope.userCredential.anonymous}" class="labelNuevo" />
-                        <label style="font-size:16px;  color:white;" value="${sessionScope.usuario.nombreUsuario} / TIPO AMBIENTE ${sessionScope.usuario.usuarioSistema.idUsuario}" class="labelNuevo" if="${not sessionScope.userCredential.anonymous}" />
-                        <div  align="end" style="float: right; " >
-                            <a sclass="logout labelLogout" id="logout" >  
-                                <label  value="Salir " if="${not sessionScope.userCredential.anonymous}" sclass=" labelLogout"/> 
-                                <image src="/iconos/logout-24.png"  />  
                        
-                            </a>
-                
-                        </div>
-                    </toolbar>
-                </div>
-               
+                       <menubar id="menubarEmpresa"  class="menuemp" width="100px;" style="border:none; margin:0 0 0 auto;" orient="horizontal"  autodrop="true">   
+                            <menu label="Empresa" class="menuempP"  id="menuInformacion">
+                                <menupopup>                     
+                                    <menuitem label="Contadores S.A." />
+                                    <menuitem label="Usuario: ${sessionScope.usuario.nombreUsuario}" />  
+                                    <menuitem label="Tipo Ambiente: ${sessionScope.usuario.usuarioSistema.idUsuario}" />
+                                    <menuseparator />
+                                    <menuitem label="Cerrar Sesión" id="logout" if="${not sessionScope.userCredential.anonymous}"  class="logoutMenu"/>
+                                </menupopup>
+                            </menu>    
+                        </menubar>         
+                </div>              
             </div>
-            <div>
-                    <label  value="Módulo facturas de compras"  /> 
-                    <label  value="Cuenta: Contadores S.A"  />             
-            </div>
+           
         </div>
-        <div class="rows">
+        <div class="rows" style="background:black;">
             <div  viewModel="@id('vm')" id="gridMenu" 
                   apply="com.ec.controlador.MenuOpciones" 
-            class="col-12 col-sm-12 col-md-12 col-lg-12" >
+            class="col-12 col-sm-12 col-md-12 col-lg-12" style="background:rgb(80, 134, 193); border-top:0px;" >
          
-                    <menubar id="menubar" orient="horizontal"  autodrop="true">
+                    <menubar id="menubar" orient="horizontal"  autodrop="true" style=" border:0px;" >
 
-                        <menu label="Gestionar compras" id="menuCompras">
-                            <menupopup>                     
+                        <menu class="menuempP" label="Gestionar compras" id="menuCompras" >
+                            <menupopup >                     
                                 <menuitem label="Descargar compras desde el SRI" id="btnListaComprasSRI"  />
                                 <menuitem label="Clasificar productos" id="btnReporteDetallado"  />
                                 <menuitem label="Gastos personales" id="btnTotalizarRubros"  />
-                                  
+                               
+                                <menuitem label="Gastos personales"  />
+
                             </menupopup>
                         </menu>          
-                        <menu label="Gestionar ventas" id="menuVentas">
+                        <menu class="menuempP" label="Gestionar ventas" id="menuVentas">
                             <menupopup>                     
                                 <menuitem label="Descargar ventas desde el SRI" id="btnListaVentasSRI"  />
                                    
@@ -54,7 +51,7 @@
                         </menu>  
 
                         
-                    <menuitem label="Catalogos" id="btnAdministarVenta"  /> 
+                    <menuitem class="menuempP" label="Catalogos" id="btnAdministarVenta"  /> 
                         
      
                       
