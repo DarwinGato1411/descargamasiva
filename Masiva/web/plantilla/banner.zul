@@ -5,16 +5,15 @@
          apply="com.ec.controlador.LogoutController" >
         <div class="containerLT" >
             <div class="" >
-                <image  src="/imagenes/logoTransp.png"  height="40px" />
+                <image  src="/imagenes/logoTransp.png"  height="25px" />
             </div>
             <div class="">
                 <div apply="org.zkoss.bind.BindComposer" 
                      viewModel="@id('vm') @init('com.ec.controlador.MenuToolbar')">
-                       
+                    <label value="${sessionScope.usuario.nombreUsuario}"></label>
                        <menubar id="menubarEmpresa"  class="menuemp" width="100px;" style="border:none; margin:0 0 0 auto;" orient="horizontal"  autodrop="true">   
                             <menu label="Empresa" class="menuempP"  id="menuInformacion">
-                                <menupopup>                     
-                                    <menuitem label="Contadores S.A." />
+                                <menupopup>                                                       
                                     <menuitem label="Usuario: ${sessionScope.usuario.nombreUsuario}" />  
                                     <menuitem label="Tipo Ambiente: ${sessionScope.usuario.usuarioSistema.idUsuario}" />
                                     <menuseparator />
@@ -39,7 +38,6 @@
                                 <menuitem label="Clasificar productos" id="btnReporteDetallado"  />
                                 <menuitem label="Gastos personales" id="btnTotalizarRubros"  />
                                
-                                <menuitem label="Gastos personales"  />
 
                             </menupopup>
                         </menu>          

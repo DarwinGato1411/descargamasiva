@@ -58,7 +58,7 @@
                 
                
                 <div  class="contenedorBotonera">
-                    <button   image="/imagenes/folder.png"  
+                    <button   image="/iconos/excel.png"  
                               onClick="@command('descargarPlantilla')"                                               
                               label="Descargar Plantilla"
                               class="btn btn1"
@@ -101,7 +101,7 @@
                     <listheader  width="10%" label="Documento" />  
                     <listheader width="14%"  label="# Factura" />            
                     <listheader width="14%"  label="Fecha Emi." />                           
-                    <listheader width="32%"  label="Clave autorización" />        
+                    <listheader width="42%"  label="Clave autorización" />        
                      
                                           
                 </listhead>  
