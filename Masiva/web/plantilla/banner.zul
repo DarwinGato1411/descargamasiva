@@ -47,6 +47,12 @@
                                    
                             </menupopup>
                         </menu>  
+                        <menu class="menuempP" label="Reportes" id="menuRep">
+                            <menupopup>                     
+                                <menuitem label="Formulario 104 (Casilleros)" id="btnForm104"  />
+                                   
+                            </menupopup>
+                        </menu>  
 
                         
                     <menuitem class="menuempP" label="Catalogos" id="btnAdministarVenta"  /> 
