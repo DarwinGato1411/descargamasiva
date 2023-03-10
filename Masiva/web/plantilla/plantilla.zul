@@ -4,8 +4,6 @@
     
         <include src="/plantilla/banner.zul"/>
 
-        <center  id="mainContentAsesor" autoscroll="true" self="@{insert(content)}"  >
-            
-        </center>
+        <div  id="mainContentAsesor" self="@{insert(content)}"  ></div>
        
 </zk>

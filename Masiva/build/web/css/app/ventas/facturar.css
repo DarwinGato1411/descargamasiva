@@ -1,7 +1,7 @@
 @import "https://fonts.googleapis.com/css2?family=Nunito:wght@300&family=Poppins&family=Raleway:wght@300&display=swap";
 
 :root {
-    --primary-color: #03aff1;
+    --primary-color: #5086C1;
     --secondary-color:#0b0d3e;
     --tertiary-color: #d5ecfb;
     --background-color: #fff;
@@ -945,7 +945,7 @@ div.z-listheader-cnt {
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
     background: #204770;
-    padding: 7px;
+    padding: 10px;
 }
 
 .containerLT .ctnInfo{
@@ -979,7 +979,7 @@ div.z-listheader-cnt {
     position: relative;
     top: 50px;
     left: 50px;
-    z-index: 1; 
+    z-index: 1;
     -webkit-user-select: none;
     user-select: none;
 }
@@ -1005,10 +1005,10 @@ div.z-listheader-cnt {
     height: 32px;
     position: absolute;
     top: -7px;
-    left: -5px;  
+    left: -5px;
     cursor: pointer;
     opacity: 0; /* hide this */
-    z-index: 2; /* and place it over the hamburger */ 
+    z-index: 2; /* and place it over the hamburger */
     -webkit-touch-callout: none;
 }
 
@@ -1134,7 +1134,7 @@ div.z-listheader-cnt {
 
 .nav .li span:hover {
     background-color:#434343;
-    
+
 }
 
 .nav .li .ul {
@@ -1162,13 +1162,64 @@ div.z-listheader-cnt {
 }
 
 .infoPersona .li {
-    background: transparent !important; 
+    background: transparent !important;
 }
 
 .infoPersona .li .usu{
-    background: transparent !important; 
+    background: transparent !important;
 }
 
 .infoPersona .li span{
-    background: black !important; 
+    background: black !important;
 }
+
+.contenedorDeclara{
+   
+    padding: 20px;
+}
+
+.contenedorDeclaraVC{
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: repeat(1,1fr);
+    gap: 10px;
+}
+
+.contenedorDeclaraVC .ventas,.contenedorDeclaraVC .compras{
+   
+    border: solid 1px black;
+}
+
+.contenedorDeclaraVC .titulo{
+    background: var(--primary-color);
+    display: block;
+    width: 100%;
+    color:white;
+    padding:15px;
+}
+
+.contenedorDeclaraVC .declara{
+    display: grid;
+    grid-template-columns: 60% 20% 20%;
+    gap: 5px;
+}
+
+.contenedorDeclaraVC .declara span{
+    padding: 5px;
+}
+
+.contenedorDeclaraVC .declara .inputD{
+    
+    display: grid;
+    grid-template-columns: 15% 80%;
+    padding: 5px;
+    gap:10px;
+    box-sizing: border-box;
+}
+
+.contenedorDeclaraVC .declara .inputD input{
+    display: block;
+    width: 85%;
+    border: solid 1px #ccc;
+}
+

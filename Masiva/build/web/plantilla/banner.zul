@@ -6,7 +6,7 @@
          apply="com.ec.controlador.LogoutController" >
         <div class="containerLT" >
             <div class="logo" >
-                <image  src="/imagenes/logoTransp.png"  height="40px" />
+                <image  src="/imagenes/logoTransp.png"  height="30px" />
 
             </div>
             <div class="ctnInfo">
@@ -39,7 +39,7 @@
        
             <div  viewModel="@id('vm')" id="gridMenu" 
                   apply="com.ec.controlador.MenuOpciones" 
-            class="" style="width:100%;background:#03aff1;" >
+            class="" style="width:100%;background:#5086C1;" >
          <div class="nav ul">
    
     <div class="li">
