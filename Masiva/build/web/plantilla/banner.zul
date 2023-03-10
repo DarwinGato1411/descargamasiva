@@ -7,10 +7,12 @@
         <div class="containerLT" >
             <div class="logo" >
                 <image  src="/imagenes/logoTransp.png"  height="40px" />
+
             </div>
             <div class="ctnInfo">
                 <div class="info" apply="org.zkoss.bind.BindComposer" 
                      viewModel="@id('vm') @init('com.ec.controlador.MenuToolbar')">
+
                                     
                                    <!-- <div class="submenu">
                                         <
@@ -29,6 +31,7 @@
                                         </div>
                                     </div>
                                      
+
                 </div>              
             </div>
            
@@ -44,15 +47,7 @@
         <div class="ul">
             <div class="li"><label value="Descargar compras desde el SRI" id="btnListaComprasSRI"  /></div>
             <div class="li"><label value="Clasificar productos" id="btnReporteDetallado"  /></div>
-            <!--<div class="li"><a href="">Submenu3</a></div>
-            <div class="li"><a href="">Submenu4</a>
-                <div class="ul">
-                    <div class="li"><a href="">Submenu1</a></div>
-                    <div class="li"><a href="">Submenu2</a></div>
-                    <div class="li"><a href="">Submenu3</a></div>
-                    <div class="li"><a href="">Submenu4</a></div>
-                </div>
-            </div>-->
+           
         </div>
     </div>
     <div class="li">
