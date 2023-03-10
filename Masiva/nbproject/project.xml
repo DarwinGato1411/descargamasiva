@@ -11,10 +11,6 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${libs.Jasper.classpath}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.commons-codec-1.9.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -60,13 +56,10 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.XadesBes.jar}</file>
-<<<<<<< HEAD
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${libs.ZK6.5.3CE.classpath}</file>
-=======
->>>>>>> 3f7f08d39f6e143c6e15ef9a56b8c3bc8c9093ce
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">

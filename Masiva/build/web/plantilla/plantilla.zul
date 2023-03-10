@@ -2,26 +2,10 @@
 <?link rel="stylesheet" type="text/css" href="/css/style.css"?>
 <zk>
     
-            <include src="/plantilla/banner.zul"/>
-            
-<<<<<<< HEAD
-      
-<!--        <west width="auto"  border="none"  autoscroll="true" collapsible="true" splittable="true"  >
-               
-            <include src="/plantilla/menuOpciones.zul"/>
-        </west>-->
-        <div  id="mainContentAsesor" self="@{insert(content)}"  >
-            
-        </div>
-     
-    
-=======
-        </north>
+        <include src="/plantilla/banner.zul"/>
+
         <center  id="mainContentAsesor" autoscroll="true" self="@{insert(content)}"  >
             
         </center>
-        <south autoscroll="true" self="@{insert(footer)}">
-        </south>
-    </borderlayout>
->>>>>>> 3f7f08d39f6e143c6e15ef9a56b8c3bc8c9093ce
+       
 </zk>
