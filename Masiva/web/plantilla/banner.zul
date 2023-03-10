@@ -5,12 +5,18 @@
     <div class="banner menu"   id="loginWin"   width="100%"
          apply="com.ec.controlador.LogoutController" >
         <div class="containerLT" >
+<<<<<<< HEAD
             <div class="logo" >
                 <image  src="/imagenes/logoTransp.png"  height="40px" />
+=======
+            <div class="" >
+                <image  src="/imagenes/logoTransp.png"  height="25px" />
+>>>>>>> 3f7f08d39f6e143c6e15ef9a56b8c3bc8c9093ce
             </div>
             <div class="ctnInfo">
                 <div class="info" apply="org.zkoss.bind.BindComposer" 
                      viewModel="@id('vm') @init('com.ec.controlador.MenuToolbar')">
+<<<<<<< HEAD
                                     
                                    <!-- <div class="submenu">
                                         <
@@ -29,6 +35,19 @@
                                         </div>
                                     </div>
                                      
+=======
+                    <label value="${sessionScope.usuario.nombreUsuario}"></label>
+                       <menubar id="menubarEmpresa"  class="menuemp" width="100px;" style="border:none; margin:0 0 0 auto;" orient="horizontal"  autodrop="true">   
+                            <menu label="Empresa" class="menuempP"  id="menuInformacion">
+                                <menupopup>                                                       
+                                    <menuitem label="Usuario: ${sessionScope.usuario.nombreUsuario}" />  
+                                    <menuitem label="Tipo Ambiente: ${sessionScope.usuario.usuarioSistema.idUsuario}" />
+                                    <menuseparator />
+                                    <menuitem label="Cerrar Sesión" id="logout" if="${not sessionScope.userCredential.anonymous}"  class="logoutMenu"/>
+                                </menupopup>
+                            </menu>    
+                        </menubar>         
+>>>>>>> 3f7f08d39f6e143c6e15ef9a56b8c3bc8c9093ce
                 </div>              
             </div>
            
@@ -72,13 +91,18 @@
                                 <menuitem label="Clasificar productos" id="btnReporteDetallado"  />
                                 <menuitem label="Gastos personales" id="btnTotalizarRubros"  />
                                
-                                <menuitem label="Gastos personales"  />
 
                             </menupopup>
                         </menu>          
                         <menu class="menuempP" label="Gestionar ventas" id="menuVentas">
                             <menupopup>                     
                                 <menuitem label="Descargar ventas desde el SRI" id="btnListaVentasSRI"  />
+                                   
+                            </menupopup>
+                        </menu>  
+                        <menu class="menuempP" label="Reportes" id="menuRep">
+                            <menupopup>                     
+                                <menuitem label="Formulario 104 (Casilleros)" id="btnForm104"  />
                                    
                             </menupopup>
                         </menu>  

@@ -613,7 +613,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 
                     nuevo = new FileOutputStream(pathArchivoXML);
                     nuevo.write(autorizacion.getComprobante().getBytes());
-
+                    System.out.println("autorizacion.getComprobante() "+autorizacion.getComprobante());
                     /*obtenemos el tipo de documento*/
 //                          f = new File(pathArchivoXML);
 //                         String tipoDoc = ArchivoUtils.obtenerValorXML(f, "/*/infoTributaria/codDoc");

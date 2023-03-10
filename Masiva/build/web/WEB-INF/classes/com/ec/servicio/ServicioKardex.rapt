@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Masiva/build/web/WEB-INF/classes/com/ec/servicio/ServicioKardex.rapt
 com/ec/entidad/sri/DetalleRetencionCompraSri_.java
 com/ec/entidad/FormaPago_.java
 com/ec/entidad/Producto_.java
@@ -72,3 +73,6 @@ com/ec/entidad/Proveedores_.java
 com/ec/entidad/Guiaremision_.java
 com/ec/entidad/Acumuladoventas_.java
 com/ec/entidad/ComprasSri_.java
+=======
+com/ec/entidad/CabeceraCompra_.java
+>>>>>>> 3f7f08d39f6e143c6e15ef9a56b8c3bc8c9093ce:Masiva/build/web/WEB-INF/classes/com/ec/entidad/CabeceraCompra.rapt

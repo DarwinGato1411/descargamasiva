@@ -110,6 +110,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void doFacturar() {
         Executions.sendRedirect("/venta/facturar.zul");
     }
+    @Listen("onClick = #btnForm104")
+    public void btnForm104() {
+        Executions.sendRedirect("/reportevistas/formulariodeclara.zul");
+    }
 
     @Listen("onClick = #btnKardex")
     public void btnKardex() {

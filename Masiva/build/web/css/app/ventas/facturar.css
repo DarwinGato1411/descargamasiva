@@ -945,7 +945,7 @@ div.z-listheader-cnt {
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
     background: #204770;
-    padding: 20px;
+    padding: 7px;
 }
 
 .containerLT .ctnInfo{
