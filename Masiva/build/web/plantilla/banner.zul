@@ -1,37 +1,70 @@
 
 <zk>
+    
 
     <div class="banner menu"   id="loginWin"   width="100%"
          apply="com.ec.controlador.LogoutController" >
         <div class="containerLT" >
-            <div class="" >
+            <div class="logo" >
                 <image  src="/imagenes/logoTransp.png"  height="40px" />
             </div>
-            <div class="">
-                <div apply="org.zkoss.bind.BindComposer" 
+            <div class="ctnInfo">
+                <div class="info" apply="org.zkoss.bind.BindComposer" 
                      viewModel="@id('vm') @init('com.ec.controlador.MenuToolbar')">
-                       
-                       <menubar id="menubarEmpresa"  class="menuemp" width="100px;" style="border:none; margin:0 0 0 auto;" orient="horizontal"  autodrop="true">   
-                            <menu label="Empresa" class="menuempP"  id="menuInformacion">
-                                <menupopup>                     
-                                    <menuitem label="Contadores S.A." />
-                                    <menuitem label="Usuario: ${sessionScope.usuario.nombreUsuario}" />  
-                                    <menuitem label="Tipo Ambiente: ${sessionScope.usuario.usuarioSistema.idUsuario}" />
-                                    <menuseparator />
-                                    <menuitem label="Cerrar Sesión" id="logout" if="${not sessionScope.userCredential.anonymous}"  class="logoutMenu"/>
-                                </menupopup>
-                            </menu>    
-                        </menubar>         
+                                    
+                                   <!-- <div class="submenu">
+                                        <
+                                        <label value="Tipo Ambiente: ${sessionScope.usuario.usuarioSistema.idUsuario}" />
+                                        <label value="Cerrar Sesión" id="logout" if="${not sessionScope.userCredential.anonymous}"  class="logoutMenu"/>
+                                    </div>-->
+                                    <div class="nav ul infoPersona">
+
+                                        <div class="li">                    
+                                                <image style="display:inline-block;" id="" src="/imagenes/user1.png" width="20px"  height="20px"/> 
+                                                <label class="usu" style="display:inline-block;" value="Usuario: ${sessionScope.usuario.nombreUsuario}" />      
+                                            <div class="ul">
+                                                <div class="li"><label value="Tipo Ambiente: ${sessionScope.usuario.usuarioSistema.idUsuario}" /></div>
+                                                <div class="li" style="background:red;"><label value="Cerrar Sesión" id="logout" if="${not sessionScope.userCredential.anonymous}"  class="logoutMenu"/></div>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                     
                 </div>              
             </div>
            
         </div>
-        <div class="rows" style="background:black;">
+       
             <div  viewModel="@id('vm')" id="gridMenu" 
                   apply="com.ec.controlador.MenuOpciones" 
-            class="col-12 col-sm-12 col-md-12 col-lg-12" style="background:rgb(80, 134, 193); border-top:0px;" >
-         
-                    <menubar id="menubar" orient="horizontal"  autodrop="true" style=" border:0px;" >
+            class="" style="width:100%;background:#03aff1;" >
+         <div class="nav ul">
+   
+    <div class="li">
+        <label value="Gestionar compras"/>
+        <div class="ul">
+            <div class="li"><label value="Descargar compras desde el SRI" id="btnListaComprasSRI"  /></div>
+            <div class="li"><label value="Clasificar productos" id="btnReporteDetallado"  /></div>
+            <!--<div class="li"><a href="">Submenu3</a></div>
+            <div class="li"><a href="">Submenu4</a>
+                <div class="ul">
+                    <div class="li"><a href="">Submenu1</a></div>
+                    <div class="li"><a href="">Submenu2</a></div>
+                    <div class="li"><a href="">Submenu3</a></div>
+                    <div class="li"><a href="">Submenu4</a></div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+    <div class="li">
+        <label value="Gestionar ventas"/>
+        <div  class="ul">
+            <div class="li"><label value="Descargar ventas desde el SRI" id="btnListaVentasSRI"  /></div>   
+        </div>
+    </div>
+    <div class="li"><label value="Catalogos" id="btnAdministarVenta"  /></div>
+</div>
+                
+                   <!-- <menubar id="menubar" orient="horizontal"  autodrop="true" style=" border:0px;" >
 
                         <menu class="menuempP" label="Gestionar compras" id="menuCompras" >
                             <menupopup >                     
@@ -51,15 +84,15 @@
                         </menu>  
 
                         
-                    <menuitem class="menuempP" label="Catalogos" id="btnAdministarVenta"  /> 
+                    <menuitem class="menuempP" llabel="Catalogos" id="btnAdministarVenta"  /> 
                         
      
                       
-                    </menubar>    
+                    </menubar>    -->
                                     
                 </div>
                 
-        </div>
+        
         
     </div>
 </zk>

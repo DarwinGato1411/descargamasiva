@@ -4,7 +4,8 @@
 <?link rel="stylesheet" type="text/css" href="/css/app/ventas/facturar.css"?>
 <?init class="com.ec.seguridad.Autentificador"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
-<?script src="../js/facturar.js"?>
+
+<?script src="/js/facturar.js?v1"?>
 <?link rel="icon" type="image/x-icon" href="/imagenes/logo1.png"?>  
 <!--<zk   class="col-12 col-sm-12 col-md-12 col-lg-12">-->
 <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
@@ -14,8 +15,6 @@
     <div class="contenedorTablas">
         <div class="contenedorTabla1">
             <div class="contenedorBotones">    
-                
-                
                 <div  class="contenedorBusqueda" style="">
                     <combobox  
                         model="@load(vm.listaTipoambientes)"  
@@ -45,7 +44,7 @@
                                       onCreate="self.value = new Date()"                                                   
                                       buttonVisible="true" 
                                       lenient="true"  format="dd/MM/yyyy" 
-                                      constraint="no empty: IBuscar por fecha fin de la busqueda"
+                                      constraint="no empty: Buscar por fecha fin de la busqueda"
                         /> 
                     </div>
                     <button   image="/imagenes/buscar1.png"  
