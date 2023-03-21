@@ -217,6 +217,10 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
             ch9.setCellValue(new HSSFRichTextString("TOTAL"));
             ch9.setCellStyle(estiloCelda);
 
+            HSSFCell ch10 = r.createCell(j++);
+            ch10.setCellValue(new HSSFRichTextString("TOTAL"));
+            ch10.setCellStyle(estiloCelda);
+
             int rownum = 1;
             int i = 0;
 
@@ -254,6 +258,14 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
 
                 HSSFCell c8 = r.createCell(i++);
                 c8.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getIprodTotal(), 2).toString()));
+                HSSFCell c9 = r.createCell(i++);
+                c9.setCellValue(new HSSFRichTextString(item.getIprodClasificacion().equals("N") ? "NEGOCIO"
+                            : item.getIprodClasificacion().equals("S") ? "SALUD"
+                            : item.getIprodClasificacion().equals("A") ? "ALIMENTACION"
+                            : item.getIprodClasificacion().equals("V") ? "VESTIMENTA"
+                            : item.getIprodClasificacion().equals("T") ? "TURISMO"
+                            : item.getIprodClasificacion().equals("E") ? "EDUCACION"
+                            : item.getIprodClasificacion().equals("VI") ? "VIVIENDA" : ""));
                 /*autemta la siguiente fila*/
                 rownum += 1;
 
@@ -335,8 +347,6 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
         this.iprodClasificacio = iprodClasificacio;
     }
 
-    
-
     public List<TotalizadoRubros> getListaTotalizadoRubros() {
         return listaTotalizadoRubros;
     }
@@ -344,7 +354,5 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
     public void setListaTotalizadoRubros(List<TotalizadoRubros> listaTotalizadoRubros) {
         this.listaTotalizadoRubros = listaTotalizadoRubros;
     }
-    
-    
 
 }

@@ -233,13 +233,13 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     }
 
     private void findComprasSriByBetweenFecha() {
-        listaComprasSris = servicioComprasSri.findNoVerificadosBetweenFecha(inicio, fin,"COM", amb);
+        listaComprasSris = servicioComprasSri.findNoVerificadosBetweenFecha(inicio, fin, "COM", amb);
 
     }
 
     private void findCabeceraComprasSriByBetweenFecha() {
 
-        listaCabeceraCompraSris = servicioCabeceraComprasri.findByBetweenFechaSRI(inicio, fin, amb,"COM");
+        listaCabeceraCompraSris = servicioCabeceraComprasri.findByBetweenFechaSRI(inicio, fin, amb, "COM");
         setListaComprasSriModel(new ListModelList<CabeceraCompraSri>(getListaCabeceraCompraSris()));
         ((ListModelList<CabeceraCompraSri>) listaComprasSriModel).setMultiple(true);
 
@@ -613,7 +613,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 
                     nuevo = new FileOutputStream(pathArchivoXML);
                     nuevo.write(autorizacion.getComprobante().getBytes());
-                    System.out.println("autorizacion.getComprobante() "+autorizacion.getComprobante());
+                    System.out.println("autorizacion.getComprobante() " + autorizacion.getComprobante());
                     /*obtenemos el tipo de documento*/
 //                          f = new File(pathArchivoXML);
 //                         String tipoDoc = ArchivoUtils.obtenerValorXML(f, "/*/infoTributaria/codDoc");
@@ -704,7 +704,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         cabeceraCompra.setCabXmlSri(xml);
         cabeceraCompra.setCabCasillero("500");
         cabeceraCompra.setCodTipoambiente(amb);
-         cabeceraCompra.setCabTipo("COM");
+        cabeceraCompra.setCabTipo("COM");
         /*formato de la fecha*/
         try {
             Date dt = sm.parse(adto.getInfoFactura().getFechaEmision());
@@ -782,6 +782,16 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             detalleCom.setIdCabeceraSri(cabeceraCompra);
             detalleCom.setIprodCantidad(detalle.getCantidad());
             detalleCom.setIprodDescripcion(detalle.getDescripcion());
+            Boolean grabaIva = Boolean.TRUE;
+            for (ec.gob.sri.comprobantes.modelo.factura.Impuesto impuesto : detalle.getImpuestos().getImpuesto()) {
+                if (impuesto.getCodigoPorcentaje().equals("0")) {
+                    grabaIva = Boolean.FALSE;
+                } else if (impuesto.getCodigoPorcentaje().equals("2")) {
+                    grabaIva = Boolean.TRUE;
+
+                }
+            }
+            detalleCom.setIprodGrabaIva(grabaIva);
             detalleCom.setIprodSubtotal(detalle.getPrecioUnitario());
             detalleCom.setIprodTotal(detalle.getCantidad().multiply(detalle.getPrecioUnitario()));
             detalleCom.setIprodGrabaIva(detalle.getImpuestos().getImpuesto().get(0).getCodigo().equals("2") ? Boolean.TRUE : Boolean.FALSE);
@@ -915,7 +925,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                                     "N");
                         System.out.println("iiiii " + i);
                         comprasSri.setCsriTipoFactura("COM");
-                        
+
                         System.out.println("ComprasSri " + comprasSri.toString());
                         if (servicioComprasSri.findByAutorizacion(comprasSri.getCsriAutorizacion(), amb) == null) {
 
@@ -953,7 +963,6 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     @NotifyChange({"listaProductosModel", "buscarNombre"})
     public void cargarExcelVentas() {
 
-
         try {
             org.zkoss.util.media.Media media = Fileupload.get();
             if (media instanceof org.zkoss.util.media.AMedia) {
@@ -988,9 +997,11 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 //                    for (int j = 0; j < row.getLastCellNum(); j++) {
                     for (int j = 0; j < 6; j++) {
 
-                        /**campo del excel*/
+                        /**
+                         * campo del excel
+                         */
 //                        if (servicioComprasSri.findByAutorizacion(comprasSri.getCsriAutorizacion(), amb) == null) {
-                            cell = row.getCell(j);
+                        cell = row.getCell(j);
 //                            prod = new Producto();
 //                            prod.setProdCodigo(String.valueOf(row.getCell(0)));
 //                            prod.setProdNombre(String.valueOf(row.getCell(1)));
@@ -1003,25 +1014,25 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 //                            prod.setProdCantMinima(BigDecimal.ONE);
 //                            prod.setProdFechaRegistro(new Date());
 
-                            if (row.getCell(6) != null) {
-                                String valor = String.valueOf(row.getCell(6));
-                                prod.setProdGrabaIva(String.valueOf(row.getCell(6)).contains("1") ? Boolean.TRUE : Boolean.FALSE);
+                        if (row.getCell(6) != null) {
+                            String valor = String.valueOf(row.getCell(6));
+                            prod.setProdGrabaIva(String.valueOf(row.getCell(6)).contains("1") ? Boolean.TRUE : Boolean.FALSE);
 
-                                if (prod.getProdGrabaIva()) {
-                                    BigDecimal precioIva = BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(2))));
-                                    BigDecimal precioCompra = precioIva.divide(BigDecimal.valueOf(1.12), 4, RoundingMode.FLOOR);
-                                    prod.setPordCostoCompra(precioCompra);
-                                } else {
-                                    prod.setPordCostoCompra(BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(2)))));
-                                }
-
+                            if (prod.getProdGrabaIva()) {
+                                BigDecimal precioIva = BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(2))));
+                                BigDecimal precioCompra = precioIva.divide(BigDecimal.valueOf(1.12), 4, RoundingMode.FLOOR);
+                                prod.setPordCostoCompra(precioCompra);
                             } else {
-                                prod.setProdGrabaIva(Boolean.FALSE);
                                 prod.setPordCostoCompra(BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(2)))));
                             }
-                            prod.setProdCantidadInicial(BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(6)))));
-                            servicioProducto.crear(prod);
-                            System.out.println("Valor: " + cell.toString());
+
+                        } else {
+                            prod.setProdGrabaIva(Boolean.FALSE);
+                            prod.setPordCostoCompra(BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(2)))));
+                        }
+                        prod.setProdCantidadInicial(BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(6)))));
+                        servicioProducto.crear(prod);
+                        System.out.println("Valor: " + cell.toString());
 //                        } else {
 //                            System.out.println("El producto existe " + String.valueOf(row.getCell(1)));
 //                        }
