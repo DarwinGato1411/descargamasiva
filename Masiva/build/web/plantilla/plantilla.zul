@@ -1,15 +1,9 @@
 <?link rel="stylesheet" type="text/css" href="/css/boostrap/bootstrap.css"?>  
 <?link rel="stylesheet" type="text/css" href="/css/style.css"?>
 <zk>
-    <borderlayout >
-        <north border="none" >
-            <include src="/plantilla/banner.zul"/>
-            
-        </north>
-        <center  id="mainContentAsesor" autoscroll="true" self="@{insert(content)}"  >
-            
-        </center>
-        <south autoscroll="true" self="@{insert(footer)}">
-        </south>
-    </borderlayout>
+    
+        <include src="/plantilla/banner.zul"/>
+
+        <div  id="mainContentAsesor" self="@{insert(content)}"  ></div>
+       
 </zk>

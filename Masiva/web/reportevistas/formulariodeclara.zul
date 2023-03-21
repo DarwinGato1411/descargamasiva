@@ -5,25 +5,27 @@
 <?init class="com.ec.seguridad.Autentificador"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
 <?link rel="icon" type="image/x-icon" href="/imagenes/logo1.png"?>
-<zk  contentStyle="overflow:auto" class="col-12 col-sm-12 col-md-12 col-lg-12" >
+<zk  contentStyle="overflow:auto" class="" >
     <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
-          viewModel="@id('vm') @init('com.ec.controlador.declara.FormularioDeclara')" >
+          viewModel="@id('vm') @init('com.ec.controlador.declara.FormularioDeclara')" style="width:100%;" >
         <div class="contenedorTablas">
-            <div class="contenedorTabla2">
-                <div class="content">
-                    <div  class="contenedorBusqueda1" style="">
-                        Empresa:
-                        <combobox  
-                            model="@load(vm.listaTipoambientes)"  
-                            onSelect="@command('buscarFechas')"  
-                            selectedItem="@bind(vm.amb)" 
-                            readonly="true" 
+            <div class="contenedorTabla1 contenedorDeclara">
+                <div class="contenedorBotones">
+                    <div  class="contenedorBusqueda" style="">
+                        <div class="contenidoEspe">
+                            Empresa:
+                            <combobox  
+                                model="@load(vm.listaTipoambientes)"  
+                                onSelect="@command('buscarFechas')"  
+                                selectedItem="@bind(vm.amb)" 
+                                readonly="true" 
                     
-                            class="textoFechaDateBox">
-                            <template name="model">
-                                <comboitem  label="@bind(each.amNombreComercial)"/>
-                            </template>                                      
-                        </combobox>
+                                class="textoFechaDateBox">
+                                <template name="model">
+                                    <comboitem  label="@bind(each.amNombreComercial)"/>
+                                </template>                                      
+                            </combobox>
+                        </div>
                         <div class="contenidoEspe">
                             <label class="texto"  width="30%" value="Inicio: "   />
                             <datebox  class="fecha"  width="60%" value="@bind(vm.fechainicio)" 
@@ -44,16 +46,13 @@
                             /> 
                         </div>
                         <div  class="contenedorEspe">
-                        
                             <button   image="/imagenes/buscar1.png"  
                                       onClick="@command('buscarFechas')"  
                                       class="btn btn-primary btn-sm "
-                                      label="Buscar"
-                                  
+                                      label="Buscar"      
                                       tooltiptext="Buscar"/>                 
                         </div> 
-                        <div  class="contenedorEspe">
-                        
+                        <div  class="contenedorEspe">   
                             <button   image="/imagenes/excel.png"  
                                       label="Descargar"
                                       onClick="@command('exportListboxToExcel')"  
@@ -62,98 +61,75 @@
                         </div> 
               
                     </div>    
-              
-                </div>
-                
-                <div class="container_modal">
-
-                    <div class="body">
-                        <div class="container_row_input">
-                            VENTAS
-                            <div class="wrapper_input_mod">
-                                <div class="wrapper_input_text">
-                                    <span>Ventas locales (excluye activos fijos) gravadas tarifa diferente de cero: </span>
-                               
-                                    <span>401 </span>
-                                    <decimalbox format="###.##" readonly="true" 
-                                                style="font-size:12px;background:#EBF5FB"
+                </div>       
+                <div class="contenedorDeclaraVC">
+                   
+                    <div class="ventas">
+                        <label class="titulo" value="VENTAS"/>
+                        <div class="declara"> 
+                            <span>Ventas locales (excluye activos fijos) gravadas tarifa diferente de cero: </span>
+                            <div class="inputD">
+                                <span>401 </span>
+                                <decimalbox format="###.##" readonly="true" 
+                                            style="font-size:12px;background:#EBF5FB"              
+                                            value="@bind(vm.totalizadoRubrosVenta.total12)" />
+                            </div>   
+                            <div class="inputD">       
+                                <span>411 </span> 
+                                <decimalbox format="###.##" readonly="true" 
+                                            style="font-size:12px;background:#EBF5FB"
                                                 
-                                                value="@bind(vm.totalizadoRubrosVenta.total12)" />
-                                    
-                                    <span>411 </span>
-                                  
-                                    <decimalbox format="###.##" readonly="true" 
-                                                style="font-size:12px;background:#EBF5FB"
-                                                
-                                                value="@bind(vm.totalizadoRubrosVenta.total12)" />
-                                </div>
+                                            value="@bind(vm.totalizadoRubrosVenta.total12)" />
                             </div>
-                            <div class="wrapper_input_mod">
-                                <div class="wrapper_input_text">
-                                    <span>Ventas locales (excluye activos fijos) gravadas tarifa 0% que no dan derecho a crédito tributario:</span>
-                               
-                                    <span>403 </span>
-                                    
-                                    <decimalbox format="###.##" readonly="true" 
-                                                style="font-size:12px;background:#EBF5FB"
-                                                
-                                                value="@bind(vm.totalizadoRubrosVenta.total0)" />
-                                    <span>413 </span>
-                                    <decimalbox format="###.##" readonly="true" 
-                                                style="font-size:12px;background:#EBF5FB"
-                                                
-                                                value="@bind(vm.totalizadoRubrosVenta.total0)" />
-                                    
-                                </div>
-                            </div>
-                            <div class="wrapper_input_mod">
-                                <div class="wrapper_input_text">
-                                    <span>Total comprobantes de venta emitidos:</span>
-                               
-                                    <span>411 </span>
-                                    <textbox    
-                                        value="@bind(vm.numeroCompro)" 
-                                        class="input_text" 
-                                    />
-                                    
-                                </div>
-                            </div>
-                            
-                            
-                            
-                            COMPRAS
-                            <div class="wrapper_input_mod">
-                               
-                                <div class="wrapper_input_text">
-                                    
-                                    <span>Adquisiciones y pagos (excluye activos fijos) gravados tarifa diferente de cero (con derecho a crédito tributario): </span>
-                                    <span>500 </span>                                   
-                                   
-                                    <decimalbox format="###.##" readonly="true" 
-                                                 style="font-size:12px;background:#EBF5FB"
-                                                 
-                                                 value="@bind(vm.totalizadoRubros.total12)" />
-                                    <span>510 </span>                                   
-                                   
-                                    <decimalbox format="###.##" readonly="true" 
-                                                style="font-size:12px;background:#EBF5FB"
-                                                
-                                                value="@bind(vm.totalizadoRubros.total12)" />
-                                </div>
-                            </div>
-
                         </div>
-            
-
+                        <div class="declara">
+                            <span>Ventas locales (excluye activos fijos) gravadas tarifa 0% que no dan derecho a crédito tributario:</span>                              
+                            <div class="inputD">
+                                <span>403 </span>                                    
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(vm.totalizadoRubrosVenta.total0)" />
+                            </div>  
+                            <div class="inputD"> 
+                                <span>413 </span>
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(vm.totalizadoRubrosVenta.total0)" />
+                            </div>         
+                            
+                        </div>
+                        <div class="">
+                            <div style="padding:5px;" class="">
+                                <span>Total comprobantes de venta emitidos:</span>
+                                <span>411 </span>
+                                <textbox    
+                                    value="@bind(vm.numeroCompro)" 
+                                    class="input_text" 
+                                />     
+                            </div>
+                        </div>                          
+                    </div> 
+                    <div class="compras">     
+                        <label class="titulo" value="COMPRAS"/>
+                        <div class="declara"> 
+                            
+                            <span>Adquisiciones y pagos (excluye activos fijos) gravados tarifa diferente de cero (con derecho a crédito tributario): </span>
+                            <div class="inputD">
+                                <span>500 </span>                                     
+                                <decimalbox format="###.##" readonly="true" 
+                                            value="@bind(vm.totalizadoRubros.total12)" />
+                            </div>
+                            <div class="inputD">
+                                <span>510 </span>                                    
+                                <decimalbox format="###.##" readonly="true"             
+                                            value="@bind(vm.totalizadoRubros.total12)" />
+                          
+                            </div>
+                        </div>
                     </div>
-     
-            
-                </div>
+  
+                </div>     
+        
             </div>
         </div>
-    
-    
-
     </hbox>
 
 
