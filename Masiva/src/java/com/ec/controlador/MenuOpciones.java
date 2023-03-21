@@ -63,6 +63,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
 
     @Wire("# btnListaVentasSRI")
     Menuitem btnListaVentasSRI;
+    
+    @Wire("#btnFormulario")
+    Menuitem btnFormulario;
+ 
 
     UserCredential credential = new UserCredential();
     private String acceso = "";
@@ -308,6 +312,11 @@ public class MenuOpciones extends SelectorComposer<Component> {
     @Listen("onClick = #btnfactCobra")
     public void btnfactCobra() {
         Executions.sendRedirect("/venta/facturasporcobrar.zul");
+    }
+    
+    @Listen("onClick = #btnFormulario")
+    public void btnFormulario() {
+        Executions.sendRedirect("/reportevistas/formulariodeclara.zul");
     }
 
     @Listen("onClick = #btnGestionUsuario")
