@@ -123,7 +123,7 @@ public class ServicioDetalleComprasSri {
         return listaCabeceraCompras;
     }
 
-    public List<DetalleCompraSri> detalleCompraSriForTipoambiente(Tipoambiente codTipoambiente, String iprodClasificacion) {
+    public List<DetalleCompraSri> detalleCompraSriForTipoambiente(Tipoambiente codTipoambiente, String iprodClasificacion, Date inicio, Date fin) {
 
         List<DetalleCompraSri> listaCabeceraCompras = new ArrayList<DetalleCompraSri>();
         try {
@@ -131,7 +131,7 @@ public class ServicioDetalleComprasSri {
 
             String SQL = "SELECT c FROM DetalleCompraSri c WHERE c.idCabeceraSri.codTipoambiente=:codTipoambiente ";
             String WHERE = " AND c.iprodClasificacion=:iprodClasificacion ";
-            String ORDERBY = " ORDER BY c.idCabeceraSri.cabFecha ASC";
+            String ORDERBY = "  AND c.idCabeceraSri.cabFechaEmision BETWEEN :inicio and :fin AND c.idCabeceraSri.cabTipo=:cabTipo ORDER BY c.idCabeceraSri.cabRucProveedor ASC";
 
             if (iprodClasificacion.equals("TODO")) {
                 SQL = SQL + ORDERBY;
@@ -143,6 +143,9 @@ public class ServicioDetalleComprasSri {
             em.getTransaction().begin();
             Query query = em.createQuery(SQL);
             query.setParameter("codTipoambiente", codTipoambiente);
+            query.setParameter("inicio", inicio);
+            query.setParameter("fin", fin);
+            query.setParameter("cabTipo", "COM");
             if (!iprodClasificacion.equals("TODO")) {
                 query.setParameter("iprodClasificacion", iprodClasificacion);
             }
@@ -156,4 +159,6 @@ public class ServicioDetalleComprasSri {
 
         return listaCabeceraCompras;
     }
+    
+    
 }

@@ -119,7 +119,7 @@ import org.zkoss.zul.ListModelList;
  * @author gato
  */
 public class ListaComprasSri extends SelectorComposer<Component> {
-
+    
     private static String PATH_BASE = "";
     ServicioTipoAmbiente servicioTipoAmbiente = new ServicioTipoAmbiente();
     private Tipoambiente amb = new Tipoambiente();
@@ -129,10 +129,10 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     ServicioProducto servicioProducto = new ServicioProducto();
     ServicioParametrizar servicioParametrizar = new ServicioParametrizar();
     ServicioDetalleCompra servicioDetalleCompra = new ServicioDetalleCompra();
-
+    
     ServicioCabeceraComprasSri servicioCabeceraComprasri = new ServicioCabeceraComprasSri();
     ServicioDetalleComprasSri servicioDetalleComprasSri = new ServicioDetalleComprasSri();
-
+    
     private List<CabeceraCompra> listaCabeceraCompras = new ArrayList<CabeceraCompra>();
     private String buscar = "";
     private String buscarNumFac = "";
@@ -142,9 +142,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     ServicioEstadoFactura servicioEstadoFactura = new ServicioEstadoFactura();
     UserCredential credential = new UserCredential();
     Parametrizar parametrizar = new Parametrizar();
-
+    
     ServicioTipoIdentificacionCompra servicioTipoIdentificacionCompra = new ServicioTipoIdentificacionCompra();
-
+    
     private List<ComprasSri> listaComprasSris = new ArrayList<ComprasSri>();
 
     /*subir rchivo*/
@@ -155,7 +155,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 //reporte
     AMedia fileContent = null;
     Connection con = null;
-
+    
     private Date inicioComp = new Date();
     private Date finComp = new Date();
 
@@ -163,13 +163,13 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     private ListModelList<CabeceraCompraSri> listaComprasSriModel;
     private Set<CabeceraCompraSri> registrosSeleccionados = new HashSet<CabeceraCompraSri>();
     private List<CabeceraCompraSri> listaCabeceraCompraSris = new ArrayList<CabeceraCompraSri>();
-
+    
     ServicioRetencionSri retencionSri = new ServicioRetencionSri();
     ServicioDetalleRetencionSri detalleRetencionSri = new ServicioDetalleRetencionSri();
     private List<RetencionCompraSri> listaRetencioSri = new ArrayList<RetencionCompraSri>();
     private Date inicioRet = new Date();
     private Date finRet = new Date();
-
+    
     private static String SRIFACCOMPRAS = "SRIFACCOMPRAS";
     private static String SRIRETENCION = "SRIRETENCION";
     /*DETALLE DEL KARDEX Y DETALLE KARDEX*/
@@ -177,34 +177,34 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     ServicioDetalleKardex servicioDetalleKardex = new ServicioDetalleKardex();
     ServicioTipoKardex servicioTipoKardex = new ServicioTipoKardex();
     ServicioGeneral servicioGeneral = new ServicioGeneral();
-
+    
     private List<Tipoambiente> listaTipoambientes = new ArrayList<Tipoambiente>();
-
+    
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
-
+        
     }
-
+    
     public ListaComprasSri() {
 
         //muestra 7 dias atras
         Calendar calendar = Calendar.getInstance(); //obtiene la fecha de hoy 
         calendar.add(Calendar.DATE, -7); //el -3 indica que se le restaran 3 dias 
         inicio = calendar.getTime();
-
+        
         Session sess = Sessions.getCurrent();
         UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
         credential = cre;
         parametrizar = servicioParametrizar.FindALlParametrizar();
         findByBetweenFecha();
         listaTipoambientes = servicioTipoAmbiente.findAll(credential.getUsuarioSistema());
-
+        
         amb = servicioTipoAmbiente.finSelectFirst(credential.getUsuarioSistema());
         //OBTIENE LAS RUTAS DE ACCESO A LOS DIRECTORIOS DE LA TABLA TIPOAMBIENTE
         if (amb != null) {
             PATH_BASE = amb.getAmUnidadDisco() + amb.getAmDirBaseArchivos() + File.separator
                         + amb.getAmDirXml();
-
+            
             String folderComprasSri = PATH_BASE + File.separator + SRIFACCOMPRAS + File.separator;
             File folderGen = new File(folderComprasSri);
             if (!folderGen.exists()) {
@@ -216,43 +216,43 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                 folderRet.mkdirs();
             }
         }
-
+        
     }
-
+    
     @Command
     public void seleccionarRegistros() {
         registrosSeleccionados = ((ListModelList<CabeceraCompraSri>) getListaComprasSriModel()).getSelection();
     }
-
+    
     private void buscarLikeNombre() {
         listaCabeceraCompras = servicioCompra.findCabProveedorSRI(buscar);
     }
-
+    
     private void findByBetweenFecha() {
         listaCabeceraCompras = servicioCompra.findByBetweenFechaSRI(inicio, fin);
     }
-
+    
     private void findComprasSriByBetweenFecha() {
         listaComprasSris = servicioComprasSri.findNoVerificadosBetweenFecha(inicio, fin, "COM", amb);
-
+        
     }
-
+    
     private void findCabeceraComprasSriByBetweenFecha() {
-
+        
         listaCabeceraCompraSris = servicioCabeceraComprasri.findByBetweenFechaSRI(inicio, fin, amb, "COM");
         setListaComprasSriModel(new ListModelList<CabeceraCompraSri>(getListaCabeceraCompraSris()));
         ((ListModelList<CabeceraCompraSri>) listaComprasSriModel).setMultiple(true);
-
+        
     }
-
+    
     private void findByNumFac() {
         listaCabeceraCompras = servicioCompra.findByNumeroFacturaSRI(buscarNumFac);
     }
-
+    
     private void findBetweenRetenciones() {
         listaRetencioSri = retencionSri.findRetencionesBetween(inicioRet, finRet);
     }
-
+    
     @Command
     @NotifyChange({"listaComprasSris", "inicio", "fin", "listaComprasSriModel"})
     public void eliminarCabeceraSRI() {
@@ -263,7 +263,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
         }
     }
-
+    
     @Command
     @NotifyChange({"listaComprasSris", "inicio", "fin", "listaComprasSriModel"})
     public void cargarfacturasSistema() {
@@ -271,7 +271,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             if (servicioCompra.findByNumeroFacturaAndProveedor(item.getCabNumFactura(), item.getCabProveedor()).isEmpty()) {
                 CabeceraCompra cabecera = ArchivoUtils.compraSriToCompra(item);
                 servicioCompra.crear(cabecera);
-
+                
                 for (DetalleCompraSri object : servicioDetalleComprasSri.detallebyCompraSri(item)) {
                     DetalleCompra detalleCompra = ArchivoUtils.detalleSriToDetalleCompra(object, cabecera);
                     servicioDetalleCompra.crear(detalleCompra);
@@ -298,7 +298,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     detalleKardex.setDetkKardexmanual(Boolean.FALSE);
                     detalleKardex.setDetkDetalles("Aumenta al kardex facturacion con: FACTC-" + item.getCabNumFactura());
                     detalleKardex.setIdCompra(cabecera);
-
+                    
                     detalleKardex.setDetkCantidad(detalleCompra.getIprodCantidad());
                     servicioDetalleKardex.crear(detalleKardex);
                     TotalKardex totales = servicioKardex.totalesForKardex(kardex);
@@ -306,23 +306,23 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     kardex.setKarTotal(total);
                     servicioKardex.modificar(kardex);
                 }
-
+                
             }
-
+            
         }
         servicioGeneral.corregirProductos();
         Clients.showNotification("Facturas cargadas correctamente ",
                     Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
-
+        
     }
-
+    
     @Command
     @NotifyChange({"listaComprasSris", "inicio", "fin", "listaComprasSriModel"})
     public void buscarComprasSri() {
         if (amb != null) {
             PATH_BASE = amb.getAmUnidadDisco() + amb.getAmDirBaseArchivos() + File.separator
                         + amb.getAmDirXml();
-
+            
             String folderComprasSri = PATH_BASE + File.separator + SRIFACCOMPRAS + File.separator;
             File folderGen = new File(folderComprasSri);
             if (!folderGen.exists()) {
@@ -337,44 +337,44 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         findComprasSriByBetweenFecha();
         findCabeceraComprasSriByBetweenFecha();
     }
-
+    
     @Command
     @NotifyChange({"listaRetencioSri", "inicioRet", "finRet"})
     public void buscarRetencionesSRI() {
         findBetweenRetenciones();
     }
-
+    
     @Command
     @NotifyChange({"listaComprasSriModel", "inicioComp", "finComp"})
     public void buscarComprasSriProcesadas() {
-
+        
         findCabeceraComprasSriByBetweenFecha();
     }
-
+    
     @Command
     @NotifyChange({"listaCabeceraCompras", "buscar"})
     public void buscarForProveedor() {
         buscarLikeNombre();
     }
-
+    
     @Command
     @NotifyChange({"listaCabeceraCompras", "buscarNumFac"})
     public void buscarForNumFactura() {
         findByNumFac();
     }
-
+    
     @Command
     @NotifyChange({"listaCabeceraCompras", "inicio", "fin"})
     public void buscarForFechas() {
         findByBetweenFecha();
     }
-
+    
     @Command
     public void modificarFactura(@BindingParam("valor") CabeceraCompra valor) {
         try {
 //            if (Messagebox.show("¿Desea modificar el registro, recuerde que debe crear las reteniones nuevamente?", "Atención", Messagebox.YES | Messagebox.NO, Messagebox.INFORMATION) == Messagebox.YES) {
             final HashMap<String, CabeceraCompra> map = new HashMap<String, CabeceraCompra>();
-
+            
             map.put("valor", valor);
             org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
                         "/compra/modificarcompra.zul", null, map);
@@ -385,55 +385,55 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             Messagebox.show("Error " + e.toString(), "Atención", Messagebox.OK, Messagebox.INFORMATION);
         }
     }
-
+    
     public String getBuscar() {
         return buscar;
     }
-
+    
     public void setBuscar(String buscar) {
         this.buscar = buscar;
     }
-
+    
     public List<CabeceraCompra> getListaCabeceraCompras() {
         return listaCabeceraCompras;
     }
-
+    
     public void setListaCabeceraCompras(List<CabeceraCompra> listaCabeceraCompras) {
         this.listaCabeceraCompras = listaCabeceraCompras;
     }
-
+    
     public Date getInicio() {
         return inicio;
     }
-
+    
     public void setInicio(Date inicio) {
         this.inicio = inicio;
     }
-
+    
     public Date getFin() {
         return fin;
     }
-
+    
     public void setFin(Date fin) {
         this.fin = fin;
     }
-
+    
     public String getBuscarNumFac() {
         return buscarNumFac;
     }
-
+    
     public void setBuscarNumFac(String buscarNumFac) {
         this.buscarNumFac = buscarNumFac;
     }
-
+    
     public UserCredential getCredential() {
         return credential;
     }
-
+    
     public void setCredential(UserCredential credential) {
         this.credential = credential;
     }
-
+    
     @Command
     public void exportListboxToExcel() throws Exception {
         try {
@@ -446,16 +446,16 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             System.out.println("ERROR AL DESCARGAR EL ARCHIVO" + e.getMessage());
         }
     }
-
+    
     private String exportarExcel() throws FileNotFoundException, IOException, ParseException {
         List<DetalleCompraSri> descargar = servicioDetalleComprasSri.findByBetweenFechaSRI(inicio, fin);
         String directorioReportes = Executions.getCurrent().getDesktop().getWebApp().getRealPath("/reportes");
-
+        
         Date date = new Date();
         SimpleDateFormat fhora = new SimpleDateFormat("HH:mm");
         SimpleDateFormat sm = new SimpleDateFormat("yyy-MM-dd");
         String strDate = sm.format(date);
-
+        
         String pathSalida = directorioReportes + File.separator + "comprassridetallado.xls";
         System.out.println("Direccion del reporte  " + pathSalida);
         try {
@@ -468,120 +468,120 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             FileOutputStream archivo = new FileOutputStream(archivoXLS);
             HSSFWorkbook wb = new HSSFWorkbook();
             HSSFSheet s = wb.createSheet("Comprassri");
-
+            
             HSSFFont fuente = wb.createFont();
             fuente.setBoldweight((short) 700);
             HSSFCellStyle estiloCelda = wb.createCellStyle();
             estiloCelda.setWrapText(true);
             estiloCelda.setAlignment((short) 2);
             estiloCelda.setFont(fuente);
-
+            
             HSSFCellStyle estiloCeldaInterna = wb.createCellStyle();
             estiloCeldaInterna.setWrapText(true);
             estiloCeldaInterna.setAlignment((short) 5);
             estiloCeldaInterna.setFont(fuente);
-
+            
             HSSFCellStyle estiloCelda1 = wb.createCellStyle();
             estiloCelda1.setWrapText(true);
             estiloCelda1.setFont(fuente);
-
+            
             HSSFRow r = null;
-
+            
             HSSFCell c = null;
             r = s.createRow(0);
-
+            
             HSSFCell ch2 = r.createCell(j++);
             ch2.setCellValue(new HSSFRichTextString("FACTURA"));
             ch2.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch0 = r.createCell(j++);
             ch0.setCellValue(new HSSFRichTextString("RUC"));
             ch0.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch1 = r.createCell(j++);
             ch1.setCellValue(new HSSFRichTextString("NOMBRE"));
             ch1.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch3 = r.createCell(j++);
             ch3.setCellValue(new HSSFRichTextString("FECHA EMISION"));
             ch3.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch4 = r.createCell(j++);
             ch4.setCellValue(new HSSFRichTextString("CANTIDAD"));
             ch4.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch5 = r.createCell(j++);
             ch5.setCellValue(new HSSFRichTextString("DESCRIPCION"));
             ch5.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch6 = r.createCell(j++);
             ch6.setCellValue(new HSSFRichTextString("% IVA"));
             ch6.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch7 = r.createCell(j++);
             ch7.setCellValue(new HSSFRichTextString("SUBTOTAL"));
             ch7.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch8 = r.createCell(j++);
             ch8.setCellValue(new HSSFRichTextString("TOTAL"));
             ch8.setCellStyle(estiloCelda);
-
+            
             int rownum = 1;
             int i = 0;
-
+            
             for (DetalleCompraSri item : descargar) {
                 i = 0;
-
+                
                 r = s.createRow(rownum);
-
+                
                 HSSFCell c0 = r.createCell(i++);
                 c0.setCellValue(new HSSFRichTextString(item.getIdCabeceraSri().getCabNumFactura()));
-
+                
                 HSSFCell c1 = r.createCell(i++);
                 c1.setCellValue(new HSSFRichTextString(item.getIdCabeceraSri().getCabRucProveedor()));
-
+                
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString(item.getIdCabeceraSri().getCabProveedor()));
-
+                
                 HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString(sm.format(item.getIdCabeceraSri().getCabFechaEmision())));
-
+                
                 HSSFCell c4 = r.createCell(i++);
                 c4.setCellValue(new HSSFRichTextString(item.getIprodCantidad().toString()));
-
+                
                 HSSFCell c5 = r.createCell(i++);
                 c5.setCellValue(new HSSFRichTextString(item.getIprodDescripcion().toString()));
-
+                
                 HSSFCell c6 = r.createCell(i++);
                 c6.setCellValue(new HSSFRichTextString(item.getIprodGrabaIva() ? "12" : "0"));
-
+                
                 HSSFCell c7 = r.createCell(i++);
                 c7.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getIprodSubtotal(), 2).toString()));
-
+                
                 HSSFCell c8 = r.createCell(i++);
                 c8.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getIprodTotal(), 2).toString()));
                 /*autemta la siguiente fila*/
                 rownum += 1;
-
+                
             }
             for (int k = 0; k <= descargar.size(); k++) {
                 s.autoSizeColumn(k);
             }
             wb.write(archivo);
             archivo.close();
-
+            
         } catch (IOException e) {
             System.out.println("error " + e.getMessage());
         }
         return pathSalida;
-
+        
     }
-
+    
     @Command
     @NotifyChange({"listaCabeceraCompras", "listaCabeceraCompraSris", "inicio", "fin", "listaComprasSriModel"})
     public void cargarComprasSRI()
                 throws JRException, IOException, NamingException, SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-
+        
         AutorizarDocumentos autorizarDocumentos = new AutorizarDocumentos();
         try {
             Thread.sleep(1000);
@@ -593,13 +593,13 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         + File.separator + new Date().getYear()
                         + File.separator + new Date().getMonth();
             String pathArchivoXML = "";
-
+            
             File folderGen = new File(folderDescargados);
             if (!folderGen.exists()) {
                 folderGen.mkdirs();
             }
             SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyy");
-
+            
             File f = null;
             /*TRAEMOS EL DOCUMENTO DEL SRI*/
             for (ComprasSri noVerific : listaComprasSris) {
@@ -628,7 +628,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                                     = ec.gob.sri.comprobantes.util.xml.XML2Java.unmarshalFactura(pathArchivoXML);
                         procesaFactura(adto, autorizacion.getComprobante());
                     }
-
+                    
                 }
                 //}
             }
@@ -636,9 +636,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         } catch (Exception ex) {
             Logger.getLogger(ListaFacturas.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     private void procesaRetenciones(ec.gob.sri.comprobantes.modelo.rentencion.ComprobanteRetencion dao, String xml) {
         retencionSri.eliminarbyClaveAcceso(dao.getInfoTributaria().getClaveAcceso());
         SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyy");
@@ -657,9 +657,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         /*total retenido*/
         BigDecimal valorRetenido = BigDecimal.ZERO;
         for (ec.gob.sri.comprobantes.modelo.rentencion.Impuesto item : dao.getImpuestos().getImpuesto()) {
-
+            
             valorRetenido = valorRetenido.add(item.getValorRetenido());
-
+            
         }
         retencionCompraSri.setRcoBaseGravaIva(valorRetenido);
         retencionCompraSri.setRcoFecha(dt);
@@ -685,17 +685,17 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             detalle.setDrcDescripcion(item.getCodigo().equals("2") ? "IVA" : "RENTA");
             detalleRetencionSri.crear(detalle);
         }
-
+        
     }
-
+    
     private void procesaFactura(ec.gob.sri.comprobantes.modelo.factura.Factura adto, String xml) {
         SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyy");
         /*PARA UN PROVEEDOR EN ESPECIFICO*/
 //                        if (adto.getInfoTributaria().getRuc().equals("1719631549001")) {
         servicioCabeceraComprasri.eliminarbyClaveAcceso(adto.getInfoTributaria().getClaveAcceso());
-
+        
         CabeceraCompraSri cabeceraCompra;
-
+        
         cabeceraCompra = new CabeceraCompraSri();
         cabeceraCompra.setCabAutorizacion(adto.getInfoTributaria().getClaveAcceso());
         cabeceraCompra.setCabClaveAcceso(adto.getInfoTributaria().getClaveAcceso());
@@ -713,7 +713,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         } catch (java.text.ParseException e) {
             System.out.println("ERROR FECHA " + e.getMessage());
         }
-
+        
         cabeceraCompra.setCabHomologado("N");
         BigDecimal baseCero = BigDecimal.ZERO;
         BigDecimal baseGrabada = BigDecimal.ZERO;
@@ -768,7 +768,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 //            prov = provNuevo;
 //        }
         servicioCabeceraComprasri.crear(cabeceraCompra);
-
+        
         DetalleCompraSri detalleCom = null;
         BigDecimal factorIva = BigDecimal.ONE.add(parametrizar.getParIvaActual().divide(BigDecimal.valueOf(100)));
         BigDecimal factorUtilidad = BigDecimal.ONE.add(BigDecimal.valueOf(0.47));
@@ -778,23 +778,25 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             Producto buscado = servicioProducto.findByProdCodigo(detalle.getCodigoPrincipal());
             Producto nuevoProd = new Producto();
             detalleCom = new DetalleCompraSri();
-
+            
             detalleCom.setIdCabeceraSri(cabeceraCompra);
             detalleCom.setIprodCantidad(detalle.getCantidad());
             detalleCom.setIprodDescripcion(detalle.getDescripcion());
             Boolean grabaIva = Boolean.TRUE;
             for (ec.gob.sri.comprobantes.modelo.factura.Impuesto impuesto : detalle.getImpuestos().getImpuesto()) {
-                if (impuesto.getCodigoPorcentaje().equals("0")) {
-                    grabaIva = Boolean.FALSE;
-                } else if (impuesto.getCodigoPorcentaje().equals("2")) {
-                    grabaIva = Boolean.TRUE;
-
+                if (impuesto.getCodigo().equals("2")) {
+                    if (impuesto.getCodigoPorcentaje().equals("0")) {
+                        grabaIva = Boolean.FALSE;
+                    } else if (impuesto.getCodigoPorcentaje().equals("2")) {
+                        grabaIva = Boolean.TRUE;
+                        
+                    }
                 }
             }
             detalleCom.setIprodGrabaIva(grabaIva);
             detalleCom.setIprodSubtotal(detalle.getPrecioUnitario());
             detalleCom.setIprodTotal(detalle.getCantidad().multiply(detalle.getPrecioUnitario()));
-            detalleCom.setIprodGrabaIva(detalle.getImpuestos().getImpuesto().get(0).getCodigo().equals("2") ? Boolean.TRUE : Boolean.FALSE);
+//            detalleCom.setIprodGrabaIva(detalle.getImpuestos().getImpuesto().get(0).getCodigo().equals("2") ? Boolean.TRUE : Boolean.FALSE);
             detalleCom.setIprodCodigoProducto(detalle.getCodigoPrincipal());
             detalleCom.setIprodClasificacion("N");
             servicioDetalleComprasSri.crear(detalleCom);
@@ -804,10 +806,10 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         + " " + detalle.getPrecioUnitario()
                         + " " + detalle.getPrecioTotalSinImpuesto());
         }
-
+        
         findCabeceraComprasSriByBetweenFecha();
     }
-
+    
     @Command
     @NotifyChange({"listaComprasSris", "inicio", "fin"})
     public void actualizar(@BindingParam("valor") CabeceraCompraSri valor) {
@@ -815,7 +817,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         Clients.showNotification("Registro actualizado",
                     Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
     }
-
+    
     @Listen("onUpload = #upload")
     public void onUpload(UploadEvent event) {
         try {
@@ -831,7 +833,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             Messagebox.show("Upload failed");
         }
     }
-
+    
     @Listen("onUpload = #uploadFacturas")
     public void onUploadFacturas(UploadEvent event) {
         try {
@@ -847,14 +849,14 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             Messagebox.show("Upload failed");
         }
     }
-
+    
     @Command
     @NotifyChange({"listaComprasSris", "inicio", "fin"})
     public void subirArchivo() {
-
+        
         try {
             System.out.println("");
-
+            
             String folderDescargados = PATH_BASE + File.separator + "COMPRASDESCARGADASTXT"
                         + File.separator + new Date().getYear()
                         + File.separator + new Date().getMonth();
@@ -865,11 +867,11 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                 folderGen.mkdirs();
             }
             org.zkoss.util.media.Media media = Fileupload.get("Cargar su archivo que obtuvo en el SRI", "Subir Archivo SRI");
-
+            
             if (media != null) {
                 if (media.getName().contains(".txt")) {
                     String builder = media.getStringData();
-
+                    
                     String[] campos = builder.split("\t");
                     String[] campos1 = builder.split("\t|\n");
                     String datosFormateados = "";
@@ -877,7 +879,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         if (!campos1.equals("")) {
                             datosFormateados = datosFormateados + campos1[i] + "\t";
                         }
-
+                        
                     }
                     String[] campos2 = datosFormateados.split("\t");
                     String[] campos3 = new String[campos2.length];
@@ -909,7 +911,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     BufferedWriter bfwriter = new BufferedWriter(flwriter);
                     Boolean existenRepetido = Boolean.FALSE;
                     for (int i = 11; i <= campos3.length - (cantidadBlancos + 11); i++) {
-
+                        
                         comprasSri = new ComprasSri(
                                     campos3[i],
                                     campos3[++i],
@@ -925,10 +927,10 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                                     "N");
                         System.out.println("iiiii " + i);
                         comprasSri.setCsriTipoFactura("COM");
-
+                        
                         System.out.println("ComprasSri " + comprasSri.toString());
                         if (servicioComprasSri.findByAutorizacion(comprasSri.getCsriAutorizacion(), amb) == null) {
-
+                            
                             if (comprasSri.getCsriComprobante().contains("Factura")) {
                                 comprasSri.setCodTipoambiente(amb);
                                 servicioComprasSri.crear(comprasSri);
@@ -936,9 +938,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         } else {
                             existenRepetido = Boolean.TRUE;
                             existentes = existentes + ";" + comprasSri.getCsriAutorizacion();
-
+                            
                         }
-
+                        
                     }
                     if (existenRepetido) {
                         bfwriter.write(existentes);
@@ -950,7 +952,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     findComprasSriByBetweenFecha();
                 }
             }
-
+            
         } catch (IOException e) {
             System.out.println("ERROR al subir la imagen IOException " + e.getMessage());
         } catch (java.text.ParseException e) {
@@ -962,34 +964,34 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     @Command
     @NotifyChange({"listaProductosModel", "buscarNombre"})
     public void cargarExcelVentas() {
-
+        
         try {
             org.zkoss.util.media.Media media = Fileupload.get();
             if (media instanceof org.zkoss.util.media.AMedia) {
                 String nombre = media.getName();
-
+                
                 if (!nombre.contains("xls")) {
                     Clients.showNotification("Su documento debe ser un archivo excel",
                                 Clients.NOTIFICATION_TYPE_ERROR, null, "end_center", 3000, true);
-
+                    
                     return;
                 }
-
+                
                 System.out.println("media " + nombre);
                 Files.copy(new File(PATH_BASE + File.separator + "CARGAR" + File.separator + nombre),
                             new ByteArrayInputStream(media.getByteData()));
-
+                
                 String rutaArchivo = PATH_BASE + File.separator + "CARGAR" + File.separator + nombre;
-
+                
                 InputStream myFile = new FileInputStream(new File(rutaArchivo));
                 HSSFWorkbook wb = new HSSFWorkbook(myFile);
                 HSSFSheet sheet = wb.getSheetAt(0);
-
+                
                 HSSFCell cell;
                 HSSFRow row;
-
+                
                 System.out.println("Apunto de entrar a loops");
-
+                
                 System.out.println("" + sheet.getLastRowNum());
                 Producto prod = new Producto();
                 for (int i = 1; i < sheet.getLastRowNum() + 1; i++) {
@@ -1017,7 +1019,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         if (row.getCell(6) != null) {
                             String valor = String.valueOf(row.getCell(6));
                             prod.setProdGrabaIva(String.valueOf(row.getCell(6)).contains("1") ? Boolean.TRUE : Boolean.FALSE);
-
+                            
                             if (prod.getProdGrabaIva()) {
                                 BigDecimal precioIva = BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(2))));
                                 BigDecimal precioCompra = precioIva.divide(BigDecimal.valueOf(1.12), 4, RoundingMode.FLOOR);
@@ -1025,7 +1027,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             } else {
                                 prod.setPordCostoCompra(BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(2)))));
                             }
-
+                            
                         } else {
                             prod.setProdGrabaIva(Boolean.FALSE);
                             prod.setPordCostoCompra(BigDecimal.valueOf(Double.valueOf(String.valueOf(row.getCell(2)))));
@@ -1040,9 +1042,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     }
                 }
                 System.out.println("Finalizado");
-
+                
                 servicioGeneral.corregirProductos();
-
+                
                 Clients.showNotification("Productos cargados correctamente",
                             Clients.NOTIFICATION_TYPE_INFO, null, "end_center", 3000, true);
             }
@@ -1052,9 +1054,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             e.printStackTrace();
 //            Messagebox.show("Upload failed");
         }
-
+        
     }
-
+    
     @Command
     public void descargarPlantilla() throws Exception {
         try {
@@ -1069,53 +1071,53 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             System.out.println("ERROR AL DESCARGAR EL ARCHIVO" + e.getMessage());
         }
     }
-
+    
     public List<ComprasSri> getListaComprasSris() {
         return listaComprasSris;
     }
-
+    
     public void setListaComprasSris(List<ComprasSri> listaComprasSris) {
         this.listaComprasSris = listaComprasSris;
     }
-
+    
     public List<CabeceraCompraSri> getListaCabeceraCompraSris() {
         return listaCabeceraCompraSris;
     }
-
+    
     public void setListaCabeceraCompraSris(List<CabeceraCompraSri> listaCabeceraCompraSris) {
         this.listaCabeceraCompraSris = listaCabeceraCompraSris;
     }
-
+    
     public Date getInicioComp() {
         return inicioComp;
     }
-
+    
     public void setInicioComp(Date inicioComp) {
         this.inicioComp = inicioComp;
     }
-
+    
     public Date getFinComp() {
         return finComp;
     }
-
+    
     public void setFinComp(Date finComp) {
         this.finComp = finComp;
     }
-
+    
     @Command
     public void reporteFacturaCompra(@BindingParam("valor") CabeceraCompraSri valor) throws JRException, IOException, NamingException, SQLException {
         reporteGeneral(valor.getIdCabeceraSri(), "FACT");
     }
-
+    
     @Command
     public void imprimirRetencion(@BindingParam("valor") RetencionCompraSri valor) throws JRException, IOException, NamingException, SQLException {
         reporteGeneral(valor.getRcoCodigo(), "RET");
     }
-
+    
     public void reporteGeneral(Integer idCabera, String tipo) throws JRException, IOException, NamingException, SQLException {
         EntityManager emf = HelperPersistencia.getEMF();
         try {
-
+            
             emf.getTransaction().begin();
             con
                         = emf.unwrap(Connection.class
@@ -1123,7 +1125,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             String reportFile = Executions.getCurrent().getDesktop().getWebApp()
                         .getRealPath("/reportes");
             String reportPath = "";
-
+            
             Map<String, Object> parametros = new HashMap<String, Object>();
 
             //  parametros.put("codUsuario", String.valueOf(credentialLog.getAdUsuario().getCodigoUsuario()));
@@ -1134,13 +1136,13 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                 reportPath = reportFile + File.separator + "facturacomprasri.jasper";
                 parametros.put("id_cabecera", idCabera);
             }
-
+            
             if (con != null) {
                 System.out.println("Conexión Realizada Correctamenteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             }
             FileInputStream is = null;
             is = new FileInputStream(reportPath);
-
+            
             byte[] buf = JasperRunManager.runReportToPdf(is, parametros, con);
             InputStream mediais = new ByteArrayInputStream(buf);
             AMedia amedia = new AMedia("Reporte", "pdf", "application/pdf", mediais);
@@ -1159,31 +1161,31 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             if (emf != null) {
                 emf.getTransaction().commit();
             }
-
+            
         }
-
+        
     }
-
+    
     public List<RetencionCompraSri> getListaRetencioSri() {
         return listaRetencioSri;
     }
-
+    
     public void setListaRetencioSri(List<RetencionCompraSri> listaRetencioSri) {
         this.listaRetencioSri = listaRetencioSri;
     }
-
+    
     public Date getInicioRet() {
         return inicioRet;
     }
-
+    
     public void setInicioRet(Date inicioRet) {
         this.inicioRet = inicioRet;
     }
-
+    
     public Date getFinRet() {
         return finRet;
     }
-
+    
     public void setFinRet(Date finRet) {
         this.finRet = finRet;
     }
@@ -1202,16 +1204,16 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             System.out.println("ERROR AL DESCARGAR EL ARCHIVO" + e.getMessage());
         }
     }
-
+    
     private String exportarRetencionesExcel() throws FileNotFoundException, IOException, ParseException {
         List<DetalleRetencionCompraSri> descargar = detalleRetencionSri.findBetweenDetalle(inicioRet, finRet);
         String directorioReportes = Executions.getCurrent().getDesktop().getWebApp().getRealPath("/reportes");
-
+        
         Date date = new Date();
         SimpleDateFormat fhora = new SimpleDateFormat("HH:mm");
         SimpleDateFormat sm = new SimpleDateFormat("yyy-MM-dd");
         String strDate = sm.format(date);
-
+        
         String pathSalida = directorioReportes + File.separator + "retencionessri.xls";
         System.out.println("Direccion del reporte  " + pathSalida);
         try {
@@ -1224,107 +1226,107 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             FileOutputStream archivo = new FileOutputStream(archivoXLS);
             HSSFWorkbook wb = new HSSFWorkbook();
             HSSFSheet s = wb.createSheet("Comprassri");
-
+            
             HSSFFont fuente = wb.createFont();
             fuente.setBoldweight((short) 700);
             HSSFCellStyle estiloCelda = wb.createCellStyle();
             estiloCelda.setWrapText(true);
             estiloCelda.setAlignment((short) 2);
             estiloCelda.setFont(fuente);
-
+            
             HSSFCellStyle estiloCeldaInterna = wb.createCellStyle();
             estiloCeldaInterna.setWrapText(true);
             estiloCeldaInterna.setAlignment((short) 5);
             estiloCeldaInterna.setFont(fuente);
-
+            
             HSSFCellStyle estiloCelda1 = wb.createCellStyle();
             estiloCelda1.setWrapText(true);
             estiloCelda1.setFont(fuente);
-
+            
             HSSFRow r = null;
-
+            
             HSSFCell c = null;
             r = s.createRow(0);
-
+            
             HSSFCell ch2 = r.createCell(j++);
             ch2.setCellValue(new HSSFRichTextString("COMPROBANTE"));
             ch2.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch0 = r.createCell(j++);
             ch0.setCellValue(new HSSFRichTextString("RUC"));
             ch0.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch1 = r.createCell(j++);
             ch1.setCellValue(new HSSFRichTextString("NOMBRE"));
             ch1.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch3 = r.createCell(j++);
             ch3.setCellValue(new HSSFRichTextString("FECHA EMISION"));
             ch3.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch4 = r.createCell(j++);
             ch4.setCellValue(new HSSFRichTextString("BASE IMPONIBLE"));
             ch4.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch5 = r.createCell(j++);
             ch5.setCellValue(new HSSFRichTextString("% RETENCION"));
             ch5.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch6 = r.createCell(j++);
             ch6.setCellValue(new HSSFRichTextString("VALOR RETENIDO"));
             ch6.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch7 = r.createCell(j++);
             ch7.setCellValue(new HSSFRichTextString("TIPO RETENCION"));
             ch7.setCellStyle(estiloCelda);
-
+            
             int rownum = 1;
             int i = 0;
-
+            
             for (DetalleRetencionCompraSri item : descargar) {
                 i = 0;
-
+                
                 r = s.createRow(rownum);
-
+                
                 HSSFCell c0 = r.createCell(i++);
                 c0.setCellValue(new HSSFRichTextString(item.getRcoCodigo().getRcoSecuencialText()));
-
+                
                 HSSFCell c1 = r.createCell(i++);
                 c1.setCellValue(new HSSFRichTextString(item.getRcoCodigo().getRcoRuc()));
-
+                
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString(item.getRcoCodigo().getRcoNombre()));
-
+                
                 HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString(sm.format(item.getRcoCodigo().getCabFechaEmision())));
-
+                
                 HSSFCell c4 = r.createCell(i++);
                 c4.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(BigDecimal.valueOf(item.getDrcBaseImponible()), 2).toString()));
-
+                
                 HSSFCell c5 = r.createCell(i++);
                 c5.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(BigDecimal.valueOf(item.getDrcPorcentaje()), 2).toString()));
-
+                
                 HSSFCell c6 = r.createCell(i++);
                 c6.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(BigDecimal.valueOf(item.getDrcValorRetenido()), 2).toString()));
                 HSSFCell c7 = r.createCell(i++);
                 c7.setCellValue(new HSSFRichTextString(item.getDrcDescripcion()));
                 /*autemta la siguiente fila*/
                 rownum += 1;
-
+                
             }
             for (int k = 0; k <= descargar.size(); k++) {
                 s.autoSizeColumn(k);
             }
             wb.write(archivo);
             archivo.close();
-
+            
         } catch (IOException e) {
             System.out.println("error " + e.getMessage());
         }
         return pathSalida;
-
+        
     }
-
+    
     @Command
     public void exportarDocumentosSRI() throws Exception {
         try {
@@ -1337,16 +1339,16 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             System.out.println("ERROR AL DESCARGAR EL ARCHIVO" + e.getMessage());
         }
     }
-
+    
     private String exportarDocumentosSriExcel() throws FileNotFoundException, IOException, ParseException {
 //        List<ComprasSri> descargar = listaComprasSris.findBetweenDetalle(inicioRet, finRet);
         String directorioReportes = Executions.getCurrent().getDesktop().getWebApp().getRealPath("/reportes");
-
+        
         Date date = new Date();
         SimpleDateFormat fhora = new SimpleDateFormat("HH:mm");
         SimpleDateFormat sm = new SimpleDateFormat("yyy-MM-dd");
         String strDate = sm.format(date);
-
+        
         String pathSalida = directorioReportes + File.separator + "retencionessri.xls";
         System.out.println("Direccion del reporte  " + pathSalida);
         try {
@@ -1359,93 +1361,93 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             FileOutputStream archivo = new FileOutputStream(archivoXLS);
             HSSFWorkbook wb = new HSSFWorkbook();
             HSSFSheet s = wb.createSheet("Comprassri");
-
+            
             HSSFFont fuente = wb.createFont();
             fuente.setBoldweight((short) 700);
             HSSFCellStyle estiloCelda = wb.createCellStyle();
             estiloCelda.setWrapText(true);
             estiloCelda.setAlignment((short) 2);
             estiloCelda.setFont(fuente);
-
+            
             HSSFCellStyle estiloCeldaInterna = wb.createCellStyle();
             estiloCeldaInterna.setWrapText(true);
             estiloCeldaInterna.setAlignment((short) 5);
             estiloCeldaInterna.setFont(fuente);
-
+            
             HSSFCellStyle estiloCelda1 = wb.createCellStyle();
             estiloCelda1.setWrapText(true);
             estiloCelda1.setFont(fuente);
-
+            
             HSSFRow r = null;
-
+            
             HSSFCell c = null;
             r = s.createRow(0);
-
+            
             HSSFCell ch2 = r.createCell(j++);
             ch2.setCellValue(new HSSFRichTextString("COMPROBANTE"));
             ch2.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch0 = r.createCell(j++);
             ch0.setCellValue(new HSSFRichTextString("RUC"));
             ch0.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch1 = r.createCell(j++);
             ch1.setCellValue(new HSSFRichTextString("NOMBRE"));
             ch1.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch3 = r.createCell(j++);
             ch3.setCellValue(new HSSFRichTextString("FECHA EMISION"));
             ch3.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch4 = r.createCell(j++);
             ch4.setCellValue(new HSSFRichTextString("FECHA AUTORIZACION"));
             ch4.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch5 = r.createCell(j++);
             ch5.setCellValue(new HSSFRichTextString("TOTAL"));
             ch5.setCellStyle(estiloCelda);
-
+            
             int rownum = 1;
             int i = 0;
-
+            
             for (ComprasSri item : listaComprasSris) {
                 i = 0;
-
+                
                 r = s.createRow(rownum);
-
+                
                 HSSFCell c0 = r.createCell(i++);
                 c0.setCellValue(new HSSFRichTextString(item.getCsriComprobante()));
-
+                
                 HSSFCell c1 = r.createCell(i++);
                 c1.setCellValue(new HSSFRichTextString(item.getCsriRucEmisor()));
-
+                
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString(item.getCsriRazonSocial()));
-
+                
                 HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString(sm.format(item.getCsriFechaEmision())));
-
+                
                 HSSFCell c4 = r.createCell(i++);
                 c4.setCellValue(new HSSFRichTextString(sm.format(item.getCsriFechaAutorizacion())));
-
+                
                 HSSFCell c5 = r.createCell(i++);
                 c5.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(BigDecimal.valueOf(Double.valueOf(item.getCsriTotal())), 2).toString()));
 
                 /*autemta la siguiente fila*/
                 rownum += 1;
-
+                
             }
             for (int k = 0; k <= listaComprasSris.size(); k++) {
                 s.autoSizeColumn(k);
             }
             wb.write(archivo);
             archivo.close();
-
+            
         } catch (IOException e) {
             System.out.println("error " + e.getMessage());
         }
         return pathSalida;
-
+        
     }
 
     //PROCESAR XML
@@ -1457,9 +1459,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         File[] listaArvhivos = folder.listFiles();
         System.out.println("NUMERO ARCHIVOS " + listaArvhivos.length);
         for (File file : listaArvhivos) {
-
+            
             try {
-
+                
                 String xmlParse = leerArchivo(file);
                 System.out.println(xmlParse);
 //                XmlMapper xmlMapper = new XmlMapper();
@@ -1467,17 +1469,17 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 //                RetencionXML value
 //                        = xmlMapper.readValue(xmlParse, RetencionXML.class);
                 JAXBContext jaxbContext;
-
+                
                 try {
                     jaxbContext = JAXBContext.newInstance(RetencionXML.class);
-
+                    
                     Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
+                    
                     RetencionXML retenciones = (RetencionXML) jaxbUnmarshaller.unmarshal(new StringReader(xmlParse));
-
+                    
                     System.out.println(retenciones);
                     procesaRetencionesXML(retenciones);
-
+                    
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -1499,16 +1501,16 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                 System.out.println(e);
             }
         }
-
+        
     }
-
+    
     private String leerArchivo(File archivo) {
         FileReader fr = null;
         BufferedReader br = null;
         try {
-
+            
             return modificar(archivo);
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1525,11 +1527,11 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         }
         return "";
     }
-
+    
     void Escribir(File fFichero, String cadena) {
         // Declaramos un buffer de escritura
         BufferedWriter bw;
-
+        
         try {
             // Comprobamos si el archivo no existe y si es asi creamos uno nuevo.
             if (!fFichero.exists()) {
@@ -1540,11 +1542,11 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             bw = new BufferedWriter(new FileWriter(fFichero, true));
             bw.write(cadena);
             bw.close();
-
+            
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        
     }
 
     /**
@@ -1561,7 +1563,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                 Ffichero.delete();
                 System.out.println("Ficherro Borrado");
             }
-
+            
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -1601,12 +1603,12 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             /*Valido si el fichero antiguo que pasamos como parametro existe, si es asi procedo a leer el
             contenido que hay dentro de el
              */
-
+            
             if (fAntiguo.exists()) {
                 br = new BufferedReader(new FileReader(fAntiguo));
-
+                
                 String linea;
-
+                
                 String textoInicial = "<![CDATA[";
                 String salida = "</impuestos>";
 
@@ -1636,7 +1638,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             br.close();
                             Escribir(fNuevo, xml);
                             xml = xml + "\n";
-
+                            
                             try {
                                 // Comprovamos si el fichero existe  de ser así procedemos a borrar el archivo
                                 if (fAntiguo.exists()) {
@@ -1656,13 +1658,13 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             } else {
                                 System.out.println("El fichero no puede ser renombrado");
                             }
-
+                            
                             return xml;
-
+                            
                         } else {
                             xml = xml + eliminaInicio;
                         }
-
+                        
                     } else if (linea.trim().contains(salida)) {
 //                        Escribir(fNuevo, linea);
 //                        Escribir(fNuevo, "</comprobanteRetencion>"
@@ -1680,7 +1682,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                                         + "</comprobante> \n"
                                         + "</autorizacion> \n";
                         }
-
+                        
                         br.close();
                         Escribir(fNuevo, xml);
                         // Capturo el nombre del fichero antiguo
@@ -1705,7 +1707,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         } else {
                             System.out.println("El fichero no puede ser renombrado");
                         }
-
+                        
                         return xml;
                     } else {
 //                        Escribir(fNuevo, linea);
@@ -1717,7 +1719,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             linea = linea.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", "");
                             xml = xml + linea + " \n";
                         }
-
+                        
                     }
                 }
 
@@ -1730,21 +1732,21 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     if (fNuevo.exists()) {
                         FileDeleteStrategy.FORCE.delete(fNuevo);
                     }
-
+                    
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-
+                
             } else {
                 System.out.println("Fichero no Existe");
             }
-
+            
         } catch (Exception e) {
             System.out.println(e);
         }
         return xml;
     }
-
+    
     private void procesaRetencionesXML(RetencionXML dao) {
         retencionSri.eliminarbyClaveAcceso(dao.getComprobante().getComprobanteRetencion().getInfoTributaria().getClaveAcceso());
         SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyy");
@@ -1763,9 +1765,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         /*total retenido*/
         BigDecimal valorRetenido = BigDecimal.ZERO;
         for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
-
+            
             valorRetenido = valorRetenido.add(BigDecimal.valueOf(Double.valueOf(item.getValorRetenido())));
-
+            
         }
         retencionCompraSri.setRcoBaseGravaIva(valorRetenido);
         retencionCompraSri.setRcoFecha(dt);
@@ -1791,7 +1793,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             detalle.setDrcDescripcion(item.getCodigo().equals("2") ? "IVA" : "RENTA");
             detalleRetencionSri.crear(detalle);
         }
-
+        
     }
 
     /*PROCESAR FACTURA DE COMPRAS*/
@@ -1804,9 +1806,9 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         File[] listaArvhivos = folder.listFiles();
         System.out.println("NUMERO ARCHIVOS " + listaArvhivos.length);
         for (File file : listaArvhivos) {
-
+            
             try {
-
+                
                 String xmlParse = leerArchivoFactura(file);
                 System.out.println(xmlParse);
 //                XmlMapper xmlMapper = new XmlMapper();
@@ -1814,17 +1816,17 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 //                RetencionXML value
 //                        = xmlMapper.readValue(xmlParse, RetencionXML.class);
                 JAXBContext jaxbContext;
-
+                
                 try {
                     jaxbContext = JAXBContext.newInstance(FacturaCompraXML.class);
-
+                    
                     Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
+                    
                     FacturaCompraXML factura = (FacturaCompraXML) jaxbUnmarshaller.unmarshal(new StringReader(xmlParse));
-
+                    
                     System.out.println(factura);
                     procesaFacturaXML(factura, xmlParse);
-
+                    
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -1846,16 +1848,16 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                 System.out.println(e);
             }
         }
-
+        
     }
-
+    
     private String leerArchivoFactura(File archivo) {
         FileReader fr = null;
         BufferedReader br = null;
         try {
-
+            
             return modificarFactura(archivo);
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1907,12 +1909,12 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             /*Valido si el fichero antiguo que pasamos como parametro existe, si es asi procedo a leer el
             contenido que hay dentro de el
              */
-
+            
             if (fAntiguo.exists()) {
                 br = new BufferedReader(new FileReader(fAntiguo));
-
+                
                 String linea;
-
+                
                 String textoInicial = "<![CDATA[";
                 String salida = "</detalles>";
 
@@ -1944,7 +1946,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             br.close();
                             Escribir(fNuevo, xml);
                             xml = xml + "\n";
-
+                            
                             try {
                                 // Comprovamos si el fichero existe  de ser así procedemos a borrar el archivo
                                 if (fAntiguo.exists()) {
@@ -1964,18 +1966,18 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             } else {
                                 System.out.println("El fichero no puede ser renombrado");
                             }
-
+                            
                             return xml;
-
+                            
                         } else {
                             if (linea.contains("infoAdicional") || linea.contains("campoAdicional")) {
-
+                                
                             } else {
-
+                                
                                 xml = xml + eliminaInicio + " \n";
                             }
                         }
-
+                        
                     } else if (linea.trim().contains(salida)) {
 //                        Escribir(fNuevo, linea);
 //                        Escribir(fNuevo, "</comprobanteRetencion>"
@@ -1989,7 +1991,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             eliminaInicio = eliminaInicio.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
 //                            eliminaInicio = eliminaInicio.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
                             eliminaInicio = eliminaInicio.replace("<![CDATA[", "");
-
+                            
                             xml = xml + eliminaInicio.replace("<infoAdicional>", "");;
                             xml = xml
                                         + "</detalles> \n"
@@ -2003,7 +2005,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                                         + "</comprobante> \n"
                                         + "</autorizacion> \n";
                         }
-
+                        
                         br.close();
                         Escribir(fNuevo, xml);
                         // Capturo el nombre del fichero antiguo
@@ -2028,7 +2030,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         } else {
                             System.out.println("El fichero no puede ser renombrado");
                         }
-
+                        
                         return xml;
                     } else {
 //                        Escribir(fNuevo, linea);
@@ -2040,12 +2042,12 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                             linea = linea.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", "");
                             linea = linea.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
                             if (linea.contains("infoAdicional") || linea.contains("campoAdicional")) {
-
+                                
                             } else {
                                 xml = xml + linea + " \n";
                             }
                         }
-
+                        
                     }
                 }
 
@@ -2058,29 +2060,29 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     if (fNuevo.exists()) {
                         FileDeleteStrategy.FORCE.delete(fNuevo);
                     }
-
+                    
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-
+                
             } else {
                 System.out.println("Fichero no Existe");
             }
-
+            
         } catch (Exception e) {
             System.out.println(e);
         }
         return xml;
     }
-
+    
     private void procesaFacturaXML(FacturaCompraXML adto, String xml) {
         SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyy");
         /*PARA UN PROVEEDOR EN ESPECIFICO*/
 //                        if (adto.getInfoTributaria().getRuc().equals("1719631549001")) {
         servicioCabeceraComprasri.eliminarbyClaveAcceso(adto.getComprobante().getFactura().getInfoTributaria().getClaveAcceso());
-
+        
         CabeceraCompraSri cabeceraCompra;
-
+        
         cabeceraCompra = new CabeceraCompraSri();
         cabeceraCompra.setCabAutorizacion(adto.getComprobante().getFactura().getInfoTributaria().getClaveAcceso());
         cabeceraCompra.setCabClaveAcceso(adto.getComprobante().getFactura().getInfoTributaria().getClaveAcceso());
@@ -2096,7 +2098,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         } catch (java.text.ParseException e) {
             System.out.println("ERROR FECHA " + e.getMessage());
         }
-
+        
         cabeceraCompra.setCabHomologado("N");
         BigDecimal baseCero = BigDecimal.ZERO;
         BigDecimal baseGrabada = BigDecimal.ZERO;
@@ -2147,7 +2149,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 //        }
 
         servicioCabeceraComprasri.crear(cabeceraCompra);
-
+        
         DetalleCompraSri detalleCom = null;
         BigDecimal factorIva = BigDecimal.ONE.add(parametrizar.getParIvaActual().divide(BigDecimal.valueOf(100)));
         BigDecimal factorUtilidad = BigDecimal.ONE.add(BigDecimal.valueOf(0.47));
@@ -2192,7 +2194,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             detalleCom.setIprodDescripcion(detalle.getDescripcion());
             detalleCom.setIprodSubtotal(detalle.getPrecioUnitario());
             detalleCom.setIprodTotal(detalle.getCantidad().multiply(detalle.getPrecioUnitario()));
-
+            
             servicioDetalleComprasSri.crear(detalleCom);
             System.out.println("DETALLE " + detalle.getCantidad()
                         + " " + detalle.getCodigoPrincipal()
@@ -2200,10 +2202,10 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                         + " " + detalle.getPrecioUnitario()
                         + " " + detalle.getPrecioTotalSinImpuesto());
         }
-
+        
         findCabeceraComprasSriByBetweenFecha();
     }
-
+    
     @Command
     public void exportListboxToExcelCabe() throws Exception {
         try {
@@ -2216,16 +2218,16 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             System.out.println("ERROR AL DESCARGAR EL ARCHIVO" + e.getMessage());
         }
     }
-
+    
     private String exportarExcelCabeceras() throws FileNotFoundException, IOException, ParseException {
 //        List<DetalleCompraSri> descargar = servicioDetalleComprasSri.findByBetweenFechaSRI(inicioComp, finComp);
         String directorioReportes = Executions.getCurrent().getDesktop().getWebApp().getRealPath("/reportes");
-
+        
         Date date = new Date();
         SimpleDateFormat fhora = new SimpleDateFormat("HH:mm");
         SimpleDateFormat sm = new SimpleDateFormat("yyy-MM-dd");
         String strDate = sm.format(date);
-
+        
         String pathSalida = directorioReportes + File.separator + "comprassri.xls";
         System.out.println("Direccion del reporte  " + pathSalida);
         try {
@@ -2238,123 +2240,123 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             FileOutputStream archivo = new FileOutputStream(archivoXLS);
             HSSFWorkbook wb = new HSSFWorkbook();
             HSSFSheet s = wb.createSheet("Comprassri");
-
+            
             HSSFFont fuente = wb.createFont();
             fuente.setBoldweight((short) 700);
             HSSFCellStyle estiloCelda = wb.createCellStyle();
             estiloCelda.setWrapText(true);
             estiloCelda.setAlignment((short) 2);
             estiloCelda.setFont(fuente);
-
+            
             HSSFCellStyle estiloCeldaInterna = wb.createCellStyle();
             estiloCeldaInterna.setWrapText(true);
             estiloCeldaInterna.setAlignment((short) 5);
             estiloCeldaInterna.setFont(fuente);
-
+            
             HSSFCellStyle estiloCelda1 = wb.createCellStyle();
             estiloCelda1.setWrapText(true);
             estiloCelda1.setFont(fuente);
-
+            
             HSSFRow r = null;
-
+            
             HSSFCell c = null;
             r = s.createRow(0);
-
+            
             HSSFCell ch2 = r.createCell(j++);
             ch2.setCellValue(new HSSFRichTextString("FACTURA"));
             ch2.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch0 = r.createCell(j++);
             ch0.setCellValue(new HSSFRichTextString("RUC"));
             ch0.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch1 = r.createCell(j++);
             ch1.setCellValue(new HSSFRichTextString("NOMBRE"));
             ch1.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch3 = r.createCell(j++);
             ch3.setCellValue(new HSSFRichTextString("FECHA EMISION"));
             ch3.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch4 = r.createCell(j++);
             ch4.setCellValue(new HSSFRichTextString("BASE 0%"));
             ch4.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch5 = r.createCell(j++);
             ch5.setCellValue(new HSSFRichTextString("BASE12%"));
             ch5.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch6 = r.createCell(j++);
             ch6.setCellValue(new HSSFRichTextString("IVA"));
             ch6.setCellStyle(estiloCelda);
-
+            
             HSSFCell ch7 = r.createCell(j++);
             ch7.setCellValue(new HSSFRichTextString("TOTAL"));
             ch7.setCellStyle(estiloCelda);
-
+            
             int rownum = 1;
             int i = 0;
-
+            
             for (CabeceraCompraSri item : listaCabeceraCompraSris) {
                 i = 0;
-
+                
                 r = s.createRow(rownum);
-
+                
                 HSSFCell c0 = r.createCell(i++);
                 c0.setCellValue(new HSSFRichTextString(item.getCabNumFactura()));
-
+                
                 HSSFCell c1 = r.createCell(i++);
                 c1.setCellValue(new HSSFRichTextString(item.getCabRucProveedor()));
-
+                
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString(item.getCabProveedor()));
-
+                
                 HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString(sm.format(item.getCabFechaEmision())));
-
+                
                 HSSFCell c4 = r.createCell(i++);
                 c4.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getCabSubTotalCero(), 2).toString()));
-
+                
                 HSSFCell c5 = r.createCell(i++);
                 c5.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getCabSubTotal(), 2).toString()));
-
+                
                 HSSFCell c6 = r.createCell(i++);
                 c6.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getCabIva(), 2).toString()));
                 HSSFCell c7 = r.createCell(i++);
                 c7.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getCabTotal(), 2).toString()));
                 /*autemta la siguiente fila*/
                 rownum += 1;
-
+                
             }
             for (int k = 0; k <= listaCabeceraCompraSris.size(); k++) {
                 s.autoSizeColumn(k);
             }
             wb.write(archivo);
             archivo.close();
-
+            
         } catch (IOException e) {
             System.out.println("error " + e.getMessage());
         }
         return pathSalida;
-
+        
     }
-
+    
     public ListModelList<CabeceraCompraSri> getListaComprasSriModel() {
         return listaComprasSriModel;
     }
-
+    
     public void setListaComprasSriModel(ListModelList<CabeceraCompraSri> listaComprasSriModel) {
         this.listaComprasSriModel = listaComprasSriModel;
     }
-
+    
     public Set<CabeceraCompraSri> getRegistrosSeleccionados() {
         return registrosSeleccionados;
     }
-
+    
     public void setRegistrosSeleccionados(Set<CabeceraCompraSri> registrosSeleccionados) {
         this.registrosSeleccionados = registrosSeleccionados;
     }
-
+    
     @Command
     @NotifyChange({"inicio", "fin", "listaComprasSriModel"})
     public void eliminarCabeceraCabeceraSRI() {
@@ -2363,24 +2365,24 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             findCabeceraComprasSriByBetweenFecha();
             Clients.showNotification("Registros eliminados correctamente ",
                         Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
-
+            
         }
     }
-
+    
     public List<Tipoambiente> getListaTipoambientes() {
         return listaTipoambientes;
     }
-
+    
     public void setListaTipoambientes(List<Tipoambiente> listaTipoambientes) {
         this.listaTipoambientes = listaTipoambientes;
     }
-
+    
     public Tipoambiente getAmb() {
         return amb;
     }
-
+    
     public void setAmb(Tipoambiente amb) {
         this.amb = amb;
     }
-
+    
 }

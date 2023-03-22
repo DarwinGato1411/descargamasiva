@@ -32,12 +32,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "detalle_compra_sri")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetalleCompraSri.findAll", query = "SELECT d FROM DetalleCompraSri d"),
-    @NamedQuery(name = "DetalleCompraSri.findByIdIngresoProdSri", query = "SELECT d FROM DetalleCompraSri d WHERE d.idIngresoProdSri = :idIngresoProdSri"),
-    @NamedQuery(name = "DetalleCompraSri.findByIprodCantidad", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodCantidad = :iprodCantidad"),
-    @NamedQuery(name = "DetalleCompraSri.findByIprodDescripcion", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodDescripcion = :iprodDescripcion"),
-    @NamedQuery(name = "DetalleCompraSri.findByIprodSubtotal", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodSubtotal = :iprodSubtotal"),
-    @NamedQuery(name = "DetalleCompraSri.findByIprodTotal", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodTotal = :iprodTotal"),
+    @NamedQuery(name = "DetalleCompraSri.findAll", query = "SELECT d FROM DetalleCompraSri d")
+    ,
+    @NamedQuery(name = "DetalleCompraSri.findByIdIngresoProdSri", query = "SELECT d FROM DetalleCompraSri d WHERE d.idIngresoProdSri = :idIngresoProdSri")
+    ,
+    @NamedQuery(name = "DetalleCompraSri.findByIprodCantidad", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodCantidad = :iprodCantidad")
+    ,
+    @NamedQuery(name = "DetalleCompraSri.findByIprodDescripcion", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodDescripcion = :iprodDescripcion")
+    ,
+    @NamedQuery(name = "DetalleCompraSri.findByIprodSubtotal", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodSubtotal = :iprodSubtotal")
+    ,
+    @NamedQuery(name = "DetalleCompraSri.findByIprodTotal", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodTotal = :iprodTotal")
+    ,
     @NamedQuery(name = "DetalleCompraSri.findByIprodCodigoProvee", query = "SELECT d FROM DetalleCompraSri d WHERE d.iprodCodigoProvee = :iprodCodigoProvee")})
 public class DetalleCompraSri implements Serializable {
 
@@ -205,7 +211,7 @@ public class DetalleCompraSri implements Serializable {
 
     public BigDecimal getBase12() {
         if (iprodGrabaIva) {
-            base12 = iprodSubtotal;
+            base12 = iprodTotal;
         } else {
             base12 = BigDecimal.ZERO;
         }
@@ -214,7 +220,7 @@ public class DetalleCompraSri implements Serializable {
 
     public BigDecimal getBase0() {
         if (!iprodGrabaIva) {
-            base0 = iprodSubtotal;
+            base0 = iprodTotal;
         } else {
             base0 = BigDecimal.ZERO;
         }
@@ -222,7 +228,12 @@ public class DetalleCompraSri implements Serializable {
     }
 
     public BigDecimal getIva() {
-        iva = iprodSubtotal.multiply(BigDecimal.valueOf(0.12));
+        if (!iprodGrabaIva) {
+            iva = BigDecimal.ZERO;
+        } else {
+            iva = iprodSubtotal.multiply(iprodCantidad).multiply(BigDecimal.valueOf(0.12));
+        }
+
         return iva;
     }
 

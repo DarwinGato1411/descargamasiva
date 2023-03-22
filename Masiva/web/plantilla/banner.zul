@@ -42,7 +42,7 @@
         <label value="Gestionar compras"/>
         <div class="ul">
             <div class="li"><label value="Descargar compras desde el SRI" id="btnListaComprasSRI"  /></div>
-            <div class="li"><label value="Clasificar productos" id="btnReporteDetallado"/></div>
+            <div class="li"><label value="Clasificar items compras" id="btnReporteDetallado"/></div>
             
         </div>
     </div>
@@ -58,6 +58,7 @@
         <label value="Reportes"/>
         <div  class="ul">
             <div class="li"><label value="Gastos personales" id="btnTotalizarRubros"  /></div>
+            <div class="li"><label value="Detalle Gastos con Proveedor" id="btnDetGasProv"  /></div>
             <div class="li"><label value="Formulario 104" id="btnFormulario"  /></div>
 </div>
     </div>

@@ -109,6 +109,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnTotalizarRubros() {
         Executions.sendRedirect("/compra/totalizarrubros.zul");
     }
+    @Listen("onClick = #btnDetGasProv")
+    public void btnDetGasProv() {
+        Executions.sendRedirect("/compra/totalizarrubrosprov.zul");
+    }
 
     @Listen("onClick = #btnFacturar")
     public void doFacturar() {
