@@ -2362,6 +2362,8 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         this.registrosSeleccionados = registrosSeleccionados;
     }
 
+    
+    
     @Command
     @NotifyChange({"inicio", "fin", "listaComprasSriModel"})
     public void eliminarCabeceraCabeceraSRI() {

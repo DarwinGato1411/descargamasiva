@@ -121,6 +121,27 @@ public class ServicioRetencionSri {
         }
 
     }
+     
+     public void eliminarRetencionesSri(Date inicio, Date fin, Tipoambiente codTipoambiente) {
+
+        try {
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            Query query = em.createQuery("DELETE FROM RetencionCompraSri a WHERE a.rcoFecha BETWEEN :inicio and :fin AND a.codTipoambiente=:codTipoambiente");
+            query.setParameter("inicio", inicio);
+            query.setParameter("fin", fin);
+            query.setParameter("codTipoambiente", codTipoambiente);
+            int i = query.executeUpdate();
+
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("Error en eliminar  comprasSri " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
 
    
 }

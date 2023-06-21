@@ -72,11 +72,11 @@
                               label="Limpiar datos TXT"
                               class="btn btn2 "
                               tooltiptext="Eliminar registros"/>
-                    <button   image="/iconos/excel.png"
+<!--                    <button   image="/iconos/excel.png"
                               label="Descargar Retenciones"
                               onClick="@command('exportarDocumentosSRI')"  
                               class="btn btn3"
-                              tooltiptext="Descargar Retenciones"/>
+                              tooltiptext="Descargar Retenciones"/>-->
                     <button   image="/iconos/sri.png" 
                               label="Descarga Documentos SRI" 
                               onClick="@command('cargarComprasSRI')"  
@@ -164,7 +164,7 @@
                 
                 <button   image="/iconos/delete.png"  
                           onClick="@command('eliminarCabeceraCabeceraSRI')"                                                                        
-                          label="LImpiar datos TXT"
+                          label="Eliminar facturas"
                           class="btn btn2"
                           tooltiptext="Elminar facturas obtenidas del SRI"/>
                 <button   image="/iconos/excel.png"  

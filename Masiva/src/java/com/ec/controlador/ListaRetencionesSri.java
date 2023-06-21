@@ -259,7 +259,7 @@ public class ListaRetencionesSri extends SelectorComposer<Component> {
     }
 
     private void findBetweenRetenciones() {
-        listaRetencioSri = retencionSri.findRetencionesBetween(inicio, fin,amb);
+        listaRetencioSri = retencionSri.findRetencionesBetween(inicio, fin, amb);
     }
 
     @Command
@@ -268,6 +268,17 @@ public class ListaRetencionesSri extends SelectorComposer<Component> {
         if (Messagebox.show("Esta seguro de eliminar los registros?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
             servicioComprasSri.eliminarCabeceraSri(inicio, fin, amb);
             findComprasSriByBetweenFecha();
+            Clients.showNotification("Registros eliminados correctamente ",
+                        Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
+        }
+    }
+
+    @Command
+    @NotifyChange({"listaComprasSris", "inicio", "fin", "listaComprasSriModel", "listaRetencioSri"})
+    public void eliminarRetencionSRI() {
+        if (Messagebox.show("Esta seguro de eliminar los registros?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
+            retencionSri.eliminarRetencionesSri(inicio, fin, amb);
+            findBetweenRetenciones();
             Clients.showNotification("Registros eliminados correctamente ",
                         Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
         }
@@ -2415,9 +2426,9 @@ public class ListaRetencionesSri extends SelectorComposer<Component> {
 
     @Command
     @NotifyChange({"inicio", "fin", "listaComprasSriModel"})
-    public void eliminarCabeceraCabeceraSRI() {
+    public void eliminarRetencionesSRI() {
         if (Messagebox.show("Esta seguro de eliminar los registros?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-            servicioCabeceraComprasri.eliminarCabeceraComprasSri(inicio, fin, amb);
+            retencionSri.eliminarRetencionesSri(inicio, fin, amb);
             findCabeceraComprasSriByBetweenFecha();
             Clients.showNotification("Registros eliminados correctamente ",
                         Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
@@ -2443,6 +2454,7 @@ public class ListaRetencionesSri extends SelectorComposer<Component> {
 
 //PROCESAR XML desde SRI
     @Command
+    @NotifyChange({"listaRetencioSri", "inicio", "fin"})
     public void procesarXMLRetencionSRI(File xml, String version) {
         String pathDoc = PATH_BASE + File.separator + SRIRETENCION;
         String pathArchivoXML = "";
@@ -2486,18 +2498,7 @@ public class ListaRetencionesSri extends SelectorComposer<Component> {
                 e.printStackTrace();
             }
 
-            // Capturo el nombre del fichero antiguo
-            try {
-                // Comprovamos si el fichero existe  de ser así procedemos a borrar el archivo
-//                if (xml.exists()) {
-//
-//                    FileDeleteStrategy.FORCE.delete(xml);
-//                }
-
-//                    Files.move(fNuevo.toPath(), fAntiguo.toPath());
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            findBetweenRetenciones();
         } catch (Exception e) {
             System.out.println(e);
         }
