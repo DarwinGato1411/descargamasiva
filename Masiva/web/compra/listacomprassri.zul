@@ -35,6 +35,7 @@
                         <datebox  class="fecha"  value="@bind(vm.inicio)" 
                                   style="font-weight:bold;"                                                   
                                   buttonVisible="true" 
+                                  
                                   lenient="true"  format="dd/MM/yyyy" 
                                   constraint="no empty: Ingrese de inicio de la busqueda"
                                   width="90%"/> 
@@ -42,8 +43,7 @@
                     <div class="contenidoEspe">
                         <label  class="texto"    width="30%" value="Fin: "  />
                         <datebox  class="fecha" width="90%"  value="@bind(vm.fin)" 
-                                  style="font-weight:bold;" 
-                                  onCreate="self.value = new Date()"                                                   
+                                  style="font-weight:bold;"                                                   
                                   buttonVisible="true" 
                                   lenient="true"  format="dd/MM/yyyy" 
                                   constraint="no empty: Buscar por fecha fin de la busqueda"

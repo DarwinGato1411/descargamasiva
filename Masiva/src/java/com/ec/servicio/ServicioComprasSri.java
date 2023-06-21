@@ -144,7 +144,7 @@ public class ServicioComprasSri {
     }
 
     /*documentos no procesados por rango de fechas*/
-    public List<ComprasSri> findNoVerificadosBetweenFecha(Date inicio, Date fin, String tipo,Tipoambiente codTipoambiente) {
+    public List<ComprasSri> findNoVerificadosBetweenFecha(Date inicio, Date fin, String tipo, Tipoambiente codTipoambiente) {
 
         List<ComprasSri> listaComprasSris = new ArrayList<ComprasSri>();
         try {
@@ -166,17 +166,16 @@ public class ServicioComprasSri {
 
         return listaComprasSris;
     }
-    
-    
 
-    public void eliminarCabeceraSri(Date inicio, Date fin) {
+    public void eliminarCabeceraSri(Date inicio, Date fin, Tipoambiente codTipoambiente) {
 
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("DELETE FROM ComprasSri a WHERE a.csriFechaEmision BETWEEN :inicio and :fin");
+            Query query = em.createQuery("DELETE FROM ComprasSri a WHERE a.csriFechaEmision BETWEEN :inicio and :fin and a.codTipoambiente=:codTipoambiente");
             query.setParameter("inicio", inicio);
             query.setParameter("fin", fin);
+            query.setParameter("codTipoambiente", codTipoambiente);
             int i = query.executeUpdate();
 
             em.getTransaction().commit();

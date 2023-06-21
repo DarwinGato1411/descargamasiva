@@ -4,12 +4,14 @@
  */
 package com.ec.controlador.declara;
 
+import com.ec.entidad.Parametrizar;
 import com.ec.entidad.Tipoambiente;
 import com.ec.entidad.TotalizadoRubros;
 import com.ec.entidad.TotalizadoRubrosVenta;
 import com.ec.entidad.sri.CabeceraCompraSri;
 import com.ec.seguridad.EnumSesion;
 import com.ec.seguridad.UserCredential;
+import com.ec.servicio.ServicioParametrizar;
 import com.ec.servicio.ServicioTipoAmbiente;
 import com.ec.vista.servicios.ServicioTotalizadoRubros;
 import com.ec.vista.servicios.ServicioTotalizadoRubrosVenta;
@@ -43,12 +45,22 @@ public class FormularioDeclara {
 
     private Integer numeroCompro = 0;
 
+    ServicioParametrizar servicioParametrizar = new ServicioParametrizar();
+    Parametrizar parametrizar = new Parametrizar();
+
     public FormularioDeclara() {
+        parametrizar = servicioParametrizar.finActivo();
         Session sess = Sessions.getCurrent();
         credential = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
         listaTipoambientes = servicioTipoAmbiente.findAll(credential.getUsuarioSistema());
         amb = servicioTipoAmbiente.finSelectFirst(credential.getUsuarioSistema());
+
+        if (parametrizar.getParFijarFecha()) {
+            fechainicio = parametrizar.getParFechanicio() == null ? new Date() : parametrizar.getParFechanicio();
+            fechafin = parametrizar.getParFechaFin() == null ? new Date() : parametrizar.getParFechaFin();
+        }
         buscarRubros();
+
     }
 
     private void buscarRubros() {

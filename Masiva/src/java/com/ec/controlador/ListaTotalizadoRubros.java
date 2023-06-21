@@ -9,6 +9,7 @@ import com.ec.entidad.Tipoambiente;
 import com.ec.entidad.TotalizadoRubros;
 import com.ec.seguridad.EnumSesion;
 import com.ec.seguridad.UserCredential;
+import com.ec.servicio.ServicioParametrizar;
 import com.ec.servicio.ServicioTipoAmbiente;
 import com.ec.untilitario.ArchivoUtils;
 import com.ec.vista.servicios.ServicioTotalizadoRubros;
@@ -65,6 +66,8 @@ public class ListaTotalizadoRubros extends SelectorComposer<Component> {
      * busqueda
      */
     private String iprodClasificacio = "TODO";
+//    Parametrizar parametrizar = new Parametrizar();
+    ServicioParametrizar servicioParametrizar = new ServicioParametrizar();
 
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
@@ -72,7 +75,7 @@ public class ListaTotalizadoRubros extends SelectorComposer<Component> {
     }
 
     public ListaTotalizadoRubros() {
-
+        parametrizar = servicioParametrizar.finActivo();
         //muestra 7 dias atras
         Calendar calendar = Calendar.getInstance(); //obtiene la fecha de hoy 
         calendar.add(Calendar.DATE, -15); //el -3 indica que se le restaran 3 dias 
@@ -85,6 +88,11 @@ public class ListaTotalizadoRubros extends SelectorComposer<Component> {
         listaTipoambientes = servicioTipoAmbiente.findAll(credential.getUsuarioSistema());
         amb = servicioTipoAmbiente.finSelectFirst(credential.getUsuarioSistema());
         //OBTIENE LAS RUTAS DE ACCESO A LOS DIRECTORIOS DE LA TABLA TIPOAMBIENTE
+
+        if (parametrizar.getParFijarFecha()) {
+            inicio = parametrizar.getParFechanicio() == null ? new Date() : parametrizar.getParFechanicio();
+            fin = parametrizar.getParFechaFin() == null ? new Date() : parametrizar.getParFechaFin();
+        }
     }
 
     @Command
@@ -163,11 +171,10 @@ public class ListaTotalizadoRubros extends SelectorComposer<Component> {
             ch0.setCellValue(new HSSFRichTextString("Total 0%"));
             ch0.setCellStyle(estiloCelda);
 
-            
             HSSFCell ch01 = r.createCell(j++);
             ch01.setCellValue(new HSSFRichTextString("Total 12%"));
             ch01.setCellStyle(estiloCelda);
-            
+
             HSSFCell ch1 = r.createCell(j++);
             ch1.setCellValue(new HSSFRichTextString("Total"));
             ch1.setCellStyle(estiloCelda);
@@ -185,14 +192,13 @@ public class ListaTotalizadoRubros extends SelectorComposer<Component> {
 
 //                HSSFCell c1 = r.createCell(i++);
 //                c1.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getSubtotal(), 2).toString()));
-
                 HSSFCell c2 = r.createCell(i++);
                 c2.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotal0(), 2).toString()));
 
-                 HSSFCell c3 = r.createCell(i++);
+                HSSFCell c3 = r.createCell(i++);
                 c3.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotal12(), 2).toString()));
 
-                 HSSFCell c4 = r.createCell(i++);
+                HSSFCell c4 = r.createCell(i++);
                 c4.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getTotal(), 2).toString()));
 
                 /*autemta la siguiente fila*/

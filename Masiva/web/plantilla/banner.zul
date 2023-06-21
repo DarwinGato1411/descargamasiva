@@ -15,17 +15,21 @@
 
                                     
                                  
-                                    <div class="nav ul infoPersona">
+                    <div class="nav ul infoPersona">
 
-                                        <div class="li">                    
-                                                <image style="display:inline-block;" id="" src="/imagenes/user1.png" width="20px"  height="20px"/> 
-                                                <label class="usu" style="display:inline-block;" value="Usuario: ${sessionScope.usuario.nombreUsuario}" />      
-                                            <div class="ul">
-                                                <div class="li"><label value="Tipo Ambiente: ${sessionScope.usuario.usuarioSistema.idUsuario}" /></div>
-                                                <div class="li" style="background:red;"><label value="Cerrar Sesión" id="logout" if="${not sessionScope.userCredential.anonymous}"  class="logoutMenu"/></div>  
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="li">                    
+                            <image style="display:inline-block;" id="" src="/imagenes/user1.png" width="20px"  height="20px"/> 
+                            <label class="usu" style="display:inline-block;" value="Usuario: ${sessionScope.usuario.nombreUsuario}" />      
+                            <div class="ul">
+                                <div class="li">
+                                    <label value="Tipo Ambiente: ${sessionScope.usuario.usuarioSistema.idUsuario}" />
+                                </div>
+                                <div class="li" style="background:red;">
+                                    <label value="Cerrar Sesión" id="logout" if="${not sessionScope.userCredential.anonymous}"  class="logoutMenu"/>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
                                      
 
                 </div>              
@@ -33,162 +37,96 @@
            
         </div>
        
-            <div  viewModel="@id('vm')" id="gridMenu" 
-                  apply="com.ec.controlador.MenuOpciones" 
-            class="" style="width:100%;background:#5086C1;" >
-         <div class="nav ul">
+        <div  viewModel="@id('vm')" id="gridMenu" 
+              apply="com.ec.controlador.MenuOpciones" 
+              class="" style="width:100%;background:#5086C1;" >
+            <div class="nav ul">
    
-    <div class="li">
-        <label value="Gestionar compras"/>
-        <div class="ul">
-            <div class="li"><label value="Descargar compras desde el SRI" id="btnListaComprasSRI"  /></div>
-            <div class="li"><label value="Clasificar items compras" id="btnReporteDetallado"/></div>
+                <div class="li">
+                    <label value="Gestionar compras"/>
+                    <div class="ul">
+                        <div class="li">
+                            <label value="Descargar compras desde el SRI" id="btnListaComprasSRI"  />
+                        </div>
+                        <div class="li">
+                            <label value="Clasificar items compras" id="btnReporteDetallado"/>
+                        </div>
             
-        </div>
-    </div>
-    <div class="li">
-        <label value="Gestionar ventas"/>
-        <div  class="ul">
-            <div class="li"><label value="Descargar ventas desde el SRI" id="btnListaVentasSRI"  /></div>   
-        </div>
-    </div>
+                    </div>
+                </div>
+                <div class="li">
+                    <label value="Gestionar retenciones"/>
+                    <div class="ul">
+                        <div class="li">
+                            <label value="Descargar retenciones desde el SRI" id="btnListarRetenciones"  />
+                        </div>
+                     
+            
+                    </div>
+                </div>
+                <div class="li">
+                    <label value="Gestionar ventas"/>
+                    <div  class="ul">
+                        <div class="li">
+                            <label value="Descargar ventas desde el SRI" id="btnListaVentasSRI"  />
+                        </div>   
+                    </div>
+                </div>
    
     
-<div class="li">
-        <label value="Reportes"/>
-        <div  class="ul">
-            <div class="li"><label value="Gastos personales" id="btnTotalizarRubros"  /></div>
-            <div class="li"><label value="Detalle Gastos con Proveedor" id="btnDetGasProv"  /></div>
-            <div class="li"><label value="Formulario 104" id="btnFormulario"  /></div>
-</div>
-    </div>
- <div class="li"><label value="Catalogos" id="btnAdministarVenta"/></div>
-</div>
-                
-                   <!-- <menubar id="menubar" orient="horizontal"  autodrop="true" style=" border:0px;" >
-
-                        <menu class="menuempP" label="Gestionar compras" id="menuCompras" >
-                            <menupopup >                     
-                                <menuitem label="Descargar compras desde el SRI" id="btnListaComprasSRI"  />
-                                <menuitem label="Clasificar productos" id="btnReporteDetallado"  />
-                                <menuitem label="Gastos personales" id="btnTotalizarRubros"  />
-                               
-
-                            </menupopup>
-                        </menu>          
-                        <menu class="menuempP" label="Gestionar ventas" id="menuVentas">
-                            <menupopup>                     
-                                <menuitem label="Descargar ventas desde el SRI" id="btnListaVentasSRI"  />
-                                   
-                            </menupopup>
-                        </menu>  
-                        <menu class="menuempP" label="Reportes" id="menuRep">
-                            <menupopup>                     
-                                <menuitem label="Formulario 104 (Casilleros)" id="btnForm104"  />
-                                   
-                            </menupopup>
-                        </menu>  
-
-                        
-                    <menuitem class="menuempP" llabel="Catalogos" id="btnAdministarVenta"  /> 
-                        
-     
-                      
-                    </menubar>    -->
-                                    
+                <div class="li">
+                    <label value="Reportes"/>
+                    <div  class="ul">
+                        <div class="li">
+                            <label value="Gastos personales" id="btnTotalizarRubros"  />
+                        </div>
+                        <div class="li">
+                            <label value="Detalle Gastos con Proveedor" id="btnDetGasProv"  />
+                        </div>
+                        <div class="li">
+                            <label value="Formulario 104" id="btnFormulario"  />
+                        </div>
+                    </div>
                 </div>
+                <div class="li">
+                    <label value="Catalogos" id="btnAdministarVenta"/>
+                </div>
+                
+                <div  align="end" style="margin-left:100px;">
+                    <div apply="org.zkoss.bind.BindComposer" 
+                         viewModel="@id('vm') @init('com.ec.controlador.MenuToolbar')">
+                 
+                        <checkbox   style="    width: 20px;height: 20px;"             
+                                    label="Fijar fecha" 
+                                    onCheck="@command('fejarFechaEstado')"
+                        
+                                    checked="@bind(vm.parametrizar.parFijarFecha)" 
+                        />
+                        <datebox  class="fecha"  value="@bind(vm.parametrizar.parFechanicio)" 
+                                  style="font-weight:bold;"                                                   
+                                  buttonVisible="true" 
+                                  lenient="true"  format="dd/MM/yyyy" 
+                                  constraint="no empty: Ingrese de inicio de la busqueda fijada"/>
+                        <datebox  class="fecha"  value="@bind(vm.parametrizar.parFechaFin)" 
+                                  style="font-weight:bold;"                                                   
+                                  buttonVisible="true" 
+                                  lenient="true"  format="dd/MM/yyyy" 
+                                  constraint="no empty: Ingrese de inicio de la busqueda fijada"/>
+                        
+                        <button   id="btnFijar"
+                                  onClick="@command('fejarFecha')"
+                                  class="btn btn-primary btn-sm "
+                                  label="Establecer fechas para el sistema"
+                                  tooltiptext="Fijar fechas seleccionadas"/>
+                    </div>
+                </div>
+            </div>
+                
+                   
+                                    
+        </div>
                 
         
         
     </div>
 </zk>
-<!--<div hflex="1" vflex="1" sclass="banner">
-    <hbox hflex="1" vflex="1" align="center" >
-        <div width="100%">
-            <label value="Sistema de cotizacion" sclass="banner-head" />
-        </div>
-        <hbox apply="imp.controladoresviewesview.LogoutController" width="100%"
-                  hflex="1" vflex="1" pack="end" align="end" >
-           
-        </hbox>       
-    </hbox>
-</div>-->
-<!--
-<div hflex="1" vflex="1" class="table" sclass="banner" apply="imp.controladoresviewesview.LogoutController" >
-    
-    <nav sclass="navbar navbar-default">
-    <menubar  width="100%" apply="imp.controladoresviewesview.MenuOpcionesViewModel" autodrop="true" >
-        <menuitem id="btnPrincipal" label="INICIO"   />
-        <menuitem id="btnAdministrar" label="CATALOGOS"  />
-      
-        <menu label="ORDEN CON COTIZACION" visible="true"    >
-            <menupopup>
-                <menu  label="COTIZACIONES" >
-                    <menupopup>
-                        <menuitem id="btnCotizar" label="GENERAL" />
-                        <menuitem  id="btnCompaginado" label="COMPAGINADO" />
-                        <menuitem  id="btnGiganto" label="GIGANTOGRAFIA" />
-                        <menuitem  id="btnDigital" label="DIGITAL" />
-                    </menupopup>
-                </menu>
-                <menu  label="LISTA DE COTIZACIONES" >
-                    <menupopup>
-                        <menuitem  id="btnListaUsuarios" label="GENERADAS" />
-                        <menuitem  id="btnCotizacionCerrada" label="CERRADA" />
-                        <menuitem id="btnCotizacionFacturadas" label="FACTURADAS" />
-                        <menuitem image="/imagenes/group.png" id="btnDigital" label="DIGITAL" />
-                    </menupopup>
-                </menu>
-                <menu  label="ORDEN DE PRODUCCION" >
-                    <menupopup>
-                        <menuitem  id="btnOrdenFinalizada" label="CERRADA" />
-                    </menupopup>
-                </menu>
-
-            </menupopup>
-        </menu>
-        <menu label="ORDEN SIN COTIZACION" visible="true"    >
-            <menupopup>
-             
-                <menuitem  id="btnOrdenSinCotizar" label="GENERAR ORDEN" >
-                </menuitem>
-                <menu  label="LISTA DE ORDEN DE PRODUCCION" >
-                    <menupopup>
-                        <menuitem  id="btnOrdenSinCotizar" label="ORDEN SIN COTIZACION" />
-                        <menuitem  id="btnListaOrdenSinCotizar" label="GENERADAS" />
-                        <menuitem  id="btnListaOrdenSinCotizarCerradas" label="CERRADAS" />
-                        <menuitem  id="btnListaOrdenSinCotizarFacturadas" label="FACTURADAS" />
-                    </menupopup>
-                </menu>
-
-            </menupopup>
-        </menu>
-        <menu label="ADMINISTRACION" visible="true"    >
-            <menupopup>
-             
-                <menuitem  id="btnMaterialSolicitado" label="SOLICITAR MATERIAL" >
-                </menuitem>
-                
-              
-                <menuitem  id="btnMailMasivo" label="PUBLICIDAD MASIVA" >
-                </menuitem>
-                <menuitem  id="btnManual" label="MANUAL USUARIO" >
-                </menuitem>
-                  <menuitem  id="btnUsuarios" label="USUARIOS" >
-                </menuitem>
-               
-                
-
-            </menupopup>
-        </menu>
-         <menuitem  id="btnCalculadora" label="CALCULADORA" >
-                </menuitem>
-       <menuitem  label="Usuario: ${sessionScope.usuario.nombreUsuario}" 
-                       style=" float:rigth;position:absolute;right:10%;" 
-                       if="${not sessionScope.userCredential.anonymous}" sclass="info"  />
-        <menuitem id="logout" label="Salir"  style=" float:rigth;position:absolute;right:1%;" 
-                      image="/imagenes/cancel.png" />
-                  
-    </menubar>    
-    </nav>
-</div>-->

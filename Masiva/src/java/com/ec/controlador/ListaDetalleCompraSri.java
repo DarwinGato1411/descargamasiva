@@ -11,6 +11,7 @@ import com.ec.entidad.sri.DetalleCompraSri;
 import com.ec.seguridad.EnumSesion;
 import com.ec.seguridad.UserCredential;
 import com.ec.servicio.ServicioDetalleComprasSri;
+import com.ec.servicio.ServicioParametrizar;
 import com.ec.servicio.ServicioTipoAmbiente;
 import com.ec.untilitario.ArchivoUtils;
 import com.ec.vista.servicios.ServicioTotalizadoRubros;
@@ -66,7 +67,9 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
 
     UserCredential credential = new UserCredential();
     Parametrizar parametrizar = new Parametrizar();
+    ServicioParametrizar servicioParametrizar = new ServicioParametrizar();
     private List<Tipoambiente> listaTipoambientes = new ArrayList<Tipoambiente>();
+    
     /**
      * busqueda
      */
@@ -78,7 +81,7 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
     }
 
     public ListaDetalleCompraSri() {
-
+        parametrizar = servicioParametrizar.finActivo();
         //muestra 7 dias atras
         Calendar calendar = Calendar.getInstance(); //obtiene la fecha de hoy 
         calendar.add(Calendar.DATE, -15); //el -3 indica que se le restaran 3 dias 
@@ -91,6 +94,10 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
         listaTipoambientes = servicioTipoAmbiente.findAll(credential.getUsuarioSistema());
         amb = servicioTipoAmbiente.finSelectFirst(credential.getUsuarioSistema());
         //OBTIENE LAS RUTAS DE ACCESO A LOS DIRECTORIOS DE LA TABLA TIPOAMBIENTE
+        if (parametrizar.getParFijarFecha()) {
+            inicio = parametrizar.getParFechanicio() == null ? new Date() : parametrizar.getParFechanicio();
+            fin = parametrizar.getParFechaFin() == null ? new Date() : parametrizar.getParFechaFin();
+        }
     }
 
     @Command
@@ -256,15 +263,15 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
                 HSSFCell c7 = r.createCell(i++);
                 c7.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getBase12(), 2).toString()));
                 totalBase12 = totalBase12.add(ArchivoUtils.redondearDecimales(item.getBase12(), 2));
-                
+
                 HSSFCell c71 = r.createCell(i++);
                 c71.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getBase0(), 2).toString()));
                 totalBase0 = totalBase0.add(ArchivoUtils.redondearDecimales(item.getBase0(), 2));
-                
+
                 HSSFCell c8 = r.createCell(i++);
                 c8.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getIprodTotal(), 2).toString()));
-                   totalFinal = totalFinal.add(ArchivoUtils.redondearDecimales(item.getIprodTotal(), 2));
-                
+                totalFinal = totalFinal.add(ArchivoUtils.redondearDecimales(item.getIprodTotal(), 2));
+
                 HSSFCell c9 = r.createCell(i++);
                 c9.setCellValue(new HSSFRichTextString(item.getIprodClasificacion().equals("N") ? "NEGOCIO"
                             : item.getIprodClasificacion().equals("S") ? "SALUD"
@@ -279,7 +286,7 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
             }
 
             j = 0;
-             r = s.createRow(rownum);
+            r = s.createRow(rownum);
             /*  HSSFCell ch201 = r.createCell(j++);
             ch201.setCellValue(new HSSFRichTextString(""));
             ch201.setCellStyle(estiloCelda);

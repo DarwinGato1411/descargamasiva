@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -71,18 +72,21 @@ public class ComprasSri implements Serializable {
 
     @Column(name = "csri_verificado")
     private String csriVerificado;
-    
+
     @Column(name = "csri_tipo_factura")
     private String csriTipoFactura;
-    
+
     @JoinColumn(name = "cod_tipoambiente", referencedColumnName = "cod_tipoambiente")
     @ManyToOne
     private Tipoambiente codTipoambiente;
 
+    @Transient
+    private String numeroDocModificado;
+
     public ComprasSri() {
     }
 
-    public ComprasSri(String csriComprobante, String csriSerieComprobante, String csriRucEmisor, String csriRazonSocial, Date csriFechaEmision, Date csriFechaAutorizacion, String csriTipoEmision, String csriIdentificacionReceptor, String csriClaveAcceso, String csriAutorizacion, String csriTotal, String csriVerificado) {
+    public ComprasSri(String csriComprobante, String csriSerieComprobante, String csriRucEmisor, String csriRazonSocial, Date csriFechaEmision, Date csriFechaAutorizacion, String csriTipoEmision, String numeroDocModificado, String csriIdentificacionReceptor, String csriClaveAcceso, String csriAutorizacion, String csriTotal, String csriVerificado) {
         this.csriComprobante = csriComprobante;
         this.csriSerieComprobante = csriSerieComprobante;
         this.csriRucEmisor = csriRucEmisor;
@@ -95,6 +99,22 @@ public class ComprasSri implements Serializable {
         this.csriAutorizacion = csriAutorizacion;
         this.csriTotal = csriTotal;
         this.csriVerificado = csriVerificado;
+        this.numeroDocModificado = numeroDocModificado;
+    }
+    public ComprasSri(String csriComprobante, String csriSerieComprobante, String csriRucEmisor, String csriRazonSocial, Date csriFechaEmision, Date csriFechaAutorizacion, String csriTipoEmision, String numeroDocModificado, String csriIdentificacionReceptor, String csriClaveAcceso, String csriAutorizacion, String csriTotal) {
+        this.csriComprobante = csriComprobante;
+        this.csriSerieComprobante = csriSerieComprobante;
+        this.csriRucEmisor = csriRucEmisor;
+        this.csriRazonSocial = csriRazonSocial;
+        this.csriFechaEmision = csriFechaEmision;
+        this.csriFechaAutorizacion = csriFechaAutorizacion;
+        this.csriTipoEmision = csriTipoEmision;
+        this.csriIdentificacionReceptor = csriIdentificacionReceptor;
+        this.csriClaveAcceso = csriClaveAcceso;
+        this.csriAutorizacion = csriAutorizacion;
+        this.csriTotal = csriTotal;
+     
+        this.numeroDocModificado = numeroDocModificado;
     }
 
     public ComprasSri(BigDecimal idCompSri) {
@@ -213,6 +233,14 @@ public class ComprasSri implements Serializable {
         this.csriTipoFactura = csriTipoFactura;
     }
 
+    public String getNumeroDocModificado() {
+        return numeroDocModificado;
+    }
+
+    public void setNumeroDocModificado(String numeroDocModificado) {
+        this.numeroDocModificado = numeroDocModificado;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -238,8 +266,6 @@ public class ComprasSri implements Serializable {
         return "ComprasSri{" + "idCompSri=" + idCompSri + ", csriComprobante=" + csriComprobante + ", csriSerieComprobante=" + csriSerieComprobante + ", csriRucEmisor=" + csriRucEmisor + ", csriRazonSocial=" + csriRazonSocial + ", csriFechaEmision=" + csriFechaEmision + ", csriFechaAutorizacion=" + csriFechaAutorizacion + ", csriTipoEmision=" + csriTipoEmision + ", csriIdentificacionReceptor=" + csriIdentificacionReceptor + ", csriClaveAcceso=" + csriClaveAcceso + ", csriAutorizacion=" + csriAutorizacion + ", csriTotal=" + csriTotal + ", csriVerificado=" + csriVerificado + '}';
     }
 
-    
-    
     public Tipoambiente getCodTipoambiente() {
         return codTipoambiente;
     }

@@ -5,8 +5,10 @@
 package com.ec.controlador;
 
 import com.ec.dao.DetalleFacturaDAO;
+import com.ec.entidad.Parametrizar;
 import com.ec.seguridad.EnumSesion;
 import com.ec.seguridad.UserCredential;
+import com.ec.servicio.ServicioParametrizar;
 import java.util.HashMap;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -28,20 +30,7 @@ import org.zkoss.zul.Menuitem;
  */
 public class MenuOpciones extends SelectorComposer<Component> {
 
-//    @Wire("#btnAdministrar")
-//    Button btnAdministrar;
-//    @Wire("#btnCotizar")
-//    Button btnCotizar;
-//    @Wire("#btnCompaginado")
-//    Button btnCompaginado;
-//    @Wire("#btnGiganto")
-//    Button btnGiganto;
-//    @Wire("#btnDigital")
-//    Button btnDigital;
-//    @Wire("#btnUsuarios")
-//    Button btnUsuarios;
-//    @Wire("#btnIngresoCompras")
-//    Button btnIngresoCompras;
+   
     @Wire("#btnFacturar")
     Menuitem btnFacturar;
     @Wire("#menuVentas")
@@ -63,10 +52,9 @@ public class MenuOpciones extends SelectorComposer<Component> {
 
     @Wire("# btnListaVentasSRI")
     Menuitem btnListaVentasSRI;
-    
+
     @Wire("#btnFormulario")
     Menuitem btnFormulario;
- 
 
     UserCredential credential = new UserCredential();
     private String acceso = "";
@@ -75,29 +63,13 @@ public class MenuOpciones extends SelectorComposer<Component> {
         Session sess = Sessions.getCurrent();
         UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
         credential = cre;
+        
     }
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
-//        if (credential.getUsuarioSistema() != null) {
-//
-//            if (credential.getUsuarioSistema().getUsuNivel() == 1) {
-//                btnFacturar.setVisible(Boolean.TRUE);
-//                menuVentas.setVisible(Boolean.TRUE);
-//                menuCompras.setVisible(Boolean.TRUE);
-//                menuKardex.setVisible(Boolean.TRUE);
-//                menuReportes.setVisible(Boolean.TRUE);
-//                btnAdministarVenta.setVisible(Boolean.TRUE);
-//            } else {
-//                btnFacturar.setVisible(Boolean.TRUE);
-//                menuVentas.setVisible(Boolean.FALSE);
-//                menuCompras.setVisible(Boolean.FALSE);
-//                menuKardex.setVisible(Boolean.FALSE);
-//                menuReportes.setVisible(Boolean.FALSE);
-//                btnAdministarVenta.setVisible(Boolean.FALSE);
-//            }
-//        }
+
     }
 
     @Listen("onClick = #buttonConsultar")
@@ -109,6 +81,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnTotalizarRubros() {
         Executions.sendRedirect("/compra/totalizarrubros.zul");
     }
+
     @Listen("onClick = #btnDetGasProv")
     public void btnDetGasProv() {
         Executions.sendRedirect("/compra/totalizarrubrosprov.zul");
@@ -118,6 +91,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void doFacturar() {
         Executions.sendRedirect("/venta/facturar.zul");
     }
+
     @Listen("onClick = #btnForm104")
     public void btnForm104() {
         Executions.sendRedirect("/reportevistas/formulariodeclara.zul");
@@ -186,6 +160,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
     @Listen("onClick = #btnListaComprasSRI")
     public void btnListaComprasSRI() {
         Executions.sendRedirect("/compra/listacomprassri.zul");
+    }
+    @Listen("onClick = #btnListarRetenciones")
+    public void btnListarRetenciones() {
+        Executions.sendRedirect("/compra/listaretencionessri.zul");
     }
 
     @Listen("onClick = #btnListaCompras")
@@ -317,7 +295,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnfactCobra() {
         Executions.sendRedirect("/venta/facturasporcobrar.zul");
     }
-    
+
     @Listen("onClick = #btnFormulario")
     public void btnFormulario() {
         Executions.sendRedirect("/reportevistas/formulariodeclara.zul");
@@ -337,7 +315,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void btnCierreCaja() {
 //        if (credential.getUsuarioSistema().getUsuNivel() != 1) {
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/cierrecaja.zul", null, null);
+                    "/nuevo/cierrecaja.zul", null, null);
         window.doModal();
 //        } else {
 //            Clients.showNotification("El usuario administrador no puede cerrar una caja",
@@ -350,7 +328,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void nuevoProducto() {
 
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/producto.zul", null, null);
+                    "/nuevo/producto.zul", null, null);
         window.doModal();
 
     }
@@ -359,7 +337,7 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void nuevoCliente() {
 
         org.zkoss.zul.Window window = (org.zkoss.zul.Window) Executions.createComponents(
-                "/nuevo/cliente.zul", null, null);
+                    "/nuevo/cliente.zul", null, null);
         window.doModal();
 
     }
@@ -379,4 +357,10 @@ public class MenuOpciones extends SelectorComposer<Component> {
     public void setAcceso(String acceso) {
         this.acceso = acceso;
     }
+
+   
+
+   
+
+   
 }

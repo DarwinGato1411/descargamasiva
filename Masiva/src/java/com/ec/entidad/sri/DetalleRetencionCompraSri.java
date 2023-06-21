@@ -74,6 +74,8 @@ public class DetalleRetencionCompraSri implements Serializable {
     @Size(max = 10)
     @Column(name = "drc_tipo_registro")
     private String drcTipoRegistro;
+    @Column(name = "drc_num_factura")
+    private String drcNumFactura;
     @JoinColumn(name = "rco_codigo", referencedColumnName = "rco_codigo")
     @ManyToOne
     private RetencionCompraSri rcoCodigo;
@@ -170,6 +172,14 @@ public class DetalleRetencionCompraSri implements Serializable {
 
     public void setRcoCodigo(RetencionCompraSri rcoCodigo) {
         this.rcoCodigo = rcoCodigo;
+    }
+
+    public String getDrcNumFactura() {
+        return drcNumFactura;
+    }
+
+    public void setDrcNumFactura(String drcNumFactura) {
+        this.drcNumFactura = drcNumFactura;
     }
 
     @Override

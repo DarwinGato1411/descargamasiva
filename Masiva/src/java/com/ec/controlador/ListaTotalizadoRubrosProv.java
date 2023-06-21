@@ -8,6 +8,7 @@ import com.ec.entidad.Parametrizar;
 import com.ec.entidad.Tipoambiente;
 import com.ec.seguridad.EnumSesion;
 import com.ec.seguridad.UserCredential;
+import com.ec.servicio.ServicioParametrizar;
 import com.ec.servicio.ServicioTipoAmbiente;
 import com.ec.untilitario.ArchivoUtils;
 import com.ec.untilitario.ConsolidadoGastos;
@@ -59,6 +60,7 @@ public class ListaTotalizadoRubrosProv extends SelectorComposer<Component> {
     private Date fin = new Date();
 
     UserCredential credential = new UserCredential();
+    ServicioParametrizar servicioParametrizar = new ServicioParametrizar();
     Parametrizar parametrizar = new Parametrizar();
     private List<Tipoambiente> listaTipoambientes = new ArrayList<Tipoambiente>();
     /**
@@ -72,7 +74,7 @@ public class ListaTotalizadoRubrosProv extends SelectorComposer<Component> {
     }
 
     public ListaTotalizadoRubrosProv() {
-
+        parametrizar = servicioParametrizar.finActivo();
         //muestra 7 dias atras
         Calendar calendar = Calendar.getInstance(); //obtiene la fecha de hoy 
         calendar.add(Calendar.DATE, -15); //el -3 indica que se le restaran 3 dias 
@@ -85,6 +87,11 @@ public class ListaTotalizadoRubrosProv extends SelectorComposer<Component> {
         listaTipoambientes = servicioTipoAmbiente.findAll(credential.getUsuarioSistema());
         amb = servicioTipoAmbiente.finSelectFirst(credential.getUsuarioSistema());
         //OBTIENE LAS RUTAS DE ACCESO A LOS DIRECTORIOS DE LA TABLA TIPOAMBIENTE
+
+        if (parametrizar.getParFijarFecha()) {
+            inicio = parametrizar.getParFechanicio() == null ? new Date() : parametrizar.getParFechanicio();
+            fin = parametrizar.getParFechaFin() == null ? new Date() : parametrizar.getParFechaFin();
+        }
     }
 
     @Command
@@ -195,7 +202,7 @@ public class ListaTotalizadoRubrosProv extends SelectorComposer<Component> {
                 rownum += 1;
 
             }
-   r = s.createRow(rownum);
+            r = s.createRow(rownum);
             j = 0;
 
             HSSFCell ch11 = r.createCell(j++);

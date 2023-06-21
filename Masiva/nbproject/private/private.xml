@@ -4,13 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/src/java/com/ec/controlador/ListaComprasSri.java</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/src/java/com/ec/servicio/ServicioDetalleComprasSri.java</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/src/java/com/ec/controlador/ListaDetalleCompraSri.java</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/src/conf/persistence.xml</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/src/java/com/ec/entidad/sri/DetalleCompraSri.java</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/src/java/com/ec/entidad/sri/CabeceraCompraSri.java</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/web/compra/compras.zul</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/web/compra/detallecomprassri.zul</file>
+            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/src/java/com/ec/controlador/ListaRetencionesSri.java</file>
+            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/web/compra/listacomprassri.zul</file>
+            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/src/java/com/ec/controlador/ListaVentasSri.java</file>
         </group>
     </open-files>
 </project-private>
