@@ -4,7 +4,6 @@
  */
 package com.ec.controlador;
 
-import com.ec.dao.xml.Impuesto;
 import com.ec.dao.xml.RetencionXML;
 import com.ec.dao.xml.factura.Detalle;
 import com.ec.dao.xml.factura.FacturaCompraXML;
@@ -915,7 +914,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     flwriter = new FileWriter(pathTXT);
                     BufferedWriter bfwriter = new BufferedWriter(flwriter);
                     Boolean existenRepetido = Boolean.FALSE;
-                    for (int i = 12; i <= campos2.length - (cantidadBlancos + 11); i++) {
+                    for (int i = 12; i <= campos2.length - ( 11); i++) {
 
                         comprasSri = new ComprasSri(
                                     campos2[i],
