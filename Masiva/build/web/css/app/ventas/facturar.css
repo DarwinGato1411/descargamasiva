@@ -1,8 +1,8 @@
 @import "https://fonts.googleapis.com/css2?family=Nunito:wght@300&family=Poppins&family=Raleway:wght@300&display=swap";
 
 :root {
-    --primary-color: #5086C1;
-    --secondary-color:#0b0d3e;
+    --primary-color: #3cab4e;
+    --secondary-color:#045b9b;
     --tertiary-color: #d5ecfb;
     --background-color: #fff;
 }
@@ -944,7 +944,7 @@ div.z-listheader-cnt {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
-    background: #204770;
+    background: var(--primary-color);
     padding: 10px;
 }
 
