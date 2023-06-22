@@ -7,7 +7,7 @@
         <div class="containerLT" >
             <div class="logo" >
                 <image  src="/imagenes/logoTransp.png"  height="30px" />
-
+                <!--<label value="@bind(vm.nombrePagina)" />-->
             </div>
             <div class="ctnInfo">
                 <div apply="org.zkoss.bind.BindComposer" 

@@ -6,7 +6,7 @@
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
 <?link rel="icon" type="image/x-icon" href="/imagenes/logo1.png"?>  
 <!--<zk   class="col-12 col-sm-12 col-md-12 col-lg-12">-->
-
+<window border="normal" title="Módulo de clasificacion de compras">
 <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
       class="contenedorReporteSRI" 
       viewModel="@id('vm') @init('com.ec.controlador.ListaDetalleCompraSri')" >
@@ -215,3 +215,4 @@
 
 
 <!--</zk>-->
+</window>

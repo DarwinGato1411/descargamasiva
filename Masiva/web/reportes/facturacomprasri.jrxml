@@ -214,7 +214,7 @@ where cb.id_cabecera_sri=$P{id_cabecera} limit 1;]]>
 									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[CANT]]></text>
@@ -244,7 +244,7 @@ where cb.id_cabecera_sri=$P{id_cabecera} limit 1;]]>
 									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[CODIGO]]></text>
@@ -278,7 +278,7 @@ where cb.id_cabecera_sri=$P{id_cabecera} limit 1;]]>
 									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[DESCRIPCION]]></text>
@@ -306,7 +306,7 @@ where cb.id_cabecera_sri=$P{id_cabecera} limit 1;]]>
 									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[% IVA]]></text>
@@ -334,7 +334,7 @@ where cb.id_cabecera_sri=$P{id_cabecera} limit 1;]]>
 									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8" isBold="true"/>
 								</textElement>
 								<text><![CDATA[IVA]]></text>

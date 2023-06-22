@@ -5,7 +5,7 @@ public class retencion {
     private int codigo;
     private int codigoRetencion;
     private double baseImponible;
-    private int porcentajeRetener;
+    private double porcentajeRetener;
     private double valorRetenido;
 
     public int getCodigo() {
@@ -32,11 +32,11 @@ public class retencion {
         this.baseImponible = baseImponible;
     }
 
-    public int getPorcentajeRetener() {
+    public double getPorcentajeRetener() {
         return porcentajeRetener;
     }
 
-    public void setPorcentajeRetener(int porcentajeRetener) {
+    public void setPorcentajeRetener(double porcentajeRetener) {
         this.porcentajeRetener = porcentajeRetener;
     }
 

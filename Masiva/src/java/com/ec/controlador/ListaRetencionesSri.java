@@ -1743,9 +1743,20 @@ public class ListaRetencionesSri extends SelectorComposer<Component> {
 //                                        + "</comprobante> \n"
 //                                        + "</autorizacion> \n";
                         } else {
-                            xml = xml
-                                        + "</impuestos> \n"
-                                        + "</comprobanteRetencion> \n";
+                            if(version.equals("1")) {
+
+                                xml = xml
+                                            + "</impuestos> \n"
+                                            + "</comprobanteRetencion> \n";
+//                                            + "</comprobante> \n"
+//                                            + "</autorizacion> \n";
+
+                            }else {
+                                xml = xml
+                                            + "</docsSustento> \n"
+                                            + "</comprobanteRetencion> \n";
+                            }
+
                         }
 
                         br.close();
@@ -2469,6 +2480,8 @@ public class ListaRetencionesSri extends SelectorComposer<Component> {
 
             xmlParse = xmlParse.replace("id=\"comprobante\" version=\"2.0.0\"", "");
             xmlParse = xmlParse.replace("id=\"comprobante\" version=\"1.0.0\"", "");
+            xmlParse = xmlParse.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
+            xmlParse = xmlParse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
             System.out.println("IMPRIME LE ARCHIVO FORMATEADO \n" + xmlParse);
             JAXBContext jaxbContext;
 

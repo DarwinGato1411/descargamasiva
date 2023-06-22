@@ -8,6 +8,7 @@
 <?script src="/js/facturar.js?v1"?>
 <?link rel="icon" type="image/x-icon" href="/imagenes/logo1.png"?>   
 <!--<zk   class="col-12 col-sm-12 col-md-12 col-lg-12">-->
+<window border="normal" title="Módulo de retenciones">
 <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
       class="contenedorListaCompras"
       viewModel="@id('vm') @init('com.ec.controlador.ListaRetencionesSri')" >
@@ -250,3 +251,4 @@
 
 
 <!--</zk>-->
+</window>

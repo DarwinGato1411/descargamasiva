@@ -774,3 +774,37 @@ input, button, select, textarea {
     font-size: 47px;
     align-items: center;
 }
+
+.z-window-modal-header, .z-window-popup-header, .z-window-highlighted-header, .z-window-overlapped-header, .z-window-embedded-header {
+    overflow: hidden;
+    zoom: 1;
+    padding-bottom: 4px;
+    font-family: arial, sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    cursor: default;
+        text-align: center;
+    background: #94b9da;
+}
+.z-window-embedded-tr, .z-window-modal-tr, .z-window-highlighted-tr, .z-window-overlapped-tr, .z-window-popup-tr {
+    background: #94b9da;
+    position: relative;
+    height: 5px;
+    margin-right: -5px;
+    font-size: 0;
+    line-height: 0;
+    zoom: 1;
+}
+
+
+.z-window-embedded-hr, .z-window-modal-hr, .z-window-highlighted-hr, .z-window-overlapped-hr, .z-window-popup-hr {
+    background: #94b9da no-repeat right 0;
+    padding-right: 6px;
+    zoom: 1;
+}
+
+.z-window-embedded-hl, .z-window-modal-hl, .z-window-highlighted-hl, .z-window-overlapped-hl, .z-window-popup-hl {
+    background: #94b9da no-repeat right 0;
+    padding-left: 6px;
+    zoom: 1;
+}
