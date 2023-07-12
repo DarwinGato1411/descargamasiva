@@ -5,6 +5,7 @@
 package com.ec.servicio;
 
 
+import com.ec.entidad.Tipoambiente;
 import com.ec.entidad.sri.DetalleRetencionCompraSri;
 import java.util.ArrayList;
 import java.util.Date;
@@ -105,6 +106,28 @@ public class ServicioDetalleRetencionSri {
             Query query = em.createQuery("SELECT a FROM DetalleRetencionCompraSri a WHERE a.rcoCodigo.cabFechaEmision BETWEEN :inicio AND :fin ORDER BY a.rcoCodigo.cabFechaEmision DESC ");
            query.setParameter("inicio", inicio);
            query.setParameter("fin", fin);
+            listaDetalleRetencionCompraSris = (List<DetalleRetencionCompraSri>) query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error en lsa consulta findBetweenDetalle "+e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return listaDetalleRetencionCompraSris;
+    }
+     
+    public List<DetalleRetencionCompraSri> findBetweenDetalleFechaAmb(Date inicio, Date fin, Tipoambiente amb) {
+
+        List<DetalleRetencionCompraSri> listaDetalleRetencionCompraSris = new ArrayList<DetalleRetencionCompraSri>();
+        try {
+            //Connection connection = em.unwrap(Connection.class);
+            em = HelperPersistencia.getEMF();
+            em.getTransaction().begin();
+            Query query = em.createQuery("SELECT a FROM DetalleRetencionCompraSri a WHERE a.rcoCodigo.codTipoambiente=:tipoambiente and a.rcoCodigo.cabFechaEmision BETWEEN :inicio AND :fin ORDER BY a.rcoCodigo.cabFechaEmision DESC ");
+           query.setParameter("inicio", inicio);
+           query.setParameter("fin", fin);
+           query.setParameter("tipoambiente", amb);
             listaDetalleRetencionCompraSris = (List<DetalleRetencionCompraSri>) query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {

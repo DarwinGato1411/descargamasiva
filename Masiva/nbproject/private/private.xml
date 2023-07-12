@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/web/css/style.css</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/web/venta/listaventasssri.zul</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/web/compra/listaretencionessri.zul</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/web/compra/listacomprassri.zul</file>
-            <file>file:/D:/PROYECTOS/DESCARGA%20MASIVA/descargamasiva/Masiva/web/compra/detallecomprassri.zul</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/descargamasiva/Masiva/web/compra/listaretencionessri.zul</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/descargamasiva/Masiva/src/java/com/ec/servicio/ServicioDetalleRetencionSri.java</file>
+            <file>file:/C:/Users/NanoDan/Documents/DEFACT/descargamasiva/Masiva/src/java/com/ec/controlador/ListaRetencionesSri.java</file>
         </group>
     </open-files>
 </project-private>

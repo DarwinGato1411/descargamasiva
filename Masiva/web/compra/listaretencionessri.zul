@@ -173,6 +173,11 @@
                           onClick="@command('exportarRetenciones')"  
                           class="btn btn1"
                           tooltiptext="Exportar facturas"/>
+                <button   image="/iconos/excel.png"  
+                          label="Reporte por empresa"
+                          onClick="@command('exportarRetencionesFecha')"  
+                          class="btn btn1"
+                          tooltiptext="Exportar facturas fecha"/>
                 
                 
                

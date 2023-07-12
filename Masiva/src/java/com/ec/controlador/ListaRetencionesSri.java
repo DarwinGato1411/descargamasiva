@@ -1358,6 +1358,147 @@ public class ListaRetencionesSri extends SelectorComposer<Component> {
         return pathSalida;
 
     }
+    
+    @Command
+    public void exportarRetencionesFecha() throws Exception {
+        try {
+            File dosfile = new File(exportarRetencionesExcelFecha());
+            if (dosfile.exists()) {
+                FileInputStream inputStream = new FileInputStream(dosfile);
+                Filedownload.save(inputStream, new MimetypesFileTypeMap().getContentType(dosfile), dosfile.getName());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("ERROR AL DESCARGAR EL ARCHIVO" + e.getMessage());
+        }
+    }
+
+    private String exportarRetencionesExcelFecha() throws FileNotFoundException, IOException, ParseException {
+        List<DetalleRetencionCompraSri> descargar = detalleRetencionSri.findBetweenDetalleFechaAmb(inicio, fin,amb);
+        String directorioReportes = Executions.getCurrent().getDesktop().getWebApp().getRealPath("/reportes");
+
+        Date date = new Date();
+        SimpleDateFormat fhora = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat sm = new SimpleDateFormat("yyy-MM-dd");
+        String strDate = sm.format(date);
+
+        String pathSalida = directorioReportes + File.separator + "retencionessri.xls";
+        System.out.println("Direccion del reporte  " + pathSalida);
+        try {
+            int j = 0;
+            File archivoXLS = new File(pathSalida);
+            if (archivoXLS.exists()) {
+                archivoXLS.delete();
+            }
+            archivoXLS.createNewFile();
+            FileOutputStream archivo = new FileOutputStream(archivoXLS);
+            HSSFWorkbook wb = new HSSFWorkbook();
+            HSSFSheet s = wb.createSheet("Comprassri");
+
+            HSSFFont fuente = wb.createFont();
+            fuente.setBoldweight((short) 700);
+            HSSFCellStyle estiloCelda = wb.createCellStyle();
+            estiloCelda.setWrapText(true);
+            estiloCelda.setAlignment((short) 2);
+            estiloCelda.setFont(fuente);
+
+            HSSFCellStyle estiloCeldaInterna = wb.createCellStyle();
+            estiloCeldaInterna.setWrapText(true);
+            estiloCeldaInterna.setAlignment((short) 5);
+            estiloCeldaInterna.setFont(fuente);
+
+            HSSFCellStyle estiloCelda1 = wb.createCellStyle();
+            estiloCelda1.setWrapText(true);
+            estiloCelda1.setFont(fuente);
+
+            HSSFRow r = null;
+
+            HSSFCell c = null;
+            r = s.createRow(0);
+
+            HSSFCell ch2 = r.createCell(j++);
+            ch2.setCellValue(new HSSFRichTextString("COMPROBANTE"));
+            ch2.setCellStyle(estiloCelda);
+
+            HSSFCell ch0 = r.createCell(j++);
+            ch0.setCellValue(new HSSFRichTextString("RUC"));
+            ch0.setCellStyle(estiloCelda);
+
+            HSSFCell ch1 = r.createCell(j++);
+            ch1.setCellValue(new HSSFRichTextString("NOMBRE"));
+            ch1.setCellStyle(estiloCelda);
+
+            HSSFCell ch3 = r.createCell(j++);
+            ch3.setCellValue(new HSSFRichTextString("FECHA EMISION"));
+            ch3.setCellStyle(estiloCelda);
+
+            HSSFCell ch4 = r.createCell(j++);
+            ch4.setCellValue(new HSSFRichTextString("BASE IMPONIBLE"));
+            ch4.setCellStyle(estiloCelda);
+
+            HSSFCell ch5 = r.createCell(j++);
+            ch5.setCellValue(new HSSFRichTextString("% RETENCION"));
+            ch5.setCellStyle(estiloCelda);
+
+            HSSFCell ch6 = r.createCell(j++);
+            ch6.setCellValue(new HSSFRichTextString("VALOR RETENIDO"));
+            ch6.setCellStyle(estiloCelda);
+
+            HSSFCell ch7 = r.createCell(j++);
+            ch7.setCellValue(new HSSFRichTextString("TIPO RETENCION"));
+            ch7.setCellStyle(estiloCelda);
+
+            HSSFCell ch8 = r.createCell(j++);
+            ch8.setCellValue(new HSSFRichTextString("# FACTURA"));
+            ch8.setCellStyle(estiloCelda);
+
+            int rownum = 1;
+            int i = 0;
+
+            for (DetalleRetencionCompraSri item : descargar) {
+                i = 0;
+
+                r = s.createRow(rownum);
+
+                HSSFCell c0 = r.createCell(i++);
+                c0.setCellValue(new HSSFRichTextString(item.getRcoCodigo().getRcoSecuencialText()));
+
+                HSSFCell c1 = r.createCell(i++);
+                c1.setCellValue(new HSSFRichTextString(item.getRcoCodigo().getRcoRuc()));
+
+                HSSFCell c2 = r.createCell(i++);
+                c2.setCellValue(new HSSFRichTextString(item.getRcoCodigo().getRcoNombre()));
+
+                HSSFCell c3 = r.createCell(i++);
+                c3.setCellValue(new HSSFRichTextString(sm.format(item.getRcoCodigo().getCabFechaEmision())));
+
+                HSSFCell c4 = r.createCell(i++);
+                c4.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(BigDecimal.valueOf(item.getDrcBaseImponible()), 2).toString().replace(".", ",")));
+
+                HSSFCell c5 = r.createCell(i++);
+                c5.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(BigDecimal.valueOf(item.getDrcPorcentaje()), 2).toString().replace(".", ",")));
+
+                HSSFCell c6 = r.createCell(i++);
+                c6.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(BigDecimal.valueOf(item.getDrcValorRetenido()), 2).toString().replace(".", ",")));
+                HSSFCell c7 = r.createCell(i++);
+                c7.setCellValue(new HSSFRichTextString(item.getDrcDescripcion()));
+                HSSFCell c8 = r.createCell(i++);
+                c8.setCellValue(new HSSFRichTextString(item.getDrcNumFactura()));
+                /*autemta la siguiente fila*/
+                rownum += 1;
+
+            }
+            for (int k = 0; k <= descargar.size(); k++) {
+                s.autoSizeColumn(k);
+            }
+            wb.write(archivo);
+            archivo.close();
+
+        } catch (IOException e) {
+            System.out.println("error " + e.getMessage());
+        }
+        return pathSalida;
+
+    }
 
     @Command
     public void exportarDocumentosSRI() throws Exception {
