@@ -31,6 +31,9 @@ public class TotalizadoRubros implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "clasificacion")
     private String clasificacion;
+    @Column(name = "cab_ruc_proveedor")
+    private String cabRucProveedor;
+
     @Column(name = "subtotal")
     private BigDecimal subtotal;
     @Column(name = "total")
@@ -45,7 +48,8 @@ public class TotalizadoRubros implements Serializable {
     private BigDecimal total12;
     @Column(name = "total_0")
     private BigDecimal total0;
-
+    @Column(name = "cab_num_factura")
+    private String cabNumFactura;
     public TotalizadoRubros() {
     }
 
@@ -127,5 +131,23 @@ public class TotalizadoRubros implements Serializable {
     public void setTotal0(BigDecimal total0) {
         this.total0 = total0;
     }
+
+    public String getCabRucProveedor() {
+        return cabRucProveedor;
+    }
+
+    public void setCabRucProveedor(String cabRucProveedor) {
+        this.cabRucProveedor = cabRucProveedor;
+    }
+
+    public String getCabNumFactura() {
+        return cabNumFactura;
+    }
+
+    public void setCabNumFactura(String cabNumFactura) {
+        this.cabNumFactura = cabNumFactura;
+    }
+    
+    
 
 }

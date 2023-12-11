@@ -5,6 +5,7 @@
  */
 package com.ec.entidad;
 
+import com.ec.entidad.docsri.RetencionCompraSri;
 import com.ec.entidad.sri.CabeceraCompraSri;
 import java.io.Serializable;
 import java.util.Collection;
@@ -183,6 +184,9 @@ public class Tipoambiente implements Serializable {
     @ManyToOne
     private Usuario idUsuario;
 
+    
+     @OneToMany(mappedBy = "codTipoambiente")
+    private Collection<RetencionCompraSri> retencionCompraSriCollection;
     public Tipoambiente() {
     }
 
@@ -574,6 +578,16 @@ public class Tipoambiente implements Serializable {
     public void setAmCodigoArtesano(String amCodigoArtesano) {
         this.amCodigoArtesano = amCodigoArtesano;
     }
+
+    public Collection<RetencionCompraSri> getRetencionCompraSriCollection() {
+        return retencionCompraSriCollection;
+    }
+
+    public void setRetencionCompraSriCollection(Collection<RetencionCompraSri> retencionCompraSriCollection) {
+        this.retencionCompraSriCollection = retencionCompraSriCollection;
+    }
+    
+    
 
     @Override
     public int hashCode() {

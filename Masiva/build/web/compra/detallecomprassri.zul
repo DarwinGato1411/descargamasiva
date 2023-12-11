@@ -6,12 +6,14 @@
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/plantilla/plantilla.zul"?>
 <?link rel="icon" type="image/x-icon" href="/imagenes/logo1.png"?>  
 <!--<zk   class="col-12 col-sm-12 col-md-12 col-lg-12">-->
+
 <hbox self="@define(content)" apply="org.zkoss.bind.BindComposer" 
-      class="contenedorReporteSRI"
+      class="contenedorReporteSRI" 
       viewModel="@id('vm') @init('com.ec.controlador.ListaDetalleCompraSri')" >
-    
+       
     <div class="contenedorTablas">
         <div class="contenedorTabla2">
+        
             <div class="content">
                 <div  class="contenedorBusqueda1" style="">
                     Empresa:
@@ -79,10 +81,15 @@
                     </radiogroup>
                     
                       <button   image="/iconos/excel.png"
-                                  label="Descargar Retenciones"
+                                  label="Descargar detallado"
                                   onClick="@command('exportListboxToExcel')"  
                                   class="btn btn3"
                                   tooltiptext="Descargar informacion"/>  
+<!--                       <button   image="/iconos/excel.png"
+                                  label="Descargar consolidado"
+                                  onClick="@command('exportListboxToExcel')"  
+                                  class="btn btn3"
+                                  tooltiptext="Descargar el informe agrupado por proveedor y numero de documentos"/>  -->
                     
                 </div>
             </div>

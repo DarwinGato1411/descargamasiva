@@ -164,14 +164,15 @@ public class ServicioCabeceraComprasSri {
         return respuesta;
     }
 
-    public void eliminarCabeceraComprasSri(Date inicio, Date fin) {
+    public void eliminarCabeceraComprasSri(Date inicio, Date fin, Tipoambiente codTipoambiente) {
 
         try {
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("DELETE FROM CabeceraCompraSri a WHERE a.cabFecha BETWEEN :inicio and :fin");
+            Query query = em.createQuery("DELETE FROM CabeceraCompraSri a WHERE a.cabFecha BETWEEN :inicio and :fin AND a.codTipoambiente=:codTipoambiente");
             query.setParameter("inicio", inicio);
             query.setParameter("fin", fin);
+            query.setParameter("codTipoambiente", codTipoambiente);
             int i = query.executeUpdate();
 
             em.getTransaction().commit();

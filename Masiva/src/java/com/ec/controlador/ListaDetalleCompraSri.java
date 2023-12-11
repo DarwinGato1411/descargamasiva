@@ -11,6 +11,7 @@ import com.ec.entidad.sri.DetalleCompraSri;
 import com.ec.seguridad.EnumSesion;
 import com.ec.seguridad.UserCredential;
 import com.ec.servicio.ServicioDetalleComprasSri;
+import com.ec.servicio.ServicioParametrizar;
 import com.ec.servicio.ServicioTipoAmbiente;
 import com.ec.untilitario.ArchivoUtils;
 import com.ec.vista.servicios.ServicioTotalizadoRubros;
@@ -19,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,7 +67,9 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
 
     UserCredential credential = new UserCredential();
     Parametrizar parametrizar = new Parametrizar();
+    ServicioParametrizar servicioParametrizar = new ServicioParametrizar();
     private List<Tipoambiente> listaTipoambientes = new ArrayList<Tipoambiente>();
+    
     /**
      * busqueda
      */
@@ -77,7 +81,7 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
     }
 
     public ListaDetalleCompraSri() {
-
+        parametrizar = servicioParametrizar.finActivo();
         //muestra 7 dias atras
         Calendar calendar = Calendar.getInstance(); //obtiene la fecha de hoy 
         calendar.add(Calendar.DATE, -15); //el -3 indica que se le restaran 3 dias 
@@ -90,6 +94,10 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
         listaTipoambientes = servicioTipoAmbiente.findAll(credential.getUsuarioSistema());
         amb = servicioTipoAmbiente.finSelectFirst(credential.getUsuarioSistema());
         //OBTIENE LAS RUTAS DE ACCESO A LOS DIRECTORIOS DE LA TABLA TIPOAMBIENTE
+        if (parametrizar.getParFijarFecha()) {
+            inicio = parametrizar.getParFechanicio() == null ? new Date() : parametrizar.getParFechanicio();
+            fin = parametrizar.getParFechaFin() == null ? new Date() : parametrizar.getParFechaFin();
+        }
     }
 
     @Command
@@ -99,7 +107,7 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
     }
 
     private void findDetalleCompraSri() {
-        listaDetalleCompraSris = servicioDetalleComprasSri.detalleCompraSriForTipoambiente(amb, iprodClasificacio);
+        listaDetalleCompraSris = servicioDetalleComprasSri.detalleCompraSriForTipoambiente(amb, iprodClasificacio, inicio, fin);
         setListaDetalleCompraSris(new ListModelList<DetalleCompraSri>(getListaDetalleCompraSris()));
     }
 
@@ -218,12 +226,14 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
             ch9.setCellStyle(estiloCelda);
 
             HSSFCell ch10 = r.createCell(j++);
-            ch10.setCellValue(new HSSFRichTextString("TOTAL"));
+            ch10.setCellValue(new HSSFRichTextString("RUBRO"));
             ch10.setCellStyle(estiloCelda);
 
             int rownum = 1;
             int i = 0;
-
+            BigDecimal totalBase12 = BigDecimal.ZERO;
+            BigDecimal totalBase0 = BigDecimal.ZERO;
+            BigDecimal totalFinal = BigDecimal.ZERO;
             for (DetalleCompraSri item : listaDetalleCompraSris) {
                 i = 0;
 
@@ -252,12 +262,16 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
 
                 HSSFCell c7 = r.createCell(i++);
                 c7.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getBase12(), 2).toString()));
+                totalBase12 = totalBase12.add(ArchivoUtils.redondearDecimales(item.getBase12(), 2));
 
                 HSSFCell c71 = r.createCell(i++);
                 c71.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getBase0(), 2).toString()));
+                totalBase0 = totalBase0.add(ArchivoUtils.redondearDecimales(item.getBase0(), 2));
 
                 HSSFCell c8 = r.createCell(i++);
                 c8.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getIprodTotal(), 2).toString()));
+                totalFinal = totalFinal.add(ArchivoUtils.redondearDecimales(item.getIprodTotal(), 2));
+
                 HSSFCell c9 = r.createCell(i++);
                 c9.setCellValue(new HSSFRichTextString(item.getIprodClasificacion().equals("N") ? "NEGOCIO"
                             : item.getIprodClasificacion().equals("S") ? "SALUD"
@@ -270,9 +284,55 @@ public class ListaDetalleCompraSri extends SelectorComposer<Component> {
                 rownum += 1;
 
             }
-//            for (int k = 0; k <= descargar.size(); k++) {
-//                s.autoSizeColumn(k);
-//            }
+
+            j = 0;
+            r = s.createRow(rownum);
+            /*  HSSFCell ch201 = r.createCell(j++);
+            ch201.setCellValue(new HSSFRichTextString(""));
+            ch201.setCellStyle(estiloCelda);
+
+            HSSFCell ch001 = r.createCell(j++);
+            ch001.setCellValue(new HSSFRichTextString(""));
+            ch001.setCellStyle(estiloCelda);
+
+            HSSFCell ch101 = r.createCell(j++);
+            ch101.setCellValue(new HSSFRichTextString(""));
+            ch101.setCellStyle(estiloCelda);
+
+            HSSFCell ch301 = r.createCell(j++);
+            ch301.setCellValue(new HSSFRichTextString(""));
+            ch301.setCellStyle(estiloCelda);
+
+            HSSFCell ch401 = r.createCell(j++);
+            ch401.setCellValue(new HSSFRichTextString(""));
+            ch401.setCellStyle(estiloCelda);
+
+            HSSFCell ch501 = r.createCell(j++);
+            ch501.setCellValue(new HSSFRichTextString(""));
+            ch501.setCellStyle(estiloCelda);
+
+            HSSFCell ch601 = r.createCell(j++);
+            ch601.setCellValue(new HSSFRichTextString(""));
+            ch601.setCellStyle(estiloCelda);
+             */
+            HSSFCell ch701 = r.createCell(8);
+            ch701.setCellValue(new HSSFRichTextString(totalBase12.toString()));
+            ch701.setCellStyle(estiloCelda);
+
+            HSSFCell ch801 = r.createCell(9);
+            ch801.setCellValue(new HSSFRichTextString(totalBase0.toString()));
+            ch801.setCellStyle(estiloCelda);
+
+            HSSFCell ch901 = r.createCell(10);
+            ch901.setCellValue(new HSSFRichTextString(totalFinal.toString()));
+            ch901.setCellStyle(estiloCelda);
+
+//            HSSFCell ch1001= r.createCell(j++);
+//            ch1001.setCellValue(new HSSFRichTextString(""));
+//            ch1001.setCellStyle(estiloCelda);
+            for (int k = 0; k <= listaDetalleCompraSris.size(); k++) {
+                s.autoSizeColumn(k);
+            }
             wb.write(archivo);
             archivo.close();
 

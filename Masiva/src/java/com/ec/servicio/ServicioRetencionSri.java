@@ -5,6 +5,7 @@
 package com.ec.servicio;
 
 import com.ec.entidad.DetalleCompra;
+import com.ec.entidad.Tipoambiente;
 import com.ec.entidad.docsri.RetencionCompraSri;
 import com.ec.untilitario.CompraPromedio;
 
@@ -78,17 +79,18 @@ public class ServicioRetencionSri {
         }
 
     }
-
-    public List<RetencionCompraSri> findRetencionesBetween(Date inicio, Date fin) {
+    
+    public List<RetencionCompraSri> findRetencionesBetween(Date inicio, Date fin,Tipoambiente amb) {
 
         List<RetencionCompraSri> listaRetencionCompraSris = new ArrayList<RetencionCompraSri>();
         try {
             //Connection connection = em.unwrap(Connection.class);
             em = HelperPersistencia.getEMF();
             em.getTransaction().begin();
-            Query query = em.createQuery("SELECT a FROM RetencionCompraSri a WHERE a.cabFechaEmision BETWEEN :inicio AND :fin ORDER BY a.cabFechaEmision DESC");
+            Query query = em.createQuery("SELECT a FROM RetencionCompraSri a WHERE a.cabFechaEmision BETWEEN :inicio AND :fin AND a.codTipoambiente=:codTipoambiente ORDER BY a.cabFechaEmision DESC");
            query.setParameter("inicio", inicio);
            query.setParameter("fin", fin);
+           query.setParameter("codTipoambiente", amb);
             listaRetencionCompraSris = (List<RetencionCompraSri>) query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {

@@ -195,7 +195,7 @@ public class ListaVentasSri extends SelectorComposer<Component> {
         Session sess = Sessions.getCurrent();
         UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
         credential = cre;
-        parametrizar = servicioParametrizar.FindALlParametrizar();
+        parametrizar = servicioParametrizar.finActivo();
         findByBetweenFecha();
         listaTipoambientes = servicioTipoAmbiente.findAll(credential.getUsuarioSistema());
 
@@ -215,6 +215,10 @@ public class ListaVentasSri extends SelectorComposer<Component> {
             if (!folderRet.exists()) {
                 folderRet.mkdirs();
             }
+        }
+        if (parametrizar.getParFijarFecha()) {
+            inicio = parametrizar.getParFechanicio() == null ? new Date() : parametrizar.getParFechanicio();
+            fin = parametrizar.getParFechaFin() == null ? new Date() : parametrizar.getParFechaFin();
         }
 
     }
@@ -258,7 +262,7 @@ public class ListaVentasSri extends SelectorComposer<Component> {
     }
 
     private void findBetweenRetenciones() {
-        listaRetencioSri = retencionSri.findRetencionesBetween(inicioRet, finRet);
+        listaRetencioSri = retencionSri.findRetencionesBetween(inicioRet, finRet,amb);
     }
 
     @Command
@@ -529,7 +533,7 @@ public class ListaVentasSri extends SelectorComposer<Component> {
             HSSFCell ch7 = r.createCell(j++);
             ch7.setCellValue(new HSSFRichTextString("SUBTOTAL 0%"));
             ch7.setCellStyle(estiloCelda);
-            
+
             HSSFCell ch71 = r.createCell(j++);
             ch71.setCellValue(new HSSFRichTextString("SUBTOTAL 12%"));
             ch71.setCellStyle(estiloCelda);
@@ -567,11 +571,10 @@ public class ListaVentasSri extends SelectorComposer<Component> {
                 c6.setCellValue(new HSSFRichTextString(item.getIprodGrabaIva() ? "12" : "0"));
 
                 HSSFCell c7 = r.createCell(i++);
-                c7.setCellValue(new HSSFRichTextString(!item.getIprodGrabaIva() ?ArchivoUtils.redondearDecimales(item.getIprodSubtotal(), 2).toString():"0"));
+                c7.setCellValue(new HSSFRichTextString(!item.getIprodGrabaIva() ? ArchivoUtils.redondearDecimales(item.getIprodSubtotal(), 2).toString() : "0"));
 
-                
-                     HSSFCell c71 = r.createCell(i++);
-                c71.setCellValue(new HSSFRichTextString(item.getIprodGrabaIva() ?ArchivoUtils.redondearDecimales(item.getIprodSubtotal(), 2).toString():"0"));
+                HSSFCell c71 = r.createCell(i++);
+                c71.setCellValue(new HSSFRichTextString(item.getIprodGrabaIva() ? ArchivoUtils.redondearDecimales(item.getIprodSubtotal(), 2).toString() : "0"));
 
                 HSSFCell c8 = r.createCell(i++);
                 c8.setCellValue(new HSSFRichTextString(ArchivoUtils.redondearDecimales(item.getIprodTotal(), 2).toString()));
@@ -928,6 +931,7 @@ public class ListaVentasSri extends SelectorComposer<Component> {
                                     campos3[++i],
                                     campos3[++i],
                                     campos3[++i],
+                                    campos3[++i],
                                     "N");
                         System.out.println("iiiii " + i);
                         System.out.println("ComprasSri " + comprasSri.toString());
@@ -1023,15 +1027,15 @@ public class ListaVentasSri extends SelectorComposer<Component> {
 //                    for (int j = 0; j < row.getLastCellNum(); j++) {
                     for (int j = 0; j < 1; j++) {
                         comprasSri = new ComprasSri();
-                        if (servicioVentasSri.findByAutorizacion(String.valueOf(row.getCell(4)), amb) == null) {
+                        if (servicioVentasSri.findByAutorizacion(String.valueOf(row.getCell(1)), amb) == null) {
                             cell = row.getCell(j);
 
                             comprasSri.setCsriRucEmisor(String.valueOf(row.getCell(0)));
-                            comprasSri.setCsriRazonSocial(String.valueOf(row.getCell(1)));
-                            comprasSri.setCsriSerieComprobante(String.valueOf(row.getCell(2)));
-                            comprasSri.setCsriFechaEmision(sm.parse(String.valueOf(row.getCell(3))));
-                            comprasSri.setCsriAutorizacion(String.valueOf(row.getCell(4)));
-                            comprasSri.setCsriClaveAcceso(String.valueOf(row.getCell(4)));
+                            comprasSri.setCsriRazonSocial("");
+                            comprasSri.setCsriSerieComprobante("");
+                            comprasSri.setCsriFechaEmision(new Date());
+                            comprasSri.setCsriAutorizacion(String.valueOf(row.getCell(1)));
+                            comprasSri.setCsriClaveAcceso(String.valueOf(row.getCell(1)));
 
                             comprasSri.setCsriTipoFactura("VEN");
                             comprasSri.setCsriComprobante("Factura Venta");
@@ -1776,11 +1780,11 @@ public class ListaVentasSri extends SelectorComposer<Component> {
 
         /*total retenido*/
         BigDecimal valorRetenido = BigDecimal.ZERO;
-        for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
-
-            valorRetenido = valorRetenido.add(BigDecimal.valueOf(Double.valueOf(item.getValorRetenido())));
-
-        }
+//        for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
+//
+//            valorRetenido = valorRetenido.add(BigDecimal.valueOf(Double.valueOf(item.getValorRetenido())));
+//
+//        }
         retencionCompraSri.setRcoBaseGravaIva(valorRetenido);
         retencionCompraSri.setRcoFecha(dt);
         retencionCompraSri.setCabFechaEmision(dt);
@@ -1795,16 +1799,16 @@ public class ListaVentasSri extends SelectorComposer<Component> {
 //        retencionCompraSri.setRcoNumFactura(12);
         retencionSri.crear(retencionCompraSri);
         DetalleRetencionCompraSri detalle = null;
-        for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
-            detalle = new DetalleRetencionCompraSri();
-            detalle.setDrcBaseImponible(Double.valueOf(item.getBaseImponible()));
-            detalle.setDrcPorcentaje(Double.valueOf(item.getPorcentajeRetener()));
-            detalle.setDrcValorRetenido(Double.valueOf(item.getValorRetenido()));
-            detalle.setRcoCodigo(retencionCompraSri);
-            detalle.setDrcCodImpuestoAsignado(item.getCodigo());
-            detalle.setDrcDescripcion(item.getCodigo().equals("2") ? "IVA" : "RENTA");
-            detalleRetencionSri.crear(detalle);
-        }
+//        for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
+//            detalle = new DetalleRetencionCompraSri();
+//            detalle.setDrcBaseImponible(Double.valueOf(item.getBaseImponible()));
+//            detalle.setDrcPorcentaje(Double.valueOf(item.getPorcentajeRetener()));
+//            detalle.setDrcValorRetenido(Double.valueOf(item.getValorRetenido()));
+//            detalle.setRcoCodigo(retencionCompraSri);
+//            detalle.setDrcCodImpuestoAsignado(item.getCodigo());
+//            detalle.setDrcDescripcion(item.getCodigo().equals("2") ? "IVA" : "RENTA");
+//            detalleRetencionSri.crear(detalle);
+//        }
 
     }
 
@@ -2373,7 +2377,7 @@ public class ListaVentasSri extends SelectorComposer<Component> {
     @NotifyChange({"inicio", "fin", "listaComprasSriModel"})
     public void eliminarCabeceraCabeceraSRI() {
         if (Messagebox.show("Esta seguro de eliminar los registros?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-            servicioCabeceraComprasri.eliminarCabeceraComprasSri(inicio, fin);
+            servicioCabeceraComprasri.eliminarCabeceraComprasSri(inicio, fin, amb);
             findCabeceraComprasSriByBetweenFecha();
             Clients.showNotification("Registros eliminados correctamente ",
                         Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);

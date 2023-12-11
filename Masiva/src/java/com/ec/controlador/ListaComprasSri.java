@@ -195,7 +195,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
         Session sess = Sessions.getCurrent();
         UserCredential cre = (UserCredential) sess.getAttribute(EnumSesion.userCredential.getNombre());
         credential = cre;
-        parametrizar = servicioParametrizar.FindALlParametrizar();
+        parametrizar = servicioParametrizar.finActivo();
         findByBetweenFecha();
         listaTipoambientes = servicioTipoAmbiente.findAll(credential.getUsuarioSistema());
 
@@ -215,6 +215,11 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             if (!folderRet.exists()) {
                 folderRet.mkdirs();
             }
+        }
+
+        if (parametrizar.getParFijarFecha()) {
+            inicio = parametrizar.getParFechanicio() == null ? new Date() : parametrizar.getParFechanicio();
+            fin = parametrizar.getParFechaFin() == null ? new Date() : parametrizar.getParFechaFin();
         }
 
     }
@@ -250,14 +255,14 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     }
 
     private void findBetweenRetenciones() {
-        listaRetencioSri = retencionSri.findRetencionesBetween(inicioRet, finRet);
+        listaRetencioSri = retencionSri.findRetencionesBetween(inicioRet, finRet,amb);
     }
 
     @Command
     @NotifyChange({"listaComprasSris", "inicio", "fin", "listaComprasSriModel"})
     public void eliminarCabeceraSRI() {
         if (Messagebox.show("Esta seguro de eliminar los registros?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-            servicioComprasSri.eliminarCabeceraSri(inicio, fin);
+            servicioComprasSri.eliminarCabeceraSri(inicio, fin, amb);
             findComprasSriByBetweenFecha();
             Clients.showNotification("Registros eliminados correctamente ",
                         Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);
@@ -784,17 +789,19 @@ public class ListaComprasSri extends SelectorComposer<Component> {
             detalleCom.setIprodDescripcion(detalle.getDescripcion());
             Boolean grabaIva = Boolean.TRUE;
             for (ec.gob.sri.comprobantes.modelo.factura.Impuesto impuesto : detalle.getImpuestos().getImpuesto()) {
-                if (impuesto.getCodigoPorcentaje().equals("0")) {
-                    grabaIva = Boolean.FALSE;
-                } else if (impuesto.getCodigoPorcentaje().equals("2")) {
-                    grabaIva = Boolean.TRUE;
+                if (impuesto.getCodigo().equals("2")) {
+                    if (impuesto.getCodigoPorcentaje().equals("0")) {
+                        grabaIva = Boolean.FALSE;
+                    } else if (impuesto.getCodigoPorcentaje().equals("2")) {
+                        grabaIva = Boolean.TRUE;
 
+                    }
                 }
             }
             detalleCom.setIprodGrabaIva(grabaIva);
             detalleCom.setIprodSubtotal(detalle.getPrecioUnitario());
             detalleCom.setIprodTotal(detalle.getCantidad().multiply(detalle.getPrecioUnitario()));
-            detalleCom.setIprodGrabaIva(detalle.getImpuestos().getImpuesto().get(0).getCodigo().equals("2") ? Boolean.TRUE : Boolean.FALSE);
+//            detalleCom.setIprodGrabaIva(detalle.getImpuestos().getImpuesto().get(0).getCodigo().equals("2") ? Boolean.TRUE : Boolean.FALSE);
             detalleCom.setIprodCodigoProducto(detalle.getCodigoPrincipal());
             detalleCom.setIprodClasificacion("N");
             servicioDetalleComprasSri.crear(detalleCom);
@@ -908,20 +915,21 @@ public class ListaComprasSri extends SelectorComposer<Component> {
                     flwriter = new FileWriter(pathTXT);
                     BufferedWriter bfwriter = new BufferedWriter(flwriter);
                     Boolean existenRepetido = Boolean.FALSE;
-                    for (int i = 11; i <= campos3.length - (cantidadBlancos + 11); i++) {
+                    for (int i = 12; i <= campos2.length - (cantidadBlancos + 11); i++) {
 
                         comprasSri = new ComprasSri(
-                                    campos3[i],
-                                    campos3[++i],
-                                    campos3[++i],
-                                    AutorizarDocumentos.removeCaracteres(campos3[++i]),
-                                    sm.parse(campos3[++i].trim().replace("/", "-")),
-                                    sm.parse(campos3[++i].trim().replace("/", "-")),
-                                    campos3[++i],
-                                    campos3[++i],
-                                    campos3[++i],
-                                    campos3[++i],
-                                    campos3[++i],
+                                    campos2[i],
+                                    campos2[++i],
+                                    campos2[++i],
+                                    AutorizarDocumentos.removeCaracteres(campos2[++i]),
+                                    sm.parse(campos2[++i].trim().replace("/", "-")),
+                                    sm.parse(campos2[++i].trim().replace("/", "-")),
+                                    campos2[++i],
+                                    campos2[++i],
+                                    campos2[++i],
+                                    campos2[++i],
+                                    campos2[++i],
+                                    campos2[++i],
                                     "N");
                         System.out.println("iiiii " + i);
                         comprasSri.setCsriTipoFactura("COM");
@@ -1762,11 +1770,11 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 
         /*total retenido*/
         BigDecimal valorRetenido = BigDecimal.ZERO;
-        for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
-
-            valorRetenido = valorRetenido.add(BigDecimal.valueOf(Double.valueOf(item.getValorRetenido())));
-
-        }
+//        for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
+//
+//            valorRetenido = valorRetenido.add(BigDecimal.valueOf(Double.valueOf(item.getValorRetenido())));
+//
+//        }
         retencionCompraSri.setRcoBaseGravaIva(valorRetenido);
         retencionCompraSri.setRcoFecha(dt);
         retencionCompraSri.setCabFechaEmision(dt);
@@ -1781,16 +1789,16 @@ public class ListaComprasSri extends SelectorComposer<Component> {
 //        retencionCompraSri.setRcoNumFactura(12);
         retencionSri.crear(retencionCompraSri);
         DetalleRetencionCompraSri detalle = null;
-        for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
-            detalle = new DetalleRetencionCompraSri();
-            detalle.setDrcBaseImponible(Double.valueOf(item.getBaseImponible()));
-            detalle.setDrcPorcentaje(Double.valueOf(item.getPorcentajeRetener()));
-            detalle.setDrcValorRetenido(Double.valueOf(item.getValorRetenido()));
-            detalle.setRcoCodigo(retencionCompraSri);
-            detalle.setDrcCodImpuestoAsignado(item.getCodigo());
-            detalle.setDrcDescripcion(item.getCodigo().equals("2") ? "IVA" : "RENTA");
-            detalleRetencionSri.crear(detalle);
-        }
+//        for (Impuesto item : dao.getComprobante().getComprobanteRetencion().getImpuestos().getImpuesto()) {
+//            detalle = new DetalleRetencionCompraSri();
+//            detalle.setDrcBaseImponible(Double.valueOf(item.getBaseImponible()));
+//            detalle.setDrcPorcentaje(Double.valueOf(item.getPorcentajeRetener()));
+//            detalle.setDrcValorRetenido(Double.valueOf(item.getValorRetenido()));
+//            detalle.setRcoCodigo(retencionCompraSri);
+//            detalle.setDrcCodImpuestoAsignado(item.getCodigo());
+//            detalle.setDrcDescripcion(item.getCodigo().equals("2") ? "IVA" : "RENTA");
+//            detalleRetencionSri.crear(detalle);
+//        }
 
     }
 
@@ -2359,7 +2367,7 @@ public class ListaComprasSri extends SelectorComposer<Component> {
     @NotifyChange({"inicio", "fin", "listaComprasSriModel"})
     public void eliminarCabeceraCabeceraSRI() {
         if (Messagebox.show("Esta seguro de eliminar los registros?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.OK) {
-            servicioCabeceraComprasri.eliminarCabeceraComprasSri(inicio, fin);
+            servicioCabeceraComprasri.eliminarCabeceraComprasSri(inicio, fin, amb);
             findCabeceraComprasSriByBetweenFecha();
             Clients.showNotification("Registros eliminados correctamente ",
                         Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 1000, true);

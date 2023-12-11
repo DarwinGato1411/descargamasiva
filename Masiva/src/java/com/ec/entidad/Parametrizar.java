@@ -133,6 +133,15 @@ public class Parametrizar implements Serializable {
     @Column(name = "par_ilimitado_permanente")
     private Boolean parIlimitadoPermanente;
 
+    @Column(name = "par_fijar_fecha")
+    private Boolean parFijarFecha;
+    @Column(name = "par_fecha_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date parFechanicio;
+    @Column(name = "par_fecha_fin")
+    @Temporal(TemporalType.DATE)
+    private Date parFechaFin;
+
     public Parametrizar() {
     }
 
@@ -372,7 +381,7 @@ public class Parametrizar implements Serializable {
     }
 
     public Integer getParNumeroFactura() {
-        return parNumeroFactura==null?0:parNumeroFactura;
+        return parNumeroFactura == null ? 0 : parNumeroFactura;
     }
 
     public void setParNumeroFactura(Integer parNumeroFactura) {
@@ -430,4 +439,27 @@ public class Parametrizar implements Serializable {
         return "com.ec.entidad.Parametrizar[ codParametrizar=" + codParametrizar + " ]";
     }
 
+    public Boolean getParFijarFecha() {
+        return parFijarFecha==null?Boolean.FALSE:parFijarFecha;
+    }
+
+    public void setParFijarFecha(Boolean parFijarFecha) {
+        this.parFijarFecha = parFijarFecha;
+    }
+
+    public Date getParFechanicio() {
+        return parFechanicio;
+    }
+
+    public void setParFechanicio(Date parFechanicio) {
+        this.parFechanicio = parFechanicio;
+    }
+
+    public Date getParFechaFin() {
+        return parFechaFin;
+    }
+
+    public void setParFechaFin(Date parFechaFin) {
+        this.parFechaFin = parFechaFin;
+    }
 }

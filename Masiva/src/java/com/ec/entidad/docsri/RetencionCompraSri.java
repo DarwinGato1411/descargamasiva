@@ -5,6 +5,7 @@
  */
 package com.ec.entidad.docsri;
 
+import com.ec.entidad.Tipoambiente;
 import com.ec.entidad.sri.DetalleRetencionCompraSri;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -16,6 +17,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -135,7 +138,10 @@ public class RetencionCompraSri implements Serializable {
 //    @JoinColumn(name = "id_cabecera", referencedColumnName = "id_cabecera")
 //    @ManyToOne(optional = false)
 //    private CabeceraCompra idCabecera;
-    
+
+    @JoinColumn(name = "cod_tipoambiente", referencedColumnName = "cod_tipoambiente")
+    @ManyToOne
+    private Tipoambiente codTipoambiente;
 
     public RetencionCompraSri() {
     }
@@ -306,7 +312,6 @@ public class RetencionCompraSri implements Serializable {
 //    public void setIdCabecera(CabeceraCompra idCabecera) {
 //        this.idCabecera = idCabecera;
 //    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -364,5 +369,13 @@ public class RetencionCompraSri implements Serializable {
     public void setRcoNumFactura(String rcoNumFactura) {
         this.rcoNumFactura = rcoNumFactura;
     }
-    
+
+    public Tipoambiente getCodTipoambiente() {
+        return codTipoambiente;
+    }
+
+    public void setCodTipoambiente(Tipoambiente codTipoambiente) {
+        this.codTipoambiente = codTipoambiente;
+    }
+
 }

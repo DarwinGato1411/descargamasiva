@@ -7,19 +7,17 @@ package com.ec.dao.xml;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author Darwin
  */
+@XmlRootElement(name="comprobanteRetencion")
 public class ComprobanteRetencion {
 
     private InfoTributaria infoTributaria;
     private InfoCompRetencion infoCompRetencion;
-    private Impuestos impuestos;
-//    private String id;
-//    private String version;
+     private Impuestos impuestos;
 
     public InfoTributaria getInfoTributaria() {
         return infoTributaria;
@@ -43,14 +41,9 @@ public class ComprobanteRetencion {
         return impuestos;
     }
 
-    @XmlElement
-    public void setImpuestos(Impuestos value) {
-        this.impuestos = value;
+    public void setImpuestos(Impuestos impuestos) {
+        this.impuestos = impuestos;
     }
 
-//    public String getID() { return id; }
-//    public void setID(String value) { this.id = value; }
-//
-//    public String getVersion() { return version; }
-//    public void setVersion(String value) { this.version = value; }
+
 }

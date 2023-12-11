@@ -14,51 +14,52 @@ import javax.xml.bind.annotation.XmlType;
  * @author Darwin
  */
 @XmlRootElement(name="autorizacion")
-@XmlType(propOrder = {"estado", "numeroAutorizacion", "fechaAutorizacion", "ambiente", "comprobante"})
+@XmlType(propOrder = {"comprobante"})
+//@XmlType(propOrder = {"estado", "numeroAutorizacion", "fechaAutorizacion", "ambiente", "comprobante"})
 public class RetencionXML {
 
-    private String estado;
-
-    private String numeroAutorizacion;
-    private String fechaAutorizacion;
-    private String ambiente;
+//    private String estado;
+//
+//    private String numeroAutorizacion;
+//    private String fechaAutorizacion;
+//    private String ambiente;
 
     private Comprobante comprobante;
 
-    public String getEstado() {
-        return estado;
-    }
-
-    @XmlElement
-    public void setEstado(String value) {
-        this.estado = value;
-    }
-
-    public String getNumeroAutorizacion() {
-        return numeroAutorizacion;
-    }
-
-    @XmlElement
-    public void setNumeroAutorizacion(String value) {
-        this.numeroAutorizacion = value;
-    }
-
-    public String getFechaAutorizacion() {
-        return fechaAutorizacion;
-    }
-
-    public void setFechaAutorizacion(String value) {
-        this.fechaAutorizacion = value;
-    }
-
-    @XmlElement
-    public String getAmbiente() {
-        return ambiente;
-    }
-
-    public void setAmbiente(String value) {
-        this.ambiente = value;
-    }
+//    public String getEstado() {
+//        return estado;
+//    }
+//
+//    @XmlElement
+//    public void setEstado(String value) {
+//        this.estado = value;
+//    }
+//
+//    public String getNumeroAutorizacion() {
+//        return numeroAutorizacion;
+//    }
+//
+//    @XmlElement
+//    public void setNumeroAutorizacion(String value) {
+//        this.numeroAutorizacion = value;
+//    }
+//
+//    public String getFechaAutorizacion() {
+//        return fechaAutorizacion;
+//    }
+//
+//    public void setFechaAutorizacion(String value) {
+//        this.fechaAutorizacion = value;
+//    }
+//
+//    @XmlElement
+//    public String getAmbiente() {
+//        return ambiente;
+//    }
+//
+//    public void setAmbiente(String value) {
+//        this.ambiente = value;
+//    }
 
     @XmlElement
     public Comprobante getComprobante() {

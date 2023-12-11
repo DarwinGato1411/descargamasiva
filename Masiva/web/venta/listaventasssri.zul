@@ -96,12 +96,12 @@
                        
                 <listhead> 
                                       
-                    <listheader  width="10%" label="Ruc" />  
-                    <listheader  width="10%" label="Nombre" />    
+                    <listheader  width="30%" label="Ruc" />  
+<!--                    <listheader  width="10%" label="Nombre" />    
                     <listheader  width="10%" label="Documento" />  
                     <listheader width="14%"  label="# Factura" />            
-                    <listheader width="14%"  label="Fecha Emi." />                           
-                    <listheader width="42%"  label="Clave autorización" />        
+                    <listheader width="14%"  label="Fecha Emi." />                           -->
+                    <listheader width="70%"  label="Clave autorización" />        
                      
                                           
                 </listhead>  
@@ -114,7 +114,7 @@
                                       style="font-size:11px;background:#EBF5FB"
                                       readonly="true" value="@bind(each.csriRucEmisor)" width="100%" />
                         </listcell>
-                        <listcell zclass = "mycss-listcell">
+<!--                        <listcell zclass = "mycss-listcell">
                             <textbox class="form-control form-control-sm"                                                               
                                      style="font-size:11px;background:#EBF5FB"
                                      readonly="true" value="@bind(each.csriRazonSocial)" width="100%" />
@@ -140,7 +140,7 @@
                                      format="medium" width="100%"
                                      style="font-size:11px;background:#EBF5FB"                            />
                             
-                        </listcell>   
+                        </listcell>   -->
                         <listcell zclass = "mycss-listcell">
                             <textbox class="form-control form-control-sm"                                                     
                                      readonly="true" value="@bind(each.csriClaveAcceso)" width="100%" 
